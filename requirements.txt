@@ -1,0 +1,4 @@
+# Python 3.11–3.14. Match the Divi version used by all three starter notebooks.
+# qubo-decompose installs dwave-hybrid (import hybrid) and dwave-samplers.
+# jupyter installs the notebook kernel and widgets.
+qoro-divi[qubo-decompose,jupyter]==0.16.2
