@@ -1,6 +1,6 @@
 # Best solutions per instance (re-scored by the official referee)
 
-131 .sol files checked, 0 infeasible or with a wrong objective line.
+144 .sol files checked, 0 infeasible or with a wrong objective line.
 
 | instance | B | λ | BKV (status) | best quantum-pipeline | gap | file | best overall | gap |
 |---|---:|---:|---:|---:|---:|---|---:|---:|
@@ -69,7 +69,7 @@
 | po_a010_t15_s02 | 4 | 5e-4 | -37224 (best known) | — | — |  | -37224 | +0.000% |
 | po_a010_t15_s02 | 4 | 5e-5 | -121102 (best known) | — | — |  | -121102 | +0.000% |
 | po_a050_t10_orig | 20 | 0 | -501737 (optimal) | — | — |  | -501737 | +0.000% |
-| po_a050_t10_orig | 20 | 1e-2 | -37107 (best known) | — | — |  | -34520 | +6.972% |
+| po_a050_t10_orig | 20 | 1e-2 | -37107 (best known) | — | — |  | -35445 | +4.479% |
 | po_a050_t10_orig | 20 | 1e-3 | -206239 (best known) | — | — |  | -205278 | +0.466% |
 | po_a050_t10_orig | 20 | 1e-4 | -370869 (best known) | — | — |  | -370843 | +0.007% |
 | po_a050_t10_orig | 20 | 1e-5 | -478956 (best known) | — | — |  | -478956 | +0.000% |
@@ -90,7 +90,7 @@
 | po_a050_t10_s01 | 20 | 1e-6 | -428609 (best known) | — | — |  | -428609 | +0.000% |
 | po_a050_t10_s01 | 20 | 5e-4 | -183574 (best known) | — | — |  | -183279 | +0.161% |
 | po_a050_t10_s01 | 20 | 5e-5 | -342074 (best known) | — | — |  | -342074 | +0.000% |
-| po_a050_t10_s02 | 20 | 1e-2 | -43565 (best known) | — | — |  | -40149 | +7.841% |
+| po_a050_t10_s02 | 20 | 1e-2 | -43565 (best known) | — | — |  | -45069 | -3.452% |
 | po_a050_t10_s02 | 20 | 1e-3 | -233766 (best known) | — | — |  | -232490 | +0.546% |
 | po_a050_t10_s02 | 20 | 1e-4 | -443357 (best known) | — | — |  | -443357 | +0.000% |
 | po_a050_t10_s02 | 20 | 1e-5 | -594866 (best known) | — | — |  | -594866 | +0.000% |
@@ -100,7 +100,7 @@
 | po_a050_t15_orig | 20 | 1e-2 | -31504 (best known) | — | — |  | -45031 | -42.937% |
 | po_a050_t15_orig | 20 | 1e-3 | -321907 (best known) | — | — |  | -321070 | +0.260% |
 | po_a050_t15_orig | 20 | 5e-4 | -397497 (best known) | — | — |  | -397236 | +0.066% |
-| po_a050_t15_s00 | 20 | 1e-2 | -43792 (best known) | — | — |  | -39280 | +10.303% |
+| po_a050_t15_s00 | 20 | 1e-2 | -43792 (best known) | — | — |  | -41504 | +5.225% |
 | po_a050_t15_s00 | 20 | 1e-3 | -314736 (best known) | — | — |  | -312312 | +0.770% |
 | po_a050_t15_s00 | 20 | 5e-4 | -386990 (best known) | — | — |  | -386499 | +0.127% |
 | po_a050_t15_s01 | 20 | 1e-2 | -13706 (best known) | — | — |  | -12983 | +5.275% |
