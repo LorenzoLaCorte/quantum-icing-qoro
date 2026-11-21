@@ -1,0 +1,308 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.1cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools,booktabs,xcolor,enumitem}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing}
+\pgfplotsset{compat=1.17}
+\usepackage[hidelinks]{hyperref}
+\setlist{nosep,leftmargin=1.4em}
+
+\definecolor{arc}{HTML}{1F5FAD}
+\definecolor{path}{HTML}{D9730D}
+\definecolor{slack}{HTML}{7A7A7A}
+\definecolor{bad}{HTML}{B3261E}
+\tikzset{
+  nd/.style={circle,draw,thick,minimum size=7mm,inner sep=0pt,fill=white},
+  ar/.style={-{Stealth[length=2.6mm]},thick,arc},
+  pa/.style={-{Stealth[length=2.6mm]},very thick,path},
+}
+\newcommand{\T}{\tau}
+\newcommand{\Pairs}{\Pi}
+
+\title{\textbf{Path-variable QUBOs for QOBLIB network design}\\[2pt]
+\large What \texttt{network\_hopqubo.py} builds, and what we measured}
+\date{21 November 2026}
+\author{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+
+\paragraph{In one paragraph.}
+The topology QUBO in notebook~02 rewards only \emph{direct} links. We add binary
+\emph{path variables} saying ``pair $(i,k)$ is served by the 2-hop path $i\to j\to k$'',
+so the QUBO energy becomes the network's \emph{total flow} (traffic $\times$ hops).
+That makes the objective track the real LP score much better, but it also makes the
+QUBO much harder for generic samplers.
+
+%---------------------------------------------------------------------------
+\section{Why total flow is the right thing to model}
+A topology $x$ is a simple digraph on $n$ nodes with in- and out-degree~2 ($2n$ arcs).
+The referee score is the LP's minimum congestion $z^\star(x)$, the load on the
+busiest arc. Every unit of demand $t_{ik}$ crosses at least $d_{ik}(x)$ arcs, where
+$d_{ik}(x)$ is the hop distance. The total load over all arcs is therefore at least
+$\sum t_{ik}\,d_{ik}$, and the busiest arc carries at least the average:
+\begin{equation}
+  z^\star(x)\;\ge\;\frac{1}{2n}\sum_{i\neq k} t_{ik}\, d_{ik}(x).
+  \label{eq:bound}
+\end{equation}
+On \texttt{network12} the best case of this bound is $212$k against a best known
+value of $276$k. On \texttt{network24} it is $506$k against $664$k. It is the binding
+bound in both cases: per-node send/receive bounds are only $162$--$327$k. So
+\emph{minimising hop-weighted traffic} captures most of the problem, and the
+remaining ${\sim}30\%$ is load imbalance.
+
+The obstacle is that $d_{ik}(x)$ is not a quadratic function of $x$. Path variables
+make the first few hops explicit.
+
+%---------------------------------------------------------------------------
+\section{Variables}
+Let $\Pairs=\{(i,k): t_{ik}>0\}$ be the pairs with demand, and
+$\T_{ik}=t_{ik}/\max t$ the normalised demand.
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+variable & meaning & count\\
+\midrule
+$x_{ij}$ & arc $i\to j$ is built & $n(n-1)$\\
+$y_{ijk}$ & pair $(i,k)$ uses the 2-hop path $i\to j\to k$ & $|\Pairs|\,(n-2)$\\
+$s_{ik}$ & pair $(i,k)$ needs $\ge3$ hops (slack, strict model only) & $|\Pairs|$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=2.1cm]
+  % one pair (i,k) and its options
+  \node[nd] (i) at (0,0) {$i$};
+  \node[nd] (k) at (5.4,0) {$k$};
+  \node[nd] (j1) at (2.7,1.6) {$j_1$};
+  \node[nd] (j2) at (2.7,-1.6) {$j_2$};
+  \draw[ar] (i) -- node[above,pos=.55,font=\small,arc]{$x_{ik}$} (k);
+  \draw[pa] (i) -- node[above left,font=\small]{$x_{ij_1}$} (j1);
+  \draw[pa] (j1) -- node[above right,font=\small]{$x_{j_1k}$} (k);
+  \draw[ar,dashed] (i) -- (j2);
+  \draw[ar,dashed] (j2) -- (k);
+  \node[path,font=\small,align=center] at (2.7,2.45) {$y_{ij_1k}=1$ needs $x_{ij_1}=x_{j_1k}=1$};
+  \node[font=\small,align=left,anchor=west] at (6.4,0.9) {\textbf{one choice per pair:}};
+  \node[font=\small,align=left,anchor=west] at (6.4,0.25)
+    {\textcolor{arc}{direct} $x_{ik}$ \hfill cost $1\cdot\T_{ik}$};
+  \node[font=\small,align=left,anchor=west] at (6.4,-0.35)
+    {\textcolor{path}{2-hop} $y_{ijk}$, any $j$ \hfill cost $2\cdot\T_{ik}$};
+  \node[font=\small,align=left,anchor=west] at (6.4,-0.95)
+    {\textcolor{slack}{longer} $s_{ik}$ \hfill cost $3\cdot\T_{ik}$};
+\end{tikzpicture}
+\caption{For every pair with demand, the QUBO picks how it is served: by the
+direct arc, by one 2-hop path through some $j$, or by the ``$\ge3$ hops'' slack.
+A path variable can be 1 only if both of its arcs are built.}
+\label{fig:pair}
+\end{figure}
+
+%---------------------------------------------------------------------------
+\section{Strict model (\texttt{build\_path\_qubo})}
+\begin{align}
+\min\quad & \sum_{(i,k)\in\Pairs} \T_{ik}\Big(1\cdot x_{ik} + 2\sum_{j} y_{ijk} + 3\, s_{ik}\Big)
+  &&\text{total flow, 1/2/3 hops}\\
+\text{s.t.}\quad
+& \textstyle\sum_j x_{ij}=2,\ \ \sum_j x_{ji}=2 && \text{degrees, every node }i\\
+& x_{ik}+\textstyle\sum_j y_{ijk}+s_{ik}=1 && \text{one choice, every pair}\label{eq:onehot}\\
+& y_{ijk}\le x_{ij},\quad y_{ijk}\le x_{jk} && \text{paths only on built arcs}
+\end{align}
+In QUBO form, each equality becomes $P(\cdot)^2$ and each $y\le x$ becomes $P\,y(1-x)$,
+which is quadratic. For a fixed $x$, the best $(y,s)$ gives the energy
+\[
+  H_2(x)=\sum_{(i,k)\in\Pairs}\T_{ik}\,\min\{d_{ik}(x),3\},
+\]
+which is exactly total flow with hop distance capped at~3.
+
+\paragraph{Penalty weight.} Leaving \eqref{eq:onehot} unsatisfied (all zeros) costs $P$
+but saves up to $3\T_{ik}\le3$. So $P>3$ is required. With $P=1$ the sampler
+``cheats'': it reached a lower energy than any good topology, and those samples
+scored badly on the LP.
+
+\paragraph{3-hop extension.} Add $y_{ijlk}$ (cost 3, slack cost 4) with
+$y_{ijlk}\le x_{ij},x_{jl},x_{lk}$. The penalties stay quadratic, because each
+constraint involves one path variable and one arc. Only the number of variables grows.
+
+%---------------------------------------------------------------------------
+\section{Soft model (\texttt{build\_soft\_qubo})}
+This model drops the slack and turns the one-hot equality into ``at most one'' with
+pairwise penalties. Every penalty is scaled by the pair's own demand ($c\ge1$):
+\begin{multline*}
+E(x,y)=\sum_{(i,k)\in\Pairs}\T_{ik}\Big[-2x_{ik}-\sum_j y_{ijk}
+ + c\sum_j y_{ijk}\big((1-x_{ij})+(1-x_{jk})+x_{ik}\big)
+ + c\!\!\sum_{j<j'}\! y_{ijk}y_{ij'k}\Big]\\
+ + P\cdot(\text{degree penalties}).
+\end{multline*}
+\textbf{Property.} For $c\ge1$ and any valid $x$: $\min_y E(x,y)=H_2(x)-3\sum\T_{ik}$.
+The minimum is the same $H_2$ as before, up to a constant. The intent is smaller
+energy barriers: a pair's penalties are only as large as its own demand, and no
+slack bit has to move when an arc changes.
+
+\paragraph{Aux-free variant (\texttt{build\_q2\_qubo}).}
+$\sum\T_{ik}\big(-2x_{ik}-\alpha\sum_j x_{ij}x_{jk}\big)$ uses no extra variables,
+but it counts every 2-hop path, even when the pair is already connected directly.
+This version is in the code but was not run in the measurements below.
+
+\begin{center}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+instance & $|\Pairs|$ & arcs only & strict 2-hop & soft 2-hop & strict 3-hop\\
+\midrule
+\texttt{network05} & 13 & 20 & 72 & 59 & 150\\
+\texttt{network12} & 88 & 132 & 1\,100 & 1\,012 & 9\,020\\
+\texttt{network24} & 350 & 552 & 8\,602 & 8\,252 & 170\,302\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%---------------------------------------------------------------------------
+\section{What we measured}
+\subsection*{(a) Does the energy rank topologies like the LP does?}
+For each topology we computed the best-case energy in closed form and the Spearman
+rank correlation $\rho$ with the LP score. ``Near'' means 300 topologies 1--6 random
+2-exchanges away from the best known one; ``random'' means 300 random valid
+topologies.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar, bar width=7pt, width=15cm, height=5.6cm,
+  ymin=0, ymax=1.18, ytick={0,0.2,...,1}, ylabel={Spearman $\rho$ vs.\ LP},
+  point meta=explicit symbolic,
+  symbolic x coords={n12 near,n12 rand,n24 near,n24 rand},
+  xtick=data, xticklabels={\texttt{n12} near,\texttt{n12} random,\texttt{n24} near,\texttt{n24} random},
+  legend style={at={(0.5,1.03)},anchor=south,legend columns=-1,font=\small,draw=none},
+  ymajorgrids, grid style={gray!25}, enlarge x limits=0.15,
+  nodes near coords, every node near coord/.append style={font=\tiny,rotate=90,anchor=west},
+]
+\addplot[fill=gray!60,draw=none] coordinates {(n12 near,0.66)[0.66] (n12 rand,0.24)[0.24] (n24 near,0.71)[0.71] (n24 rand,0.07)[0.07]};
+\addplot[fill=path,draw=none] coordinates {(n12 near,0.85)[0.85] (n12 rand,0.53)[0.53] (n24 near,0.82)[0.82] (n24 rand,0.32)[0.32]};
+\addplot[fill=path!55,draw=none] coordinates {(n12 near,0.91)[0.91] (n12 rand,0.73)[0.73] (n24 near,0.91)[0.91] (n24 rand,0.61)[0.61]};
+\addplot[fill=arc,draw=none] coordinates {(n12 near,0.91)[0.91] (n12 rand,0.76)[0.76] (n24 near,0.95)[0.95] (n24 rand,0.84)[0.84]};
+\legend{direct only (notebook), 2-hop paths $H_2$, 3-hop paths $H_3$, exact hops (not a QUBO)}
+\end{axis}
+\end{tikzpicture}
+\caption{Adding path variables raises the correlation with the true score sharply,
+most of all far from good topologies. On \texttt{network05} every variant gives
+$\rho=0.43$: the instance is too small to tell them apart.}
+\end{figure}
+
+\subsection*{(b) How good is the surrogate's own optimum? (\texttt{network12})}
+We minimised each surrogate directly, with simulated annealing over
+degree-preserving 2-exchanges (4 restarts), and scored the result with the LP.
+
+\begin{center}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+surrogate & LP of optimum (best) & (mean)\\
+\midrule
+direct only & 357\,000 & 557\,250\\
+$H_2$ (2-hop) & 296\,572 & 319\,885\\
+$H_3$ (3-hop) & 298\,500 & 310\,208\\
+exact hops & 290\,000 & 301\,725\\
+\midrule
+\multicolumn{3}{@{}l}{notebook SA on the direct QUBO: 309\,750 \quad best known: 276\,474}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{(c) Can a QUBO sampler actually find that optimum?}
+\begin{center}
+\begin{tabular}{@{}lrlr@{}}
+\toprule
+QUBO (\texttt{network12}) & vars & sampler & LP best\\
+\midrule
+direct only & 132 & SA & 314\,500\\
+strict 2-hop, $P=4\ldots6$ & 1\,100 & SA, 2k--20k sweeps & 319\,410--324\,000\\
+soft 2-hop, $c=1.2, 2$ & 1\,012 & SA / tabu & 324\,112--332\,500\\
+soft 2-hop & 1\,012 & PCE, dense encoding, Qoro GPU & 321\,500\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{The samplers, not the energy function, are the bottleneck.} For the strict
+model, SA's best energy was $67.8$--$70.8$, while a known good topology (LP 280\,834)
+with its best path variables has energy $62.8$. Ten times more sweeps did not close
+the gap. The soft model shows the same picture ($-26.6$ to $-28.5$ against $-32.2$).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1]
+  \begin{scope}
+    \node[nd] (a) at (0,1.2) {$a$}; \node[nd] (b) at (2,1.2) {$b$};
+    \node[nd] (c) at (0,0) {$c$};   \node[nd] (d) at (2,0) {$d$};
+    \draw[ar] (a)--(b); \draw[ar] (c)--(d);
+    \node[font=\small] at (1,-0.75) {valid};
+  \end{scope}
+  \draw[-{Stealth},thick] (2.7,0.6) -- node[above,font=\scriptsize]{flip 1 bit} (3.9,0.6);
+  \begin{scope}[xshift=4.6cm]
+    \node[nd] (a) at (0,1.2) {$a$}; \node[nd] (b) at (2,1.2) {$b$};
+    \node[nd] (c) at (0,0) {$c$};   \node[nd] (d) at (2,0) {$d$};
+    \draw[ar] (c)--(d);
+    \node[font=\small,bad,align=center] at (1,-0.85) {degree broken: $+P$\\paths via $a\!\to\!b$ broken};
+  \end{scope}
+  \draw[-{Stealth},thick] (7.3,0.6) -- node[above,font=\scriptsize]{3 more flips} (8.5,0.6);
+  \begin{scope}[xshift=9.2cm]
+    \node[nd] (a) at (0,1.2) {$a$}; \node[nd] (b) at (2,1.2) {$b$};
+    \node[nd] (c) at (0,0) {$c$};   \node[nd] (d) at (2,0) {$d$};
+    \draw[ar] (a)--(d); \draw[ar] (c)--(b);
+    \node[font=\small] at (1,-0.75) {valid again};
+  \end{scope}
+\end{tikzpicture}
+\caption{The smallest legal move, a 2-exchange $(a\!\to\!b),(c\!\to\!d)\Rightarrow
+(a\!\to\!d),(c\!\to\!b)$, flips 4 arc bits plus every path variable that uses the
+changed arcs. Single-bit samplers have to climb over penalty barriers to make it.
+Path variables add more of these barriers.}
+\end{figure}
+
+\subsection*{(d) Where the extra accuracy pays off: ranking moves in a local search}
+We ran a large-neighbourhood search on \texttt{network12}. Each step frees 5 arcs,
+enumerates every valid reassignment of their heads, ranks the candidates with a
+surrogate and LP-scores only the top~3. Every ranking had the same budget of 450 LP
+solves; 3 seeds each.
+\begin{center}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+ranking & final LP (mean) & (best)\\
+\midrule
+random & 300\,414 & 292\,667\\
+direct only & 289\,014 & 287\,000\\
+$H_2$ & 290\,076 & \textbf{285\,400}\\
+exact hops & 295\,800 & 292\,546\\
+\bottomrule
+\end{tabular}
+\end{center}
+Ranking with a surrogate beats random by about 3.5\%. With only 3 seeds the
+surrogates cannot be told apart yet.
+
+\subsection*{(e) Partitioned QAOA / PCE on the Qoro GPU cluster}
+\emph{Pending.} A sweep is running: three QUBOs (direct only, soft 2-hop, strict
+2-hop), each with partitioned QAOA (modularity and spectral clusters), partitioned
+PCE, and PCE on the whole problem (polynomial encoding, 45 qubits). A dense-encoding
+PCE test run (10 qubits) cost 0.82 credits. It reached energy $89.6$, against $-1.6$
+for a good topology, on the normalised scale.
+
+%---------------------------------------------------------------------------
+\section{Takeaways}
+\begin{enumerate}
+\item \textbf{The modelling works.} Path variables turn the QUBO into total flow,
+  which is the dominant term of the real objective by \eqref{eq:bound}. The rank
+  correlation with the LP rises from $0.07$--$0.71$ to $0.32$--$0.85$ (2-hop) and
+  $0.61$--$0.91$ (3-hop).
+\item \textbf{Solving the full QUBO does not work yet.} Penalty barriers from the
+  degree rules and the path consistency constraints stop SA and tabu from reaching
+  low energy. The extra variables make this worse.
+\item \textbf{Next steps.} Use the path QUBO on small local-search subproblems
+  (5--8 freed arcs), where it stays small and the sampler's job is to rank
+  candidates. Or encode the arc choices one-hot with an XY mixer, so that legal moves
+  are single steps and the barriers go away.
+\end{enumerate}
+
+\vfill
+\noindent\footnotesize Code: \texttt{network\_hopqubo.py} (\texttt{fidelity}, \texttt{surropt},
+\texttt{qubo}, \texttt{lns}), \texttt{network\_hopqubo\_divi.py} (Divi / Qoro cloud).
+Logs: \texttt{runs/hopqubo\_*.txt}.
+\end{document}
