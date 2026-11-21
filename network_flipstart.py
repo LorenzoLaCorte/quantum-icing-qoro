@@ -74,11 +74,11 @@ for name, b in [("rand", rand_bits), ("randflip", rflip_bits)]:
 print()
 
 
-def run(start, p, seed, shots, pop, iters):
+def run(start, n_layers, seed, shots, pop, iters):
     t0 = time.time()
     q = QAOA(
         problem,
-        n_layers=p,
+        n_layers=n_layers,
         initial_state=STARTS[start],
         optimizer=MonteCarloOptimizer(population_size=pop),
         max_iterations=iters,
@@ -93,7 +93,7 @@ def run(start, p, seed, shots, pop, iters):
     p_flip = sum(s.prob for s in sols if s.bitstring == flip_bits)
     best = min(scores.values()) if scores else float("inf")
     params = getattr(q, "best_params", None)
-    return dict(start=start, p=p, seed=seed, p_valid=p_valid, p_opt=p_opt, p_flip=p_flip,
+    return dict(start=start, n_layers=n_layers, seed=seed, p_valid=p_valid, p_opt=p_opt, p_flip=p_flip,
                 best=best, rank=int((ranked < best).sum() + 1), secs=time.time() - t0,
                 params=None if params is None else np.round(np.asarray(params).ravel(), 3).tolist())
 
@@ -106,10 +106,10 @@ if __name__ == "__main__":
     ap.add_argument("--pop", type=int, default=50)
     ap.add_argument("--iters", type=int, default=10)
     args = ap.parse_args()
-    print(f"{'start':<8} p seed  P(valid)  P(opt)   P(start=flip)  best   rank  secs  params")
-    for p in args.layers:
+    print(f"{'start':<8} layers seed  P(valid)  P(opt)   P(start=flip)  best   rank  secs  params")
+    for n_layers in args.layers:
         for start in STARTS:
             for seed in args.seeds:
-                r = run(start, p, seed, args.shots, args.pop, args.iters)
-                print(f"{r['start']:<8} {r['p']} {r['seed']:>4}  {r['p_valid']:7.2%}  {r['p_opt']:7.3%}  {r['p_flip']:9.3%}"
+                r = run(start, n_layers, seed, args.shots, args.pop, args.iters)
+                print(f"{r['start']:<8} {r['n_layers']:>6} {r['seed']:>4}  {r['p_valid']:7.2%}  {r['p_opt']:7.3%}  {r['p_flip']:9.3%}"
                       f"  {r['best']:6.0f} {r['rank']:>4}  {r['secs']:4.0f}  {r['params']}", flush=True)

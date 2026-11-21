@@ -133,7 +133,7 @@ def sample_topologies(n, rng, n_rand, n_near):
         rows = [list(itertools.combinations([j for j in range(n) if j != i], 2)) for i in range(n)]
         out = []
         for ch in itertools.product(*rows):
-            a = sorted((i, j) for i, p in enumerate(ch) for j in p)
+            a = sorted((i, j) for i, pair in enumerate(ch) for j in pair)
             if qt.is_valid_topology(n, a):
                 out.append(("all", a))
         return out
@@ -223,18 +223,18 @@ def cmd_surropt(args):
 
 
 # ── full QUBO with auxiliary path variables ──────────────────────────────
-def build_path_qubo(T, hops=2, mu=0.0, P=3.0):
+def build_path_qubo(T, hops=2, mu=0.0, penalty_weight=3.0):
     """Vars: ('x',i,j) arcs; ('y',i,j,k) 2-hop; ('y3',i,j,l,k) 3-hop; ('s',i,k) slack (longer path).
     Objective: sum_{ik} t_ik * hops(path chosen) (+ mu * sum_a load_a^2), t scaled to max 1.
-    Constraints (penalty P each, squared): out/in degree 2; one-hot x_ik + sum y + s = 1 per pair with t>0;
-    consistency y <= x on each arc of the path: P * y (1 - x_a)."""
+    Constraints (penalty weight penalty_weight each, squared): out/in degree 2; one-hot x_ik + sum y + s = 1 per pair with t>0;
+    consistency y <= x on each arc of the path: penalty_weight * y (1 - x_a)."""
     n = len(T)
     t = T / T.max()
     bqm = dimod.BinaryQuadraticModel(dimod.BINARY)
     X = lambda i, j: ("x", i, j)  # noqa: E731
     for i in range(n):
-        bqm.add_linear_equality_constraint([(X(i, j), 1) for j in range(n) if j != i], P, -2)
-        bqm.add_linear_equality_constraint([(X(j, i), 1) for j in range(n) if j != i], P, -2)
+        bqm.add_linear_equality_constraint([(X(i, j), 1) for j in range(n) if j != i], penalty_weight, -2)
+        bqm.add_linear_equality_constraint([(X(j, i), 1) for j in range(n) if j != i], penalty_weight, -2)
     load = {}  # arc -> list of (var, coeff)
     for i in range(n):
         for k in range(n):
@@ -250,8 +250,8 @@ def build_path_qubo(T, hops=2, mu=0.0, P=3.0):
                 terms.append((y, 1))
                 bqm.add_linear(y, t[i, k] * 2.0)
                 for a in ((i, j), (j, k)):
-                    bqm.add_linear(y, P)
-                    bqm.add_quadratic(y, X(*a), -P)
+                    bqm.add_linear(y, penalty_weight)
+                    bqm.add_quadratic(y, X(*a), -penalty_weight)
                     load.setdefault(a, []).append((y, t[i, k]))
                 if hops >= 3:
                     for l in range(n):  # noqa: E741
@@ -261,31 +261,31 @@ def build_path_qubo(T, hops=2, mu=0.0, P=3.0):
                         terms.append((y3, 1))
                         bqm.add_linear(y3, t[i, k] * 3.0)
                         for a in ((i, j), (j, l), (l, k)):
-                            bqm.add_linear(y3, P)
-                            bqm.add_quadratic(y3, X(*a), -P)
+                            bqm.add_linear(y3, penalty_weight)
+                            bqm.add_quadratic(y3, X(*a), -penalty_weight)
                             load.setdefault(a, []).append((y3, t[i, k]))
             s = ("s", i, k)
             terms.append((s, 1))
             bqm.add_linear(s, t[i, k] * (hops + 1.0))
-            bqm.add_linear_equality_constraint(terms, P, -1)
+            bqm.add_linear_equality_constraint(terms, penalty_weight, -1)
     if mu:
         for a, terms in load.items():  # mu * (sum c v)^2, binary v^2 = v
-            for p, (u, cu) in enumerate(terms):
+            for idx, (u, cu) in enumerate(terms):
                 bqm.add_linear(u, mu * cu * cu)
-                for v, cv in terms[p + 1:]:
+                for v, cv in terms[idx + 1:]:
                     bqm.add_quadratic(u, v, 2 * mu * cu * cv)
     return bqm
 
 
-def build_q2_qubo(T, alpha=0.5, P=3.0):
+def build_q2_qubo(T, alpha=0.5, penalty_weight=3.0):
     """Aux-free: sum_ik t_ik (-2 x_ik - alpha * sum_j x_ij x_jk) + degree penalties. n(n-1) vars."""
     n = len(T)
     t = T / T.max()
     bqm = dimod.BinaryQuadraticModel(dimod.BINARY)
     X = lambda i, j: ("x", i, j)  # noqa: E731
     for i in range(n):
-        bqm.add_linear_equality_constraint([(X(i, j), 1) for j in range(n) if j != i], P, -2)
-        bqm.add_linear_equality_constraint([(X(j, i), 1) for j in range(n) if j != i], P, -2)
+        bqm.add_linear_equality_constraint([(X(i, j), 1) for j in range(n) if j != i], penalty_weight, -2)
+        bqm.add_linear_equality_constraint([(X(j, i), 1) for j in range(n) if j != i], penalty_weight, -2)
     for i in range(n):
         for k in range(n):
             if i == k or t[i, k] == 0:
@@ -297,7 +297,7 @@ def build_q2_qubo(T, alpha=0.5, P=3.0):
     return bqm
 
 
-def build_soft_qubo(T, P=3.0, c=1.2):
+def build_soft_qubo(T, penalty_weight=3.0, c=1.2):
     """Soft 2-hop aux: pair cost t(3 - 2 x_ik - sum_j y_ijk), no slack.
     y_ijk <= x_ij, x_jk via c*t*y(1-x); at-most-one via c*t * (sum of pairwise products incl. x_ik).
     For c >= 1: min over y given x == H2 exactly. Penalties scale with t_ik -> small barriers."""
@@ -306,8 +306,8 @@ def build_soft_qubo(T, P=3.0, c=1.2):
     bqm = dimod.BinaryQuadraticModel(dimod.BINARY)
     X = lambda i, j: ("x", i, j)  # noqa: E731
     for i in range(n):
-        bqm.add_linear_equality_constraint([(X(i, j), 1) for j in range(n) if j != i], P, -2)
-        bqm.add_linear_equality_constraint([(X(j, i), 1) for j in range(n) if j != i], P, -2)
+        bqm.add_linear_equality_constraint([(X(i, j), 1) for j in range(n) if j != i], penalty_weight, -2)
+        bqm.add_linear_equality_constraint([(X(j, i), 1) for j in range(n) if j != i], penalty_weight, -2)
     for i in range(n):
         for k in range(n):
             if i == k or t[i, k] == 0:
@@ -371,13 +371,13 @@ def cmd_qubo(args):
                 bqm.update(pen)
                 decode = lambda s: [arcs_v[v] for v, b in s.items() if b]  # noqa: E731
             elif cfg[0] == "soft":
-                bqm = build_soft_qubo(T, P=args.P, c=cfg[1])
+                bqm = build_soft_qubo(T, penalty_weight=args.penalty_weight, c=cfg[1])
                 decode = lambda s: [(k[1], k[2]) for k, b in s.items() if b and k[0] == "x"]  # noqa: E731
             elif cfg[0] == "q2":
-                bqm = build_q2_qubo(T, alpha=cfg[1], P=args.P)
+                bqm = build_q2_qubo(T, alpha=cfg[1], penalty_weight=args.penalty_weight)
                 decode = lambda s: [(k[1], k[2]) for k, b in s.items() if b and k[0] == "x"]  # noqa: E731
             else:
-                bqm = build_path_qubo(T, hops=cfg[0], mu=cfg[1], P=args.P)
+                bqm = build_path_qubo(T, hops=cfg[0], mu=cfg[1], penalty_weight=args.penalty_weight)
                 decode = lambda s: [(k[1], k[2]) for k, b in s.items() if b and k[0] == "x"]  # noqa: E731
             if args.solver == "tabu":
                 from dwave.samplers import TabuSampler
@@ -399,28 +399,28 @@ def cmd_qubo(args):
 if __name__ == "__main__" and __import__("sys").argv[1:2] != ["lns"]:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    f = sub.add_parser("fidelity")
-    f.add_argument("--n", type=int, nargs="+", default=[5, 8, 12])
-    f.add_argument("--rand", type=int, default=300)
-    f.add_argument("--near", type=int, default=300)
-    s = sub.add_parser("surropt")
-    s.add_argument("--n", type=int, nargs="+", default=[12])
-    s.add_argument("--surr", nargs="+", default=["direct", "H2", "H3", "Hinf", "H2L2", "ecmp"])
-    s.add_argument("--mu", type=float, default=1.0)
-    s.add_argument("--restarts", type=int, default=4)
-    s.add_argument("--steps", type=int, default=3000)
-    q = sub.add_parser("qubo")
-    q.add_argument("--n", type=int, nargs="+", default=[12])
-    q.add_argument("--hops", type=int, nargs="*", default=[2])
-    q.add_argument("--mu", type=float, nargs="+", default=[0.0])
-    q.add_argument("--P", type=float, default=3.0)
-    q.add_argument("--reads", type=int, default=100)
-    q.add_argument("--alpha", type=float, nargs="*", default=[])
-    q.add_argument("--soft", type=float, nargs="*", default=[])
-    q.add_argument("--solver", choices=["sa", "tabu"], default="sa")
-    q.add_argument("--tabu-ms", type=int, default=2000)
-    q.add_argument("--ref", default=None, help="runs/*.json topology for energy-gap check")
-    q.add_argument("--sweeps", type=int, default=2000)
+    fidelity_p = sub.add_parser("fidelity")
+    fidelity_p.add_argument("--n", type=int, nargs="+", default=[5, 8, 12])
+    fidelity_p.add_argument("--rand", type=int, default=300)
+    fidelity_p.add_argument("--near", type=int, default=300)
+    surropt_p = sub.add_parser("surropt")
+    surropt_p.add_argument("--n", type=int, nargs="+", default=[12])
+    surropt_p.add_argument("--surr", nargs="+", default=["direct", "H2", "H3", "Hinf", "H2L2", "ecmp"])
+    surropt_p.add_argument("--mu", type=float, default=1.0)
+    surropt_p.add_argument("--restarts", type=int, default=4)
+    surropt_p.add_argument("--steps", type=int, default=3000)
+    qubo_p = sub.add_parser("qubo")
+    qubo_p.add_argument("--n", type=int, nargs="+", default=[12])
+    qubo_p.add_argument("--hops", type=int, nargs="*", default=[2])
+    qubo_p.add_argument("--mu", type=float, nargs="+", default=[0.0])
+    qubo_p.add_argument("--penalty-weight", type=float, default=3.0)
+    qubo_p.add_argument("--reads", type=int, default=100)
+    qubo_p.add_argument("--alpha", type=float, nargs="*", default=[])
+    qubo_p.add_argument("--soft", type=float, nargs="*", default=[])
+    qubo_p.add_argument("--solver", choices=["sa", "tabu"], default="sa")
+    qubo_p.add_argument("--tabu-ms", type=int, default=2000)
+    qubo_p.add_argument("--ref", default=None, help="runs/*.json topology for energy-gap check")
+    qubo_p.add_argument("--sweeps", type=int, default=2000)
     args = ap.parse_args()
     {"fidelity": cmd_fidelity, "surropt": cmd_surropt, "qubo": cmd_qubo}[args.cmd](args)
 
