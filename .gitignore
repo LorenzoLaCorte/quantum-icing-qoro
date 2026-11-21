@@ -5,11 +5,16 @@
 # Created when you run the notebooks
 qoblib_data/
 *.sol
+!deliverables/**/*.sol
+/deliverables/reports/build/
+/ai_context/reports/build/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 
-# Local env and search artifacts
-.venv/
+venv
+.codex
+AGENTS.md
+
+# Local search artifacts
 runs/
-solutions/

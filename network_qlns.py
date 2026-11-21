@@ -31,7 +31,7 @@ from scipy.optimize import linear_sum_assignment
 warnings.filterwarnings("ignore")
 import qoblib_tools as qt  # noqa: E402
 from network_lns import load_start, pick_free  # noqa: E402
-from network_search import RUN_DIR, lp_eval  # noqa: E402
+from network_design.sa_search import RUN_DIR, lp_eval  # noqa: E402
 
 
 # ── sub-QUBO ─────────────────────────────────────────────────────────────
@@ -231,7 +231,7 @@ def main():
     ties = sum(abs(l["q_best"] - l["rand_best"]) <= 1e-6 for l in log)
     if best_e < start_e - 1e-6:
         import network_pipeline as npipe
-        npipe.bank(a.n, demand, best_arcs)
+        print(" ", npipe.bank(a.n, demand, best_arcs, "network_qlns")[2])
     print(f"done: {math.ceil(start_e - 1e-6)} -> best {math.ceil(best_e - 1e-6)} | quantum beat random in {wins}/{len(log)} steps, tied {ties}")
     (RUN_DIR / f"network{a.n:02d}" / f"q{a.solver}{a.seed}.steplog").write_text(json.dumps(log))
 

@@ -34,3 +34,8 @@
 16:01:17 [seed 901] it 20 home 657121 best 661760 k=10 lps=43364 cut=42621 stats={'2ex': [39808, 495], 'relabel': [1627, 23], 'rev': [669, 28], 'rot3': [0, 0]}
 16:01:43 [seed 900] it 20 home 657121 best 657121 k=10 lps=44810 cut=44065 stats={'2ex': [41268, 506], 'relabel': [1496, 31], 'rev': [787, 13], 'rot3': [0, 0]}
 16:04:42 [seed 904] it 20 home 657121 best 657121 k=10 lps=54900 cut=54094 stats={'2ex': [51133, 546], 'relabel': [1812, 40], 'rev': [696, 25], 'rot3': [0, 0]}
+16:05:48 [seed 902] DONE best LP 657121.0 lps=56137 stats={'2ex': [51911, 685], 'relabel': [2020, 31], 'rev': [941, 25], 'rot3': [0, 0]}
+16:05:53 [seed 901] DONE best LP 661760.0 lps=57029 stats={'2ex': [52657, 640], 'relabel': [2222, 32], 'rev': [885, 31], 'rot3': [0, 0]}
+16:05:58 [seed 903] DONE best LP 657121.0 lps=57406 stats={'2ex': [53427, 639], 'relabel': [1845, 46], 'rev': [868, 20], 'rot3': [0, 0]}
+16:06:20 [seed 900] DONE best LP 657121.0 lps=57627 stats={'2ex': [53407, 697], 'relabel': [1921, 41], 'rev': [1034, 23], 'rot3': [0, 0]}
+16:06:37 [seed 904] DONE best LP 657121.0 lps=60324 stats={'2ex': [56314, 626], 'relabel': [1950, 45], 'rev': [799, 30], 'rot3': [0, 0]}

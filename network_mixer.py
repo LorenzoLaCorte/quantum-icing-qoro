@@ -289,7 +289,7 @@ def cmd_qlns(args):
     """Attacks 2+4: LNS where QAOA (exchange mixer on the freed arcs, H2 HUBO with fixed arcs
     substituted) proposes reassignments; same LP budget as random and classical-H2 proposers."""
     from network_lns import pick_free
-    from network_search import lp_eval
+    from network_design.sa_search import lp_eval
 
     n = args.n
     T = qt.load_network_demand(n)

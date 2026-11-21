@@ -25,7 +25,7 @@ from scipy.optimize import Bounds, LinearConstraint, milp
 
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 import qoblib_tools as qt  # noqa: E402
-from network_search import RUN_DIR, lp_eval  # noqa: E402
+from network_design.sa_search import RUN_DIR, lp_eval  # noqa: E402
 
 
 def rewire_milp(demand, arcs, free, z_ub, time_limit):
@@ -209,8 +209,8 @@ def main():
         print("no improving run; nothing to bank")
         return
     top = min(runs, key=lambda r: r["z_lp"])
-    print(f"overall best {top['score']}  gap {npipe.gap(top['score'], a.n)}")
-    npipe.bank(a.n, qt.load_network_demand(a.n), [tuple(x) for x in top["arcs"]])
+    print(f"overall best {top['score']}  gap {npipe.gap(a.n, top['score']):+.3%}")
+    print(" ", npipe.bank(a.n, qt.load_network_demand(a.n), [tuple(x) for x in top["arcs"]], "network_lns")[2])
 
 
 if __name__ == "__main__":

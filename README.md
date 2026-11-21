@@ -7,6 +7,10 @@ using problem partitioning with [Divi](https://github.com/QoroQuantum/divi) on Q
 **Step one: [sign up at dash.qoroquantum.net](https://dash.qoroquantum.net)** for your API key and
 hackathon credits.
 
+For our network design results, see the [hand-in folder](deliverables/README.md) and the
+[methodology and run evidence](ai_context/README.md). Solver implementations are in
+[`network_design/`](network_design/).
+
 ## The notebooks
 
 | Notebook | What it is |
