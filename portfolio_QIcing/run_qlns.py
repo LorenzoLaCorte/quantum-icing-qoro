@@ -59,12 +59,13 @@ ap.add_argument("--p-corr", type=float, default=0.0, help="prob. of correlation-
 ap.add_argument("--p-hedge", type=float, default=0.0, help="prob. of a hedge window (objective-only sub-QUBO)")
 ap.add_argument("--hedge-assets", type=int, default=2)
 ap.add_argument("--time-limit", type=float, default=3000)
+ap.add_argument("--save-sol", default="", help="non-official λ (homotopy step): write the final portfolio here instead of recording")
 args = ap.parse_args()
 
 rng = np.random.default_rng(args.seed)
 model = pc.make_model(args.instance, args.lam)
 cq = pq.CompactQUBO(model)
-bkv, status = pc.load_bkv()[(args.instance, model.budget, args.lam)]
+bkv, status = pc.load_bkv().get((args.instance, model.budget, args.lam), (0, "none (homotopy step)"))
 print(f"{args.instance} B={model.budget} λ={args.lam}: compact QUBO {cq.n_vars} vars; BKV {bkv} ({status})")
 
 if args.start == "empty":
@@ -193,18 +194,22 @@ for it in range(args.iters):
     log.append(dict(it=it, period=t, assets=assets, qubits=nq, circuits=nc, sec=round(time.time() - t0, 1),
                     window_opt_sampled=hit, best_candidate=best_here, incumbent=best))
     print(f"it {it:3d} t={t} assets={assets} q={nq} {time.time() - t0:4.1f}s  window-opt sampled={hit!s:5}  "
-          f"cand {best_here:>8}  incumbent {best:>8}  gap {(best - bkv) / abs(bkv):+.2%}", flush=True)
+          f"cand {best_here:>8}  incumbent {best:>8}  gap {((best - bkv) / abs(bkv) if bkv else 0):+.2%}", flush=True)
 
 if not log:
     raise SystemExit(0)
 score = pq.official(model, v)
-print(f"\nFINAL {score}  BKV {bkv}  gap {(score.objective - bkv) / abs(bkv):+.3%}")
+print(f"\nFINAL {score}  BKV {bkv}  gap {((score.objective - bkv) / abs(bkv) if bkv else 0):+.3%}")
 print(f"improvements {n_improve}, window optimum sampled {n_hit}/{len(log)}, max qubits {max_qubits}, "
       f"circuits {circuits}, {time.time() - t_start:.0f}s")
 settings = (f"routine={args.routine} n_layers={n_layers} window_assets={args.window_assets} p_time={args.p_time} p_corr={args.p_corr} p_hedge={args.p_hedge} hedge_assets={args.hedge_assets} penalty_weight={W:.0f} "
             f"mc_pop={args.mc_population} mc_iter={args.mc_iterations} shots={args.shots} iters={len(log)} "
             f"seed={args.seed} start={args.start} warm_start={'char-service' if init is not None else 'none'} "
             f"char_job={report.job_id if report is not None else ''} circuits={circuits}")
+if args.save_sol:
+    model.write_solution(args.save_sol, pc.v_to_positions(model, v), comment=f"homotopy step λ={args.lam} (not an official instance)")
+    print("saved", args.save_sol)
+    raise SystemExit(0)
 sc, path, _ = pc.record_solution(model, pc.v_to_positions(model, v), method=f"QLNS-{args.routine} (quantum sub-solver, Maestro)",
                                  settings=settings, n_qubo_vars=cq.n_vars, max_qubits=max_qubits, quantum=True,
                                  tag=f"qlns-{args.routine}")

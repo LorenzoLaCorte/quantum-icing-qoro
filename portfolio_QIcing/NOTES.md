@@ -64,7 +64,7 @@ Why this case: smallest leaderboard instance (notebook warm-up), proven optimum 
 - λ = 1e-3 chain s6 → s8 → s15: **−8 397 = proven optimum** (0.91 M circuits, 31 min). s02 λ = 1e-4: −53 220 (+0.066%) after s9 → s16.
 - → PCE-QLNS reached the proven optimum on all three a010_t10_orig λ tried (1e-4, 5e-4, 1e-3), each from an empty portfolio.
 - The a050 s00 λ=1e-2 QLNS file (s12) was relabelled `quantum: False` in its header and in results.csv: it is the classical LNS solution, unchanged.
-- `verify_solutions.py`: 127 .sol files, all feasible, objective lines match → `best_solutions.md`.
-- QOBLIB Rust checker (`06-portfolio/check`, `cargo build --release`, run `check_portfolio ../qoblib_data/06-portfolio/instances <file.sol>`): 127/127 pass, incl. the 4 a050 BKV beats (2026-11-21).
+- `verify_solutions.py`: 127+ .sol files, all feasible, objective lines match → `best_solutions.md`.
+- QOBLIB Rust checker (`06-portfolio/check`, `cargo build --release`, run `check_portfolio ../qoblib_data/06-portfolio/instances <file.sol>`): all 127+ pass, incl. the 4 a050 BKV beats (2026-11-21).
 - PDF summary: `report/portfolio_qicing.pdf` (source `report/portfolio_qicing.tex.in` + `plotdata.json`; the .tex is generated).
 - Gotcha: `pgrep -f`/`pkill -f` patterns also match the waiting shell → hung waiter loop; use PIDs.

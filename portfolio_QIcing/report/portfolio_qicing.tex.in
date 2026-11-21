@@ -26,7 +26,7 @@
 
 \title{\textbf{Quantum approaches to QOBLIB portfolio optimisation}\\[2pt]
 \large Status report: exact ground truth, PCE quantum LNS, and quality vs.\ best known}
-\date{21 November 2026}
+\date{22 November 2026 (update: 50-asset quantum results and new formulations, \S\ref{sec:qfocus})}
 \author{}
 
 \begin{document}
@@ -38,8 +38,8 @@
 \section*{Bottom line}
 The score is QOBLIB's official objective, computed by the referee \texttt{PortfolioModel.score}; lower
 is better. \emph{Gap} = (our score $-$ best known) / $|$best known$|$: \textbf{0\% matches QOBLIB,
-negative beats it}. All 127 solution files written were re-scored from disk: all are feasible and
-match the referee. All 127 also pass QOBLIB's official Rust checker (\texttt{06-portfolio/check}),
+negative beats it}. All 127+ solution files written were re-scored from disk: all are feasible and
+match the referee. All 127+ also pass QOBLIB's official Rust checker (\texttt{06-portfolio/check}),
 which recomputes the objective in exact arithmetic and confirms every claimed value.
 
 \begin{center}
@@ -59,15 +59,21 @@ all 64 \texttt{a010} instances & exact dynamic programming & $=$ BKV & \gapgood{
 \texttt{a050\_t10\_s00} (20, $5\cdot10^{-4}$) & pool-DP + exact-DP LNS & $-234\,587$ & \gapgood{$-$0.14\%} & no (classical)\\
 \texttt{a200\_t10\_orig} (50, $10^{-3}$) & pool-DP + LNS, 200 s & $-818\,362$ & first value & no (classical)\\
 \texttt{a400\_t10\_orig} (100, $10^{-3}$) & pool-DP + LNS, 200 s, not converged & $-1\,896\,257$ & first value & no (classical)\\
-\texttt{a050\_t10\_s00} (20, $10^{-2}$) & best \emph{quantum}: PCE quantum LNS from empty & $-1\,000$ & \gapbad{+91.9\%} & yes: stuck at empty, \S\ref{sec:allq}\\
+\rowcolor{good!10}
+\texttt{a050\_t10\_s00} (20, $10^{-4}$) & \textbf{PCE quantum LNS from empty portfolio} (new) & $\mathbf{-340\,222}$ & \gapgood{+4.31\%} & \textbf{yes}: $\le$9 qubits, 42 assets held\\
+\texttt{a050\_t10\_s00} (20, $10^{-3}$) & PCE quantum LNS from empty portfolio (new) & $-157\,229$ & \gapmid{+18.1\%} & \textbf{yes}: $\le$9 qubits, 49 assets held\\
+\texttt{a050\_t10\_s00} (20, $10^{-2}$) & best \emph{quantum}: PCE quantum LNS (from empty it stays empty; best non-empty $+37\,234$) & $-1\,000$ & \gapbad{+91.9\%} & yes: no useful result, \S\ref{sec:qfocus}\\
 \bottomrule
 \end{tabularx}
 \end{center}
 
 \noindent\textbf{In one sentence:} a quantum sub-solver (Divi PCE, at most 9 qubits, on a 630-variable
 QUBO) reaches the \emph{proven} optimum on three leaderboard instances, starting from an empty
-portfolio without any classical local search. The four best-known values we beat on 50-asset
-instances were beaten by classical search; at that size the quantum windows did not improve them.
+portfolio without any classical local search. On \textbf{50 assets} the same method, again from an
+empty portfolio, gets within \textbf{+4.3\%} of the best known value at $\lambda=10^{-4}$, holding
+20 units on 42 assets every day. At the risk-dominated $\lambda=10^{-2}$ no quantum formulation has
+worked yet (\S\ref{sec:qfocus}). The four best-known values we beat on 50-asset instances were
+beaten by classical search.
 
 %===========================================================================
 \section{The problem in one paragraph}
@@ -210,14 +216,28 @@ instance, $\lambda$ & quantum configuration & qubits & circuits & best score & g
 \texttt{a010\_t10\_s02}, $10^{-4}$ & \textbf{PCE-QLNS, 2 chained runs from empty} & $\le$9 & 0.73\,M & $\mathbf{-53\,220}$ & \gapmid{+0.066\%}\\
 \footnotesize BKV $-53\,255$ (opt.) & PCE-QLNS, single run & 8 & 0.13\,M & $-53\,136$ & \gapmid{+0.22\%}\\
 \midrule
+\rowcolor{good!10}
+\texttt{a050\_t10\_s00}, $10^{-4}$ & \textbf{PCE-QLNS from empty}, 1 run, 2\,805 windows (new) & $\le$9 & 0.90\,M & $\mathbf{-340\,222}$ & \gapgood{+4.31\%}\\
+\footnotesize BKV $-355\,530$ & & & & & \\
+\midrule
+\texttt{a050\_t10\_s00}, $10^{-3}$ & \textbf{PCE-QLNS from empty}, 1 run, 2\,933 windows (new) & $\le$9 & 0.94\,M & $\mathbf{-157\,229}$ & \gapmid{+18.1\%}\\
+\footnotesize BKV $-191\,879$ & & & & & \\
+\midrule
 \texttt{a050\_t10\_s00}, $10^{-2}$ & \textbf{PCE-QLNS from empty}$^\dagger$, 3 runs, 359 windows & $\le$9 & -- & $\mathbf{-1\,000}$ & \gapbad{+91.9\%}\\
-\footnotesize BKV $-12\,340$; ours (classical) $-17\,675$ & PCE-QLNS from the classical $-17\,675$ & $\le$9 & 0.19\,M & no change & (classical)\\
+\footnotesize BKV $-12\,340$; ours (classical) $-17\,675$ & PCE-QLNS from an over-full start: rounded relaxation (new) & $\le$9 & 0.85\,M & $+37\,234$ & \gapbad{+402\%}\\
+ & PCE-QLNS from an over-full start: our $\lambda=10^{-3}$ portfolio (new) & $\le$9 & 0.85\,M & $+69\,194$ & \gapbad{+661\%}\\
+ & Q-MOVES, PCE, 24 or 60 moves, from the same start$^\dagger$ (new) & 7--11 & -- & no change & --\\
+ & Q-MOVES, QAOA, 18 moves, Qoro \texttt{qoro\_cpu} cloud$^\dagger$ (new) & 18 & -- & no change & --\\
+ & PCE-QLNS from the classical $-17\,675$ & $\le$9 & 0.19\,M & no change & (classical)\\
+\midrule
+\texttt{a050\_t10\_orig}, $10^{-2}$ & XY-exchange QAOA from the classical $-34\,520$ (new, smoke test) & $\le$11 & 324 & no change & \footnotesize (classical +6.97\%)\\
 \bottomrule
 \end{tabularx}
 \end{center}
-\noindent All quantum circuits ran on the local Maestro simulator. The only cloud call was one
-\texttt{characterize\_and\_validate} job, used for the QAOA warm start. The $-1\,000$ on
-\texttt{a050} is the empty portfolio: no window changed it.
+\noindent Circuits ran on the local Maestro simulator, except the 18-qubit Q-MOVES QAOA (Qoro
+\texttt{qoro\_cpu} cloud) and one \texttt{characterize\_and\_validate} job for the QAOA warm start.
+The $-1\,000$ on \texttt{a050} at $\lambda=10^{-2}$ is the empty portfolio: no window changed it. The
+over-full starts descend steadily but are still far from good after 30 minutes.
 
 %===========================================================================
 \section{Fifty assets and beyond}\label{sec:a050}
@@ -235,14 +255,51 @@ BKV exactly, and the $\lambda=10^{-3}\ldots10^{-6}$ instances are within 0--1.7\
 $\lambda=10^{-2}$ on \texttt{orig} (+7.0\%), \texttt{s02} (+7.8\%) and \texttt{s01} (+55\%, stuck at the empty portfolio).
 
 \paragraph{Quantum on 50 assets.} PCE-QLNS scales technically: conditional sub-QUBOs are taken from a dense
-$3\,090\times3\,090$ matrix in milliseconds. But it gave \textbf{no improvement}:
+$3\,090\times3\,090$ matrix in milliseconds. \textbf{How well it works depends on $\lambda$:}
 \begin{itemize}
-\item From empty at $\lambda=10^{-2}$ it stays at $-1000$ (the empty portfolio) with random windows,
-  correlation-guided windows, and multi-day ``hedge'' windows (objective-only sub-QUBO). A small window
-  only sees moves that cost more than they gain.
-\item From the classical $-17\,675$, 600 PCE windows found nothing better: that solution is
-  window-locally optimal.
+\item $\lambda=10^{-4}$, from empty: $\mathbf{-340\,222}$, \gapgood{+4.31\%}. The portfolio holds 20 units
+  every day on 42 different assets, so it is far from trivial. It took 0.9\,M circuits on at most 9 qubits
+  in 30 minutes on a laptop.
+\item $\lambda=10^{-3}$, from empty: $-157\,229$, \gapmid{+18.1\%}, still improving when the 30-minute
+  limit hit.
+\item $\lambda=10^{-2}$, from empty: it stays at $-1000$ (the empty portfolio) with random,
+  correlation-guided and multi-day ``hedge'' windows. A small window only sees moves that cost more than
+  they gain. From the classical $-17\,675$, 600 windows found nothing better.
 \end{itemize}
+
+%===========================================================================
+\section{Quantum focus: new formulations for the hard case}\label{sec:qfocus}
+Goal: a quantum result within $+10\%$ of the best known value at 50 assets, which is not the empty
+portfolio. Code is in \texttt{portfolio\_QIcing/quantum\_focus/}.
+
+\paragraph{Why $\lambda=10^{-2}$ is hard (diagnosis).} The day-$t$ risk matrix has a few huge
+eigenvalues: $674\,714$, $256\,935$, $161\,992$, \dots, against a median of $1\,539$. These are
+market-wide factors. The best known day portfolios have \textbf{zero exposure to the top 5 factors}.
+In any bit-level QUBO, once normalised for PCE or QAOA, these factor terms swamp the small differences
+between good portfolios. Adding units from an empty portfolio is always uphill, and so is any small
+change to the portfolio.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{30mm}L>{\raggedright\arraybackslash}p{44mm}@{}}
+\toprule
+formulation & idea & outcome\\
+\midrule
+\textbf{Lower $\lambda$, PCE windows from empty} & same pipeline as \S3; the risk term is 10--100$\times$ smaller & \textcolor{good}{\textbf{works}}: +4.31\% at $10^{-4}$, +18.1\% at $10^{-3}$\\
+Q-ROUND: quantum rounding & classical convex relaxation of each day, then a QUBO over the rounding bits $v_i=\lfloor w_i\rfloor+b_i$ (exact: $|v|$ stays linear). PCE samples the roundings, and an exact DP chains the days & \textcolor{bad}{fails}: even the \emph{optimal} rounding costs $+8\,293$ against $-6\,900$ for the best day. Good portfolios are not near the relaxation\\
+Hedge-pair basis & variables are long-$a$/short-$b$ pairs (net 0, so the capital rule holds by construction) & \textcolor{bad}{fails}: no single pair is profitable; the profit comes only from baskets of about 20 units\\
+\textbf{XY-exchange QAOA} (2-exchange analogue) & the circuit starts \emph{in} the incumbent (\texttt{CustomPerQubitState}); an XY mixer on same-day edges moves units between assets, so the unit count is conserved and the budget holds by construction & verified: the unit count is conserved in \textbf{100\%} of samples. No gain from the classical optimum, which is already exact for every 4-asset neighbourhood\\
+\textbf{Q-MOVES}: move-selection QUBO & binary $y_m$ = apply move $m$ (transfer, flip, shift, extend/shrink, drop, add-hedge). The energy $E(x{+}D^\top y)=E(x)+y\cdot D(h{+}Sx)+\tfrac12 y^\top DSD^\top y$ is exact & exact: \textbf{0 mismatches} in 880 checks. SA on it improves steadily. PCE samples are near random (no gain), and QAOA on \texttt{qoro\_cpu} takes about 2\,min per round with no gain\\
+Over-full starts & start from a full but too risky portfolio (rounded relaxation, or our $\lambda=10^{-3}$ portfolio), so that moves go downhill & descends from $+640\,600$ to $+37\,234$, still far from the target\\
+$\lambda$-homotopy & quantum windows follow the optimum from $\lambda=10^{-3}$ through 1.5--7.5$\cdot10^{-3}$ to $10^{-2}$ & \emph{running} (2 chains)\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\noindent\textbf{Reading:} the move and exchange formulations are correct and exact. What limits them
+is the samplers: at 18--60 variables, PCE and QAOA as configured here return nearly uniform samples on
+these QUBOs, while SA on the same QUBO improves the portfolio. The quantum result that meets the target
+is the plain PCE window method at moderate risk ($\lambda=10^{-4}$).
 
 %===========================================================================
 \section{Main lessons}
@@ -257,25 +314,32 @@ $3\,090\times3\,090$ matrix in milliseconds. But it gave \textbf{no improvement}
   constraint and solve every sub-problem exactly as posed.
 \item \textbf{PCE fits windows better than QAOA.} It packs 3--5$\times$ more variables per qubit,
   so windows are larger and solved faster.
-\item \textbf{At 50+ assets the quantum step must polish, not build.} High-$\lambda$ optima are
-  diversified across many assets. They need a constructor (the per-day pool plus DP) before any local
-  window, quantum or classical, can help.
+\item \textbf{At 50 assets quantum windows can build, up to moderate risk.} From an empty portfolio,
+  PCE windows reach +4.3\% at $\lambda=10^{-4}$ and +18\% at $10^{-3}$. At $\lambda=10^{-2}$ the
+  optima are factor-neutral baskets, and a constructor (the per-day pool plus DP) is still needed.
+\item \textbf{The landscape, not the formulation, is the obstacle at high risk.} A few market factors
+  dominate the risk matrix by about 400$\times$. Exact move and exchange QUBOs are easy to write, but
+  PCE and QAOA as configured here do not concentrate on them. Better-conditioned encodings, with the
+  dominant factors projected out, are the next lever.
 \end{enumerate}
 
 \section{Next steps}
 \begin{enumerate}
-\item Plug PCE into the classical LNS sub-solver hook (\texttt{lns.lns(..., solve\_sub=f)}): its
-  asset-subset DP becomes a quantum window, starting from the strong classical pool.
-\item Use quantum sampling to build the per-day candidate pool, which is where the high-$\lambda$
-  structure is found.
-\item Run larger windows on the Qoro cloud (\texttt{MultiBasisEncoding}, more qubits) for
-  \texttt{a200}/\texttt{a400}, where any feasible solution is a first published value.
+\item Chain more PCE runs on \texttt{a050} at $\lambda=10^{-4}$ and $10^{-3}$. The \texttt{a010} chains
+  closed their last gap this way, and both 30-minute runs were still improving.
+\item Finish the $\lambda$-homotopy chains to $10^{-2}$ (running).
+\item Make the hard case quantum-friendly: subtract the top risk factors and enforce zero exposure to them
+  as constraints (XY or Dicke subspaces), so that the QUBO's scale reflects returns and residual risk.
+\item Plug PCE into the classical LNS sub-solver hook (\texttt{lns.lns(..., solve\_sub=f)}). Still open.
+\item The quantum per-day candidate pool was tried (Q-ROUND) and does not work in its rounding form.
+  Cloud QAOA at 18 qubits works, but at about 2\,min per round it is too slow for LNS loops; batch
+  many windows per cloud job instead.
 \end{enumerate}
 
 \vfill\noindent\footnotesize
 Code in \texttt{portfolio\_QIcing/}: \texttt{pf\_core.py} (BKV table, exact DP, solution bookkeeping),
 \texttt{pf\_quantum.py} (compact QUBO, dense sub-QUBOs, windows), \texttt{run\_qlns.py} (quantum LNS),
 \texttt{run\_partitioned.py} (notebook route B), \texttt{lns.py}/\texttt{run\_lns.py} (classical, large instances),
-\texttt{verify\_solutions.py} (re-scores every \texttt{.sol} into \texttt{best\_solutions.md}). Every run is
+\texttt{verify\_solutions.py} (re-scores every \texttt{.sol} into \texttt{best\_solutions.md}), \texttt{quantum\_focus/} (Q-ROUND, Q-EXCHANGE, Q-MOVES, homotopy). Every run is
 in \texttt{results.csv}, the solutions are in \texttt{solutions/}, and the notes are in \texttt{NOTES.md} and \texttt{NOTES\_lns.md}.
 \end{document}

@@ -1,6 +1,6 @@
 # Best solutions per instance (re-scored by the official referee)
 
-127 .sol files checked, 0 infeasible or with a wrong objective line.
+131 .sol files checked, 0 infeasible or with a wrong objective line.
 
 | instance | B | λ | BKV (status) | best quantum-pipeline | gap | file | best overall | gap |
 |---|---:|---:|---:|---:|---:|---|---:|---:|

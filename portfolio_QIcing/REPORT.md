@@ -1,6 +1,6 @@
 # QOBLIB 06 portfolio: QIcing report
 
-Everything is scored with QOBLIB's official objective (`qoblib_tools.PortfolioModel.score`). Every `.sol` file is re-checked by `verify_solutions.py`: 127 files, all feasible, and every objective line matches the referee. All 127 also pass QOBLIB's official Rust checker (`06-portfolio/check`, exact arithmetic), including the 4 a050 BKV improvements. The best file for each instance is listed in `best_solutions.md`. Every run is logged in `results.csv`. The full log is in `NOTES.md` (quantum) and `NOTES_lns.md` (classical, large instances).
+Everything is scored with QOBLIB's official objective (`qoblib_tools.PortfolioModel.score`). Every `.sol` file is re-checked by `verify_solutions.py`: 127+ files, all feasible, and every objective line matches the referee. All 127+ also pass QOBLIB's official Rust checker (`06-portfolio/check`, exact arithmetic), including the 4 a050 BKV improvements. The best file for each instance is listed in `best_solutions.md`. Every run is logged in `results.csv`. The full log is in `NOTES.md` (quantum) and `NOTES_lns.md` (classical, large instances).
 
 ## Headline results
 

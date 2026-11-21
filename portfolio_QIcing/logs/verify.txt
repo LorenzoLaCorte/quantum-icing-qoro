@@ -1,6 +1,6 @@
 # Best solutions per instance (re-scored by the official referee)
 
-122 .sol files checked, 0 infeasible or with a wrong objective line.
+127 .sol files checked, 0 infeasible or with a wrong objective line.
 
 | instance | B | λ | BKV (status) | best quantum-pipeline | gap | file | best overall | gap |
 |---|---:|---:|---:|---:|---:|---|---:|---:|
@@ -76,9 +76,9 @@
 | po_a050_t10_orig | 20 | 1e-6 | -499339 (best known) | — | — |  | -499339 | +0.000% |
 | po_a050_t10_orig | 20 | 5e-4 | -254972 (best known) | — | — |  | -254640 | +0.130% |
 | po_a050_t10_orig | 20 | 5e-5 | -417218 (best known) | — | — |  | -417142 | +0.018% |
-| po_a050_t10_s00 | 20 | 1e-2 | -12340 (best known) | — | — |  | -17675 | -43.233% |
-| po_a050_t10_s00 | 20 | 1e-3 | -191879 (best known) | — | — |  | -190685 | +0.622% |
-| po_a050_t10_s00 | 20 | 1e-4 | -355530 (best known) | — | — |  | -355530 | +0.000% |
+| po_a050_t10_s00 | 20 | 1e-2 | -12340 (best known) | 37234 | +401.734% | `solutions/po_a050_t10_s00_b020_l1e-2/po_a050_t10_s00_b020_l1e-2__qlns-pce__20261121-235941.sol` | -17675 | -43.233% |
+| po_a050_t10_s00 | 20 | 1e-3 | -191879 (best known) | -157229 | +18.058% | `solutions/po_a050_t10_s00_b020_l1e-3/po_a050_t10_s00_b020_l1e-3__qlns-pce__20261121-235627.sol` | -190685 | +0.622% |
+| po_a050_t10_s00 | 20 | 1e-4 | -355530 (best known) | -340222 | +4.306% | `solutions/po_a050_t10_s00_b020_l1e-4/po_a050_t10_s00_b020_l1e-4__qlns-pce__20261121-235627.sol` | -355530 | +0.000% |
 | po_a050_t10_s00 | 20 | 1e-5 | -484396 (best known) | — | — |  | -484396 | +0.000% |
 | po_a050_t10_s00 | 20 | 1e-6 | -513409 (best known) | — | — |  | -513409 | +0.000% |
 | po_a050_t10_s00 | 20 | 5e-4 | -234259 (best known) | — | — |  | -234587 | -0.140% |

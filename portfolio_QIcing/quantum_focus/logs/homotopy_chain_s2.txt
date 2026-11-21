@@ -1,0 +1,2 @@
+step 1 λ=1.5e-3: FINAL objective=-136336 (feasible; risk=65877, return=-22858
+step 2 λ=3e-3: FINAL objective=-83925 (feasible; risk=93205, return=-203699
