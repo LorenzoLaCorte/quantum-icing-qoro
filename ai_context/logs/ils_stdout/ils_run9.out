@@ -1,0 +1,46 @@
+15:45:39 [seed 902] start=banked LP 661760.0
+15:45:39 [seed 901] start=banked LP 661760.0
+15:45:39 [seed 900] start=banked LP 661760.0
+15:45:39 [seed 903] start=banked LP 661760.0
+15:45:39 [seed 904] start=banked LP 661760.0
+15:46:00 [seed 901] deep: 153 neighbours within 2.0%, exploring 20 (z 664240..673452)
+15:46:00 [seed 902] deep: 153 neighbours within 2.0%, exploring 20 (z 665667..673469)
+15:46:00 [seed 900] deep: 153 neighbours within 2.0%, exploring 20 (z 663161..673431)
+15:46:00 [seed 903] deep: 153 neighbours within 2.0%, exploring 20 (z 665731..673493)
+15:46:00 [seed 904] deep: 153 neighbours within 2.0%, exploring 20 (z 665816..673525)
+15:46:04 [seed 902] it 0 new chain best LP 657121.0 (descent 2ex) lps=1396
+15:46:04 [seed 902] bank: banked 657121 (gap -0.989%, was 661760)
+15:46:05 [seed 900] it 0 new chain best LP 661760.0 (descent 2ex) lps=1459
+15:46:05 [seed 903] it 0 new chain best LP 661760.0 (descent relabel) lps=1456
+15:46:06 [seed 904] it 0 new chain best LP 661760.0 (descent relabel) lps=1482
+15:46:08 [seed 902] deep: escaped to 657121.0
+15:46:09 [seed 901] it 0 new chain best LP 661760.0 (descent relabel) lps=1659
+15:46:24 [seed 900] it 0 new chain best LP 657121.0 (descent 2ex) lps=2392
+15:46:25 [seed 900] bank: checked 657121, not better than banked 657121
+15:46:29 [seed 900] deep: escaped to 657121.0
+15:47:29 [seed 903] it 1 new chain best LP 657121.0 (descent 2ex) lps=5289
+15:47:29 [seed 903] bank: checked 657121, not better than banked 657121
+15:47:45 [seed 904] it 0 new chain best LP 657121.0 (descent 2ex) lps=6260
+15:47:45 [seed 904] bank: checked 657121, not better than banked 657121
+15:47:49 [seed 904] deep: escaped to 657121.0
+15:52:06 [seed 903] it 10 home 657121 best 657121 k=6 lps=17192 cut=16844 stats={'2ex': [15313, 143], 'relabel': [388, 14], 'rev': [242, 6], 'rot3': [0, 0]}
+15:53:20 [seed 900] it 10 home 657121 best 657121 k=6 lps=20730 cut=20337 stats={'2ex': [18450, 187], 'relabel': [691, 15], 'rev': [340, 6], 'rot3': [0, 0]}
+15:53:32 [seed 902] it 10 home 657121 best 657121 k=8 lps=20836 cut=20428 stats={'2ex': [18585, 211], 'relabel': [666, 7], 'rev': [336, 5], 'rot3': [0, 0]}
+15:54:31 [seed 901] it 10 home 661760 best 661760 k=6 lps=24199 cut=23754 stats={'2ex': [21759, 236], 'relabel': [855, 9], 'rev': [336, 14], 'rot3': [0, 0]}
+15:54:31 [seed 904] it 10 home 657121 best 657121 k=9 lps=24880 cut=24469 stats={'2ex': [22616, 191], 'relabel': [661, 20], 'rev': [354, 15], 'rot3': [0, 0]}
+15:57:13 [seed 901] sync: adopted banked 657121
+15:59:49 [seed 903] it 20 home 657121 best 657121 k=10 lps=39013 cut=38345 stats={'2ex': [36000, 432], 'relabel': [1160, 27], 'rev': [594, 14], 'rot3': [0, 0]}
+16:01:11 [seed 902] it 20 home 657121 best 657121 k=10 lps=43448 cut=42724 stats={'2ex': [39918, 487], 'relabel': [1536, 22], 'rev': [735, 20], 'rot3': [0, 0]}
+16:01:17 [seed 901] it 20 home 657121 best 661760 k=10 lps=43364 cut=42621 stats={'2ex': [39808, 495], 'relabel': [1627, 23], 'rev': [669, 28], 'rot3': [0, 0]}
+16:01:43 [seed 900] it 20 home 657121 best 657121 k=10 lps=44810 cut=44065 stats={'2ex': [41268, 506], 'relabel': [1496, 31], 'rev': [787, 13], 'rot3': [0, 0]}
+16:04:42 [seed 904] it 20 home 657121 best 657121 k=10 lps=54900 cut=54094 stats={'2ex': [51133, 546], 'relabel': [1812, 40], 'rev': [696, 25], 'rot3': [0, 0]}
+16:05:48 [seed 902] DONE best LP 657121.0 lps=56137 stats={'2ex': [51911, 685], 'relabel': [2020, 31], 'rev': [941, 25], 'rot3': [0, 0]}
+16:05:53 [seed 901] DONE best LP 661760.0 lps=57029 stats={'2ex': [52657, 640], 'relabel': [2222, 32], 'rev': [885, 31], 'rot3': [0, 0]}
+16:05:58 [seed 903] DONE best LP 657121.0 lps=57406 stats={'2ex': [53427, 639], 'relabel': [1845, 46], 'rev': [868, 20], 'rot3': [0, 0]}
+16:06:20 [seed 900] DONE best LP 657121.0 lps=57627 stats={'2ex': [53407, 697], 'relabel': [1921, 41], 'rev': [1034, 23], 'rot3': [0, 0]}
+16:06:37 [seed 904] DONE best LP 657121.0 lps=60324 stats={'2ex': [56314, 626], 'relabel': [1950, 45], 'rev': [799, 30], 'rot3': [0, 0]}
+seed 900 start banked: LP 657121.0
+seed 901 start banked: LP 661760.0
+seed 902 start banked: LP 657121.0
+seed 903 start banked: LP 657121.0
+seed 904 start banked: LP 657121.0

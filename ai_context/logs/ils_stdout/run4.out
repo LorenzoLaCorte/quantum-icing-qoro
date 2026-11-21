@@ -1,0 +1,50 @@
+14:52:33 [seed 401] start=banked LP 683886.8
+14:52:33 [seed 403] start=banked LP 683886.8
+14:52:33 [seed 400] start=banked LP 683886.8
+14:52:33 [seed 402] start=banked LP 683886.8
+14:52:33 [seed 404] start=banked LP 683886.8
+14:52:55 [seed 401] deep: 52 neighbours within 1.5%, exploring 11 (z 686838..694083)
+14:52:55 [seed 403] deep: 52 neighbours within 1.5%, exploring 10 (z 688024..693979)
+14:52:55 [seed 402] deep: 52 neighbours within 1.5%, exploring 10 (z 687304..693967)
+14:52:55 [seed 404] deep: 52 neighbours within 1.5%, exploring 10 (z 688143..694000)
+14:52:55 [seed 400] deep: 52 neighbours within 1.5%, exploring 11 (z 685946..694017)
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ~~~~^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/pool.py", line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 520, in _chain_main
+    z, arcs = ch.run(start, minutes)
+              ~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 460, in run
+    cur, z, du = self.deep(cur, z, du, kinds, deadline)
+                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 400, in deep
+    c2, cz, cdu = self.descent(new, cz, cdu, kinds)
+                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 357, in descent
+    W = np.stack([self.weights_for(cur, du, c[1]) for c in cands])
+                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 335, in weights_for
+    dd = {a: max(float(x), 0.0) for a, x in zip(parent, du)}
+                                            ~~~^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 564, in <module>
+    main()
+    ~~~~^^
+  File "/home/danie/quantum-icing-qoro/network_ils.py", line 558, in main
+    res = pool.starmap(_chain_main, jobs)
+  File "/usr/lib/python3.14/multiprocessing/pool.py", line 375, in starmap
+    return self._map_async(func, iterable, starmapstar, chunksize).get()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/multiprocessing/pool.py", line 774, in get
+    raise self._value
+TypeError: 'NoneType' object is not iterable

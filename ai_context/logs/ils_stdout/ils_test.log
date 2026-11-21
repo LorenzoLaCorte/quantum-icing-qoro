@@ -1,0 +1,8 @@
+14:23:00 [seed 0] start=banked LP 684454.5
+14:23:45 [seed 0] it 0 new chain best LP 684454.5 (initial descent) lps=706
+14:24:22 [seed 0] it 1 new chain best LP 683886.8 (descent relabel) lps=1281
+14:24:22 [seed 0] bank: banked 683887 (gap +3.043%, was 684455)
+14:25:05 [seed 0] DONE best LP 683886.8 lps=1972 stats={'2ex': [1166, 4], 'relabel': [789, 3], 'rev': [15, 0], 'rot3': [0, 0]}
+14:28:32 [seed 0] start=banked LP 683886.8
+14:28:44 [seed 0] it 0 new chain best LP 683886.8 (initial descent) lps=694
+14:30:15 [seed 0] DONE best LP 683886.8 lps=5128 stats={'2ex': [3338, 19], 'relabel': [1739, 4], 'rev': [46, 0], 'rot3': [0, 0]}
