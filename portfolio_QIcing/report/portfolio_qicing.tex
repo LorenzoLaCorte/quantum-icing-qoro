@@ -38,8 +38,9 @@
 \section*{Bottom line}
 The score is QOBLIB's official objective, computed by the referee \texttt{PortfolioModel.score}; lower
 is better. \emph{Gap} = (our score $-$ best known) / $|$best known$|$: \textbf{0\% matches QOBLIB,
-negative beats it}. All 122 solution files written were re-scored from disk: all are feasible and
-match the referee.
+negative beats it}. All 127 solution files written were re-scored from disk: all are feasible and
+match the referee. All 127 also pass QOBLIB's official Rust checker (\texttt{06-portfolio/check}),
+which recomputes the objective in exact arithmetic and confirms every claimed value.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.25}\small
@@ -228,7 +229,8 @@ its own is too risky, so SA and local search stay at the empty portfolio. The me
 \item run an exact DP that picks one pool vector per day, with true transaction costs;
 \item run an LNS that re-optimises $k\le4$ assets exactly over all days.
 \end{enumerate}
-Result: \textbf{4 BKVs beaten} (table above). On \texttt{a050\_t10}, 13 of 29 instances run match the
+Result: \textbf{4 BKVs beaten} (table above). QOBLIB's official Rust checker confirms all four
+as feasible, with exactly the objective values shown. On \texttt{a050\_t10}, 13 of 29 instances run match the
 BKV exactly, and the $\lambda=10^{-3}\ldots10^{-6}$ instances are within 0--1.7\%. Still behind:
 $\lambda=10^{-2}$ on \texttt{orig} (+7.0\%), \texttt{s02} (+7.8\%) and \texttt{s01} (+55\%, stuck at the empty portfolio).
 
@@ -268,7 +270,6 @@ $3\,090\times3\,090$ matrix in milliseconds. But it gave \textbf{no improvement}
   structure is found.
 \item Run larger windows on the Qoro cloud (\texttt{MultiBasisEncoding}, more qubits) for
   \texttt{a200}/\texttt{a400}, where any feasible solution is a first published value.
-\item Before submitting the \texttt{a050} improvements to QOBLIB, run their Rust checker.
 \end{enumerate}
 
 \vfill\noindent\footnotesize

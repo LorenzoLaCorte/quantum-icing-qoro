@@ -1,6 +1,6 @@
 # QOBLIB 06 portfolio: QIcing report
 
-Everything is scored with QOBLIB's official objective (`qoblib_tools.PortfolioModel.score`). Every `.sol` file is re-checked by `verify_solutions.py`: 122 files, all feasible, and every objective line matches the referee. The best file for each instance is listed in `best_solutions.md`. Every run is logged in `results.csv`. The full log is in `NOTES.md` (quantum) and `NOTES_lns.md` (classical, large instances).
+Everything is scored with QOBLIB's official objective (`qoblib_tools.PortfolioModel.score`). Every `.sol` file is re-checked by `verify_solutions.py`: 127 files, all feasible, and every objective line matches the referee. All 127 also pass QOBLIB's official Rust checker (`06-portfolio/check`, exact arithmetic), including the 4 a050 BKV improvements. The best file for each instance is listed in `best_solutions.md`. Every run is logged in `results.csv`. The full log is in `NOTES.md` (quantum) and `NOTES_lns.md` (classical, large instances).
 
 ## Headline results
 
@@ -89,7 +89,7 @@ Runs are chained: a second run starts from the first run's `.sol`, with larger w
 | a010_t10_orig λ1e-3 −8 397 (quantum) | `solutions/po_a010_t10_orig_b004_l1e-3/…__qlns-pce__20261121-223909.sol` | 630 / ≤ 9 | PCE-QLNS seeds 6 → 8 → 15 |
 | 4 a050 BKV improvements, a200, a400 (classical) | see the table in `best_solutions.md` | 3 090+ vars | pool-DP + LNS |
 
-The `.gitignore` now has an exception, so `portfolio_QIcing/solutions/**/*.sol` can be committed. Before submitting to QOBLIB, run their Rust checker on the a050 files. QOBLIB does not allow published solutions as warm starts. None were used as starts; the sub-agent read two published a050 solutions only to understand their structure.
+The `.gitignore` now has an exception, so `portfolio_QIcing/solutions/**/*.sol` can be committed. QOBLIB's Rust checker has been run on every file (all pass). QOBLIB does not allow published solutions as warm starts. None were used as starts; the sub-agent read two published a050 solutions only to understand their structure.
 
 ## Next steps
 - Plug PCE into `lns.solve_sub`, the asset-subset DP. Then the a050 polish step becomes quantum and starts from a strong classical pool.
