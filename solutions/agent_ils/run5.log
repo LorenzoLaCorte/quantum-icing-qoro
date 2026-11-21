@@ -1,0 +1,16 @@
+14:59:13 [seed 401] start=banked LP 683886.8
+14:59:13 [seed 400] start=banked LP 683886.8
+14:59:13 [seed 404] start=banked LP 683886.8
+14:59:13 [seed 402] start=banked LP 683886.8
+14:59:13 [seed 403] start=banked LP 683886.8
+14:59:34 [seed 403] deep: 52 neighbours within 1.5%, exploring 10 (z 688024..693979)
+14:59:34 [seed 403] it 0 new chain best LP 691488.9 (initial descent) lps=1232
+14:59:34 [seed 402] deep: 52 neighbours within 1.5%, exploring 10 (z 687304..693967)
+14:59:35 [seed 404] deep: 52 neighbours within 1.5%, exploring 10 (z 688143..694000)
+14:59:35 [seed 401] deep: 52 neighbours within 1.5%, exploring 11 (z 686838..694083)
+14:59:35 [seed 402] it 0 new chain best LP 691488.9 (initial descent) lps=1232
+14:59:35 [seed 404] it 0 new chain best LP 691488.9 (initial descent) lps=1232
+14:59:35 [seed 401] it 0 new chain best LP 691488.9 (initial descent) lps=1233
+14:59:35 [seed 400] deep: 52 neighbours within 1.5%, exploring 11 (z 685946..694017)
+14:59:35 [seed 400] it 0 new chain best LP 691488.9 (initial descent) lps=1233
+15:01:44 [seed 404] it 60 home 683887 best 691489 k=2 lps=6833 cut=6541 stats={'2ex': [4872, 58], 'relabel': [615, 2], 'rev': [54, 0], 'rot3': [0, 0]}

@@ -1,0 +1,20 @@
+timestamp,instance,variables,score,best_known,gap,method
+2026-11-21T14:29:00,network24,552,683834,663688,3.0355%,network_pt r3 seed=3 round=9 rid=1
+2026-11-21T14:29:12,network24,552,679734,663688,2.4177%,network_pt r3 seed=3 round=13 rid=1
+2026-11-21T14:29:53,network24,552,679524,663688,2.3861%,network_pt r3 seed=3 round=27 rid=1
+2026-11-21T14:32:52,network24,552,679047,663688,2.3142%,network_pt r3 seed=3 round=83 rid=3
+2026-11-21T14:32:59,network24,552,677847,663688,2.1334%,network_pt r3 seed=3 round=85 rid=3
+2026-11-21T14:37:03,network24,552,674907,663688,1.6904%,network_pt r3 seed=3 round=159 rid=2
+2026-11-21T14:50:21,network24,552,674703,663688,1.6597%,network_pt r5 seed=5 round=72 rid=1
+2026-11-21T14:52:16,network24,552,674667,663688,1.6542%,network_pt r5 seed=5 round=104 rid=8
+2026-11-21T14:59:02,network24,552,674587,663688,1.6422%,network_pt r5 seed=5 round=204 rid=4
+2026-11-21T15:00:00,network24,552,673253,663688,1.4412%,network_pt r5 seed=5 round=220 rid=2
+2026-11-21T15:07:57,network24,552,672541,663688,1.3339%,network_pt r6 seed=7 round=171 rid=2
+2026-11-21T15:09:16,network24,552,672308,663688,1.2988%,network_pt r6 seed=7 round=210 rid=5
+2026-11-21T15:09:18,network24,552,672261,663688,1.2917%,network_pt r6 seed=7 round=211 rid=5
+2026-11-21T15:09:43,network24,552,671190,663688,1.1304%,network_pt r6 seed=7 round=223 rid=5
+2026-11-21T15:22:16,network24,552,670621,663688,1.0446%,network_pt r6 seed=7 round=595 rid=7
+2026-11-21T15:26:54,network24,552,670211,663688,0.9828%,network_pt r6 seed=7 round=734 rid=7
+2026-11-21T15:26:57,network24,552,668039,663688,0.6556%,network_pt r6 seed=7 round=735 rid=7
+2026-11-21T15:30:23,network24,552,666300,663688,0.3936%,network_pt r6 seed=7 round=830 rid=7
+2026-11-21T15:33:24,network24,552,657121,663688,-0.9895%,network_pt r7 seed=8 round=30 rid=1

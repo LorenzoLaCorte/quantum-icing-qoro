@@ -1,0 +1,13 @@
+timestamp,instance,variables,score,best_known,gap,method
+2026-11-21T14:24:22,network24,552,683887,663688,3.0434%,network_ils seed=0 descent relabel
+2026-11-21T15:03:47,network24,552,683472,663688,2.9809%,network_ils seed=502 descent rev
+2026-11-21T15:03:56,network24,552,679631,663688,2.4022%,network_ils seed=501 descent relabel
+2026-11-21T15:04:14,network24,552,676327,663688,1.9044%,network_ils seed=503 descent 2ex
+2026-11-21T15:09:00,network24,552,676182,663688,1.8825%,network_ils seed=500 descent 2ex
+2026-11-21T15:12:37,network24,552,675971,663688,1.8507%,network_ils seed=500 descent relabel
+2026-11-21T15:13:01,network24,552,675116,663688,1.7219%,network_ils seed=500 descent 2ex
+2026-11-21T15:13:05,network24,552,673219,663688,1.4361%,network_ils seed=500 descent 2ex
+2026-11-21T15:25:18,network24,552,667560,663688,0.5834%,network_ils seed=702 descent 2ex
+2026-11-21T15:25:42,network24,552,665040,663688,0.2037%,network_ils seed=702 descent 2ex
+2026-11-21T15:26:43,network24,552,661760,663688,-0.2905%,network_ils seed=702 descent relabel
+2026-11-21T15:46:04,network24,552,657121,663688,-0.9895%,network_ils seed=902 descent 2ex

@@ -1,0 +1,62 @@
+15:24:53 [seed 704] start=banked LP 670620.7
+15:24:53 [seed 702] start=banked LP 670620.7
+15:24:53 [seed 700] start=banked LP 670620.7
+15:24:53 [seed 703] start=banked LP 670620.7
+15:24:53 [seed 701] start=banked LP 670620.7
+15:25:13 [seed 702] deep: 75 neighbours within 1.5%, exploring 12 (z 671800..679837)
+15:25:13 [seed 704] deep: 75 neighbours within 1.5%, exploring 12 (z 672088..679985)
+15:25:13 [seed 701] deep: 75 neighbours within 1.5%, exploring 12 (z 671000..679800)
+15:25:13 [seed 700] deep: 75 neighbours within 1.5%, exploring 12 (z 670714..679778)
+15:25:13 [seed 703] deep: 75 neighbours within 1.5%, exploring 12 (z 671917..679983)
+15:25:14 [seed 701] it 0 new chain best LP 670620.7 (descent 2ex) lps=1260
+15:25:14 [seed 704] it 0 new chain best LP 670956.0 (descent 2ex) lps=1264
+15:25:15 [seed 700] it 0 new chain best LP 670620.7 (descent 2ex) lps=1331
+15:25:17 [seed 702] it 0 new chain best LP 667560.0 (descent 2ex) lps=1452
+15:25:18 [seed 702] bank: banked 667560 (gap +0.583%, was 670621)
+15:25:18 [seed 703] it 0 new chain best LP 670620.7 (descent 2ex) lps=1455
+15:25:21 [seed 704] it 0 new chain best LP 670620.7 (descent 2ex) lps=1615
+15:25:27 [seed 702] deep: escaped to 667560.0
+15:25:28 [seed 700] it 0 new chain best LP 669681.2 (descent 2ex) lps=1961
+15:25:29 [seed 700] bank: checked 669682, not better than banked 667560
+15:25:33 [seed 703] it 0 new chain best LP 670433.3 (descent 2ex) lps=2190
+15:25:34 [seed 703] bank: checked 670434, not better than banked 667560
+15:25:36 [seed 700] deep: escaped to 669681.2
+15:25:41 [seed 703] deep: escaped to 670433.3
+15:25:42 [seed 702] it 0 new chain best LP 665039.2 (descent 2ex) lps=2656
+15:25:42 [seed 702] bank: banked 665040 (gap +0.204%, was 667560)
+15:25:48 [seed 702] deep: escaped to 665039.2
+15:25:57 [seed 700] it 0 new chain best LP 668110.3 (descent 2ex) lps=3269
+15:26:01 [seed 700] it 0 new chain best LP 666011.5 (descent 2ex) lps=3482
+15:26:01 [seed 700] bank: checked 666012, not better than banked 665040
+15:26:01 [seed 701] it 0 new chain best LP 670259.6 (descent 2ex) lps=3554
+15:26:01 [seed 701] bank: checked 670260, not better than banked 665040
+15:26:06 [seed 701] deep: escaped to 670259.6
+15:26:08 [seed 700] deep: escaped to 666011.5
+15:26:15 [seed 701] it 0 new chain best LP 667560.0 (descent 2ex) lps=4266
+15:26:24 [seed 701] deep: escaped to 667560.0
+15:26:43 [seed 702] it 0 new chain best LP 661760.0 (descent relabel) lps=5438
+15:26:43 [seed 702] bank: banked 661760 (gap -0.290%, was 665040)
+15:26:51 [seed 702] deep: escaped to 661760.0
+15:27:02 [seed 703] it 0 new chain best LP 667560.0 (descent 2ex) lps=6424
+15:27:11 [seed 703] deep: escaped to 667560.0
+15:30:32 [seed 704] it 7 new chain best LP 667560.0 (descent 2ex) lps=15040
+15:30:32 [seed 704] bank: checked 667560, not better than banked 661760
+15:32:43 [seed 704] it 10 home 667560 best 667560 k=3 lps=21202 cut=20930 stats={'2ex': [18929, 155], 'relabel': [730, 10], 'rev': [303, 7], 'rot3': [0, 0]}
+15:32:47 [seed 702] it 10 home 661760 best 661760 k=6 lps=21268 cut=20997 stats={'2ex': [19079, 149], 'relabel': [673, 13], 'rev': [276, 10], 'rot3': [0, 0]}
+15:34:08 [seed 700] it 10 home 667472 best 666011 k=6 lps=23562 cut=23209 stats={'2ex': [21322, 224], 'relabel': [619, 12], 'rev': [381, 18], 'rot3': [0, 0]}
+15:34:11 [seed 701] it 10 home 667560 best 667560 k=8 lps=23368 cut=23010 stats={'2ex': [21072, 242], 'relabel': [753, 10], 'rev': [303, 7], 'rot3': [0, 0]}
+15:34:51 [seed 703] it 10 home 667560 best 667560 k=8 lps=25280 cut=24898 stats={'2ex': [22745, 266], 'relabel': [928, 10], 'rev': [367, 7], 'rot3': [0, 0]}
+15:35:09 [seed 704] sync: adopted banked 661760
+15:37:23 [seed 700] sync: adopted banked 661760
+15:38:08 [seed 701] sync: adopted banked 661760
+15:38:50 [seed 704] it 20 home 661760 best 667560 k=7 lps=35992 cut=35492 stats={'2ex': [32973, 345], 'relabel': [1252, 21], 'rev': [516, 23], 'rot3': [0, 0]}
+15:39:18 [seed 703] sync: adopted banked 661760
+15:41:20 [seed 702] it 20 home 661760 best 661760 k=8 lps=42544 cut=41984 stats={'2ex': [39259, 398], 'relabel': [1396, 32], 'rev': [639, 21], 'rot3': [0, 0]}
+15:41:53 [seed 700] it 20 home 661760 best 666011 k=8 lps=42476 cut=41848 stats={'2ex': [39112, 462], 'relabel': [1406, 26], 'rev': [707, 29], 'rot3': [0, 0]}
+15:43:20 [seed 703] it 20 home 661760 best 667560 k=8 lps=45329 cut=44626 stats={'2ex': [41705, 554], 'relabel': [1678, 27], 'rev': [695, 12], 'rot3': [0, 0]}
+15:43:22 [seed 701] it 20 home 661760 best 667560 k=8 lps=46208 cut=45558 stats={'2ex': [42574, 501], 'relabel': [1649, 28], 'rev': [734, 11], 'rot3': [0, 0]}
+15:44:56 [seed 704] DONE best LP 667560.0 lps=50839 stats={'2ex': [47080, 537], 'relabel': [1760, 30], 'rev': [741, 27], 'rot3': [0, 0]}
+15:45:07 [seed 702] DONE best LP 661760.0 lps=52077 stats={'2ex': [48243, 498], 'relabel': [1821, 39], 'rev': [759, 25], 'rot3': [0, 0]}
+15:45:11 [seed 701] DONE best LP 667560.0 lps=50407 stats={'2ex': [46579, 567], 'relabel': [1773, 30], 'rev': [802, 14], 'rot3': [0, 0]}
+15:45:11 [seed 700] DONE best LP 666011.5 lps=50818 stats={'2ex': [46998, 564], 'relabel': [1729, 35], 'rev': [837, 34], 'rot3': [0, 0]}
+15:45:22 [seed 703] DONE best LP 667560.0 lps=50339 stats={'2ex': [46476, 624], 'relabel': [1836, 31], 'rev': [774, 14], 'rot3': [0, 0]}

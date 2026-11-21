@@ -1,0 +1,21 @@
+15:18:27 [seed 600] start=banked LP 673218.5
+15:18:27 [seed 603] start=banked LP 673218.5
+15:18:27 [seed 602] start=banked LP 673218.5
+15:18:27 [seed 601] start=banked LP 673218.5
+15:18:27 [seed 604] start=banked LP 673218.5
+15:18:50 [seed 604] deep: 62 neighbours within 1.5%, exploring 3 (z 677934..679692)
+15:18:50 [seed 601] deep: 62 neighbours within 1.5%, exploring 3 (z 675115..679375)
+15:18:50 [seed 600] deep: 62 neighbours within 1.5%, exploring 3 (z 673340..678719)
+15:18:50 [seed 603] deep: 62 neighbours within 1.5%, exploring 3 (z 676840..679691)
+15:18:50 [seed 602] deep: 62 neighbours within 1.5%, exploring 3 (z 676552..679476)
+15:18:51 [seed 603] it 0 new chain best LP 673218.5 (descent 2ex) lps=1237
+15:18:53 [seed 601] it 0 new chain best LP 673218.5 (descent 2ex) lps=1380
+15:18:54 [seed 600] it 0 new chain best LP 673218.5 (descent 2ex) lps=1412
+15:18:54 [seed 602] it 0 new chain best LP 676451.6 (descent 2ex) lps=1421
+15:18:55 [seed 604] it 0 new chain best LP 673218.5 (descent relabel) lps=1480
+15:19:02 [seed 602] it 0 new chain best LP 673218.5 (descent 2ex) lps=1831
+15:23:33 [seed 604] DONE best LP 673218.5 lps=13192 stats={'2ex': [11249, 124], 'relabel': [501, 9], 'rev': [209, 3], 'rot3': [0, 0]}
+15:23:35 [seed 603] DONE best LP 673218.5 lps=13736 stats={'2ex': [11984, 109], 'relabel': [350, 6], 'rev': [171, 9], 'rot3': [0, 0]}
+15:23:37 [seed 600] DONE best LP 673218.5 lps=14191 stats={'2ex': [12174, 95], 'relabel': [564, 11], 'rev': [220, 6], 'rot3': [0, 0]}
+15:23:52 [seed 602] DONE best LP 673218.5 lps=14467 stats={'2ex': [12507, 114], 'relabel': [522, 7], 'rev': [205, 10], 'rot3': [0, 0]}
+15:24:00 [seed 601] DONE best LP 673218.5 lps=15480 stats={'2ex': [13360, 108], 'relabel': [633, 12], 'rev': [256, 7], 'rot3': [0, 0]}
