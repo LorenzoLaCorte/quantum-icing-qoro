@@ -31,7 +31,7 @@ import numpy as np  # noqa: E402
 from qiskit.quantum_info import SparsePauliOp  # noqa: E402
 
 import qoblib_tools as qt  # noqa: E402
-from network_moves import exchange_moves, lp, make_surrogates  # noqa: E402
+from network_moves import bkv_gap, exchange_moves, lp, make_surrogates  # noqa: E402
 
 Arc = tuple[int, int]
 
@@ -125,11 +125,12 @@ def hubo_energy(hubo, bits: dict):
 
 
 # ── Divi QAOA run with a given mixer ─────────────────────────────────────
-def run_qaoa(hubo, n_q, mixer, init_bits, n_layers, cloud, shots, pop, iters, seed, penalty_problem=None):
-    from divi.backends import JobConfig, MaestroSimulator, QoroService
+def run_qaoa(hubo, n_q, mixer, init_bits, n_layers, cloud, shots, pop, iters, seed, penalty_problem=None,
+             optimizer_name="mc", mps_bond=0):
+    from divi.backends import JobConfig, MaestroConfig, MaestroSimulator, QoroService
     from divi.qprog.algorithms import QAOA
     from divi.qprog.initial_states import CustomPerQubitState, SuperpositionState
-    from divi.qprog.optimizers import MonteCarloOptimizer
+    from divi.qprog.optimizers import MonteCarloOptimizer, ScipyMethod, ScipyOptimizer
     from divi.qprog.problems import BinaryOptimizationProblem
 
     h = dict(hubo)
@@ -137,11 +138,14 @@ def run_qaoa(hubo, n_q, mixer, init_bits, n_layers, cloud, shots, pop, iters, se
         h[(v,)] = h.get((v,), 0.0) + 1e-9
     h.pop((), None)
     problem = penalty_problem or BinaryOptimizationProblem(h, hamiltonian_builder="native")
-    backend = (QoroService(job_config=JobConfig(shots=shots, simulator_cluster=cloud)) if cloud
-               else MaestroSimulator(shots=shots))
+    maestro = (MaestroConfig(simulation_type="MatrixProductState", max_bond_dimension=mps_bond) if mps_bond else None)
+    backend = (QoroService(job_config=JobConfig(shots=shots, simulator_cluster=cloud), maestro_config=maestro) if cloud
+               else MaestroSimulator(shots=shots, maestro_config=maestro))
     qaoa = QAOA(problem, n_layers=n_layers,
              initial_state=CustomPerQubitState("".join(map(str, init_bits))) if init_bits is not None else SuperpositionState(),
-             optimizer=MonteCarloOptimizer(population_size=pop), max_iterations=iters, backend=backend, seed=seed)
+             optimizer=(ScipyOptimizer(method=ScipyMethod.COBYLA) if optimizer_name == "cobyla"
+                        else MonteCarloOptimizer(population_size=pop)),
+             max_iterations=iters, backend=backend, seed=seed)
     if mixer is not None:
         qaoa.mixer_hamiltonian = mixer
     qaoa.run()
@@ -237,36 +241,48 @@ def cmd_reliable(args):
     hubo = h2_hubo(T, qubit_of)
     mixer = exchange_mixer(qubit_of)
     H2 = make_surrogates(T)["H2"]
-    opt = min(lp(T, tp) for tp in all_valid_topologies(n)) if n <= 6 else args.target
+    all_tops = [sorted(tp) for tp in all_valid_topologies(n)] if n <= 6 else []
+    from network_pipeline import BKV
+
+    opt = min(lp(T, tp) for tp in all_tops) if all_tops else (args.target or BKV[n])
+    h2_min = min(H2(tp) for tp in all_tops) if all_tops else None
     budget = args.top_k + args.polish_budget
     print(f"network{n:02d}: optimum {opt:.0f} | top_k {args.top_k} + polish {args.polish_budget} = {budget} LP evals "
-          f"| backend {args.cloud or 'local'}", flush=True)
+          f"| backend {args.cloud or 'local'} | select by {args.select} | optimizer {args.optimizer} "
+          f"(iters {args.iters}, pop {args.pop})", flush=True)
     for n_layers in args.layers:
         rows = []
         for seed in args.seeds:
             start = sorted(qt.random_topology(n, np.random.default_rng(1000 + seed)))
             init = [int(a in set(start)) for a in arcs]
             t0 = time.time()
-            qaoa = run_qaoa(hubo, len(arcs), mixer, init, n_layers, args.cloud, args.shots, args.pop, args.iters, seed)
+            qaoa = run_qaoa(hubo, len(arcs), mixer, init, n_layers, args.cloud, args.shots, args.pop, args.iters, seed,
+                            optimizer_name=args.optimizer, mps_bond=args.mps_bond)
             sols = sorted(qaoa.get_top_solutions(n=0), key=lambda s: -s.prob)
-            tops, seen_t, p_opt = [], set(), 0.0
+            tops, seen_t, p_ground = [], set(), 0.0
             for s in sols:
                 tp = tuple(sorted(a for a, b in zip(arcs, s.bitstring) if b == "1"))
+                if h2_min is not None and H2(list(tp)) == h2_min:
+                    p_ground += s.prob
                 if tp not in seen_t:
                     seen_t.add(tp)
                     tops.append(list(tp))
+            if args.select == "energy":  # cost is classical and cheap: rank distinct samples by it
+                tops.sort(key=H2)
             scored = [(lp(T, tp), tp) for tp in tops[: args.top_k]]
             z_q, best_q = min(scored)
             z_final = polish(T, best_q, rank=H2, lp_budget=args.polish_budget)[1]
             z_base = polish(T, start, rank=H2, lp_budget=budget)[1]
             in_top = any(z == opt for z, _ in scored)
-            rows.append((z_q, z_final, z_base, in_top))
-            print(f"  {n_layers} layers seed {seed}: start {lp(T, start):.0f} | QAOA top-{args.top_k} best {z_q:.0f}"
-                  f"{' (OPT)' if in_top else ''} -> polished {z_final:.0f} | polish-only baseline {z_base:.0f} "
+            rows.append((z_q, z_final, z_base, in_top, p_ground, len(tops)))
+            print(f"  {n_layers} layers seed {seed}: start {lp(T, start):.0f} | P(H2 ground) {p_ground:.2%}, "
+                  f"{len(tops)} distinct | top-{args.top_k} best {z_q:.0f}"
+                  f"{' (OPT)' if in_top else ''} -> polished {z_final:.0f} ({bkv_gap(n, z_final)}) | polish-only baseline {z_base:.0f} "
                   f"({time.time() - t0:.0f}s)", flush=True)
         hit = lambda col: sum(r[col] == opt for r in rows)  # noqa: E731
         print(f"  == {n_layers} layers: optimum found by QAOA top-{args.top_k} {sum(r[3] for r in rows)}/{len(rows)} | "
-              f"pipeline {hit(1)}/{len(rows)} | polish-only baseline {hit(2)}/{len(rows)}", flush=True)
+              f"pipeline {hit(1)}/{len(rows)} | polish-only baseline {hit(2)}/{len(rows)} | "
+              f"mean P(H2 ground) {np.mean([r[4] for r in rows]):.2%}", flush=True)
 
 
 def cmd_qlns(args):
@@ -348,7 +364,14 @@ def cmd_qlns(args):
             log["steps"].append({"proposer": proposer, "step": step, "z": z, "n_opts": len(opts), "qubits": len(cand)})
         extra = (f" | P(valid) min {min(p_valid_per_step):.4f} | {n_quantum_props} of {evals} LP evals were QAOA proposals"
                  if p_valid_per_step else "")
-        print(f"  {proposer:<9} final LP {z:.0f} after {evals} LP evals ({time.time() - t0:.0f}s){extra}", flush=True)
+        print(f"  {proposer:<9} final LP {z:.0f} ({bkv_gap(n, z)}) after {evals} LP evals ({time.time() - t0:.0f}s){extra}", flush=True)
+        if args.final_polish:
+            from network_moves import polish
+
+            z_before = z
+            cur, z, used = polish(T, cur, rank=H2, lp_budget=args.final_polish)
+            print(f"  {proposer:<9} + final 2-exchange polish ({used} LP evals): {z_before:.0f} -> {z:.0f} "
+                  f"({bkv_gap(n, z)})", flush=True)
         log[proposer] = {"z": z, "arcs": cur}
     json.dump(log, open(f"runs/mixer_qlns_n{n}_r{args.r}_s{args.seed}.json", "w"))
 
@@ -366,6 +389,8 @@ if __name__ == "__main__":
     rel_p.add_argument("--top-k", type=int, default=10)
     rel_p.add_argument("--polish-budget", type=int, default=20)
     rel_p.add_argument("--target", type=float, default=0)
+    rel_p.add_argument("--select", choices=["prob", "energy"], default="prob")
+    rel_p.add_argument("--optimizer", choices=["mc", "cobyla"], default="mc")
     qlns_p = sub.add_parser("qlns")
     qlns_p.add_argument("--n", type=int, default=12)
     qlns_p.add_argument("--r", type=int, default=4)
@@ -374,11 +399,13 @@ if __name__ == "__main__":
     qlns_p.add_argument("--layers", type=int, default=2)
     qlns_p.add_argument("--proposers", nargs="+", default=["random", "classical", "quantum"])
     qlns_p.add_argument("--start-json", default=None)
+    qlns_p.add_argument("--final-polish", type=int, default=0, help="LP evals for a closing 2-exchange polish")
     for sub_parser in (f, rel_p, qlns_p):
         sub_parser.add_argument("--cloud", default=None)
         sub_parser.add_argument("--shots", type=int, default=5000)
         sub_parser.add_argument("--pop", type=int, default=20)
         sub_parser.add_argument("--iters", type=int, default=5)
         sub_parser.add_argument("--seed", type=int, default=0)
+        sub_parser.add_argument("--mps-bond", type=int, default=0, help="0 = statevector; >0 = MPS bond dimension")
     a = ap.parse_args()
     {"verify": cmd_verify, "full5": cmd_full5, "reliable": cmd_reliable, "qlns": cmd_qlns}[a.cmd](a)

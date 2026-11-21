@@ -45,6 +45,13 @@ def lp(T, arcs):
     return qt.route_min_congestion(T, arcs).objective
 
 
+def bkv_gap(n: int, score: float) -> str:
+    """Gap to the QOBLIB best-known value (proven optimal for n <= 10)."""
+    from network_pipeline import BKV
+
+    return f"{(score - BKV[n]) / BKV[n]:+.2%} vs BKV {BKV[n]}"
+
+
 # ── routing model shared by the surrogates ───────────────────────────────
 def ecmp_loads(T, arcs):
     """Arc loads when every pair splits evenly over all its shortest paths."""
@@ -196,7 +203,7 @@ def cmd_polish(args):
                 z0 = [lp(T, a) for a in tops]
                 res = [polish(T, a, rank=H2 if rk else None, lp_budget=args.budget, k=args.k) for a in tops]
                 z1 = [r[1] for r in res]
-                print(f"  {name:<15} rank={'H2' if rk else 'random':<6} start best {min(z0):.0f} -> polished best {min(z1):.0f} "
+                print(f"  {name:<15} rank={'H2' if rk else 'random':<6} start best {min(z0):.0f} -> polished best {min(z1):.0f} ({bkv_gap(n, min(z1))}) "
                       f"mean {np.mean(z1):.0f} (LP evals {sum(r[2] for r in res)}, {time.time() - t0:.0f}s)", flush=True)
 
 
@@ -235,6 +242,7 @@ def cmd_busyopt(args):
                 raw.append(lp(T, a))
                 pol.append(polish(T, a, rank=fns["H2"], lp_budget=args.budget)[1])
             print(f"  {name:<12} surrogate-opt LP best {min(raw):.0f} mean {np.mean(raw):.0f} | after polish best {min(pol):.0f} "
+                  f"({bkv_gap(n, min(pol))}) "
                   f"mean {np.mean(pol):.0f} ({time.time() - t0:.0f}s)", flush=True)
 
 
