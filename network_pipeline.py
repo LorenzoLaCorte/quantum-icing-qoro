@@ -3,6 +3,9 @@
     python network_pipeline.py verify                    # network05 against the proven optimum
     python network_pipeline.py search 24 --minutes 10    # improve network24, banking as it goes
     python network_pipeline.py status                    # re-check every banked .sol file
+    python network_pipeline.py check-ref 24              # published solution passes our checker
+    python network_pipeline.py step1                     # network05: brute force vs proven optimum
+    python network_pipeline.py step2 --evals 400         # network24: greedy + random-swap local search
 
 Every candidate topology is scored by the exact routing LP. A topology is banked only after
 integer flows are written to a .sol file and that file passes ``qt.check_network_solution``
@@ -17,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import itertools
 import math
 import os
 import time
@@ -210,6 +214,74 @@ def search(n: int, minutes: float, seed: int, batch: int, workers: int,
     return best_z, best
 
 
+# ── From branch network24-search: reference check, brute force, plain local search ─────
+
+def check_ref(n: int) -> None:
+    kind = "opt" if n in PROVEN_OPTIMAL else "bst"
+    ref = qt.fetch_qoblib_file(f"08-network/solutions/network{n:02d}.{kind}.sol")
+    demand = qt.load_network_demand(n)
+    print(f"network{n:02d} published solution:", qt.check_network_solution(ref, n, demand))
+    _, arcs, _ = qt.read_network_solution(ref)
+    print("  our LP re-scores its topology as:", qt.route_min_congestion(demand, arcs).objective)
+
+
+def all_valid_topologies(n: int):
+    """Each node picks 2 out-neighbours; keep combos where every in-degree is 2 too."""
+    rows = [list(itertools.combinations([j for j in range(n) if j != i], 2)) for i in range(n)]
+    for choice in itertools.product(*rows):
+        arcs = [(i, j) for i, pair in enumerate(choice) for j in pair]
+        if qt.is_valid_topology(n, arcs):
+            yield arcs
+
+
+def step1() -> None:
+    n = 5
+    demand = qt.load_network_demand(n)
+    tops = list(all_valid_topologies(n))
+    scores = [qt.route_min_congestion(demand, a).objective for a in tops]
+    best = int(np.argmin(scores))
+    print(f"network05: {len(tops)} valid topologies, best {scores[best]:.0f} "
+          f"(proven optimum {BKV[n]}, gap {gap(n, scores[best]):+.3%})")
+    assert scores[best] == BKV[n], "pipeline does not reproduce the proven optimum"
+    print(" ", bank(n, demand, tops[best], "step1 brute force")[2])
+
+
+def local_search(demand: np.ndarray, arcs: list[Arc], evals: int, seed: int = 0):
+    """Random 2-exchanges, keep if not worse (sideways moves escape plateaus,
+    since only the bottleneck link sets the score)."""
+    n = len(demand)
+    rng = np.random.default_rng(seed)
+    cur = sorted(arcs)
+    cur_s = qt.route_min_congestion(demand, cur).objective
+    best, best_s = cur, cur_s
+    t0 = time.time()
+    for e in range(1, evals + 1):
+        p, q = rng.choice(len(cur), 2, replace=False)
+        cand = swap(cur, int(p), int(q))
+        if cand is None:
+            continue
+        s = qt.route_min_congestion(demand, cand).objective
+        if s <= cur_s:
+            cur, cur_s = cand, s
+            if s < best_s:
+                best, best_s = cand, s
+                print(f"  eval {e:4d}  {best_s:.0f}  gap {gap(n, best_s):+.3%}  ({time.time() - t0:.0f}s)")
+    return best, best_s
+
+
+def step2(evals: int, seed: int) -> None:
+    n = 24
+    demand = qt.load_network_demand(n)
+    start = qt.repair_topology(n, [], demand)  # greedy: highest direct-demand links
+    assert qt.is_valid_topology(n, start)
+    s0 = qt.route_min_congestion(demand, start).objective
+    print(f"network24 greedy start: {s0:.0f}  gap {gap(n, s0):+.3%}")
+    print(" ", bank(n, demand, start, "step2 greedy start")[2])  # secure a checked submission first
+    best, best_s = local_search(demand, start, evals, seed)
+    print(f"network24 after {evals} evals: {best_s:.0f}  gap {gap(n, best_s):+.3%}")
+    print(" ", bank(n, demand, best, f"step2 local search evals={evals} seed={seed}")[2])
+
+
 # ── Commands ───────────────────────────────────────────────────────────────────────────
 
 def cmd_verify(args) -> None:
@@ -265,6 +337,15 @@ def main() -> None:
     s.set_defaults(func=cmd_search)
     st = sub.add_parser("status", help="re-check every banked .sol file")
     st.set_defaults(func=cmd_status)
+    cr = sub.add_parser("check-ref", help="published solution passes our checker")
+    cr.add_argument("n", type=int, choices=sorted(BKV))
+    cr.set_defaults(func=lambda a: check_ref(a.n))
+    s1 = sub.add_parser("step1", help="network05 brute force vs proven optimum")
+    s1.set_defaults(func=lambda a: step1())
+    s2 = sub.add_parser("step2", help="network24 greedy start + random-swap local search")
+    s2.add_argument("--evals", type=int, default=400)
+    s2.add_argument("--seed", type=int, default=0)
+    s2.set_defaults(func=lambda a: step2(a.evals, a.seed))
     args = ap.parse_args()
     args.func(args)
 

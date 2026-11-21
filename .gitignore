@@ -1,5 +1,6 @@
 # API keys
 .env
+.venv/
 
 # Created when you run the notebooks
 qoblib_data/
@@ -7,3 +8,8 @@ qoblib_data/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
+
+# Local env and search artifacts
+.venv/
+runs/
+solutions/
