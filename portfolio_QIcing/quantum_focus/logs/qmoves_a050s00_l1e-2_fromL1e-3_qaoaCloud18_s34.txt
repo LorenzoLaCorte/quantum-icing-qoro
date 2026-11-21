@@ -1,0 +1,1 @@
+po_a050_t10_s00 λ=1e-2: start 409285 (starts/po_a050_t10_s00_l1e-2_from_l1e-3.sol); BKV -12340 gap +3416.73%

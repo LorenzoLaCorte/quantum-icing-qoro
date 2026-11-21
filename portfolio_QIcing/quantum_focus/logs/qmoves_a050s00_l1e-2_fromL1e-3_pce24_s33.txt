@@ -1,0 +1,182 @@
+po_a050_t10_s00 λ=1e-2: start 409285 (starts/po_a050_t10_s00_l1e-2_from_l1e-3.sol); BKV -12340 gap +3416.73%
+it   0 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer'] 37.5s cand 555979 incumbent 409285 gap +3416.73%
+it   1 moves=24 q=7 sel=10 ['drop', 'flip', 'shift-right', 'transfer']  0.3s cand 681238 incumbent 409285 gap +3416.73%
+it   2 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 692571 incumbent 409285 gap +3416.73%
+it   3 moves=24 q=7 sel=8 ['drop', 'extend-left', 'shift-right', 'transfer']  0.3s cand 704834 incumbent 409285 gap +3416.73%
+it   4 moves=24 q=7 sel=11 ['extend-right', 'flip', 'shift-left', 'shrink-left', 'transfer']  0.3s cand 656044 incumbent 409285 gap +3416.73%
+it   5 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 648694 incumbent 409285 gap +3416.73%
+it   6 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-right', 'shrink-left']  0.3s cand 524257 incumbent 409285 gap +3416.73%
+it   7 moves=24 q=7 sel=12 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 534693 incumbent 409285 gap +3416.73%
+it   8 moves=24 q=7 sel=9 ['drop', 'extend-right', 'shift-left', 'shrink-right', 'transfer']  0.3s cand 647307 incumbent 409285 gap +3416.73%
+it   9 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 607205 incumbent 409285 gap +3416.73%
+it  10 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 739024 incumbent 409285 gap +3416.73%
+it  11 moves=24 q=7 sel=9 ['drop', 'extend-left', 'shift-left', 'shift-right']  0.4s cand 532179 incumbent 409285 gap +3416.73%
+it  12 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 685101 incumbent 409285 gap +3416.73%
+it  13 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.4s cand 735763 incumbent 409285 gap +3416.73%
+it  14 moves=24 q=7 sel=11 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.3s cand 646716 incumbent 409285 gap +3416.73%
+it  15 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.4s cand 535903 incumbent 409285 gap +3416.73%
+it  16 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shrink-left', 'transfer']  0.4s cand 539397 incumbent 409285 gap +3416.73%
+it  17 moves=24 q=7 sel=9 ['extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-right']  0.4s cand 709290 incumbent 409285 gap +3416.73%
+it  18 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shift-left', 'shrink-left', 'transfer']  0.4s cand 755098 incumbent 409285 gap +3416.73%
+it  19 moves=24 q=7 sel=9 ['extend-right', 'flip', 'shift-right', 'transfer']  0.3s cand 797038 incumbent 409285 gap +3416.73%
+it  20 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 644232 incumbent 409285 gap +3416.73%
+it  21 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.3s cand 719737 incumbent 409285 gap +3416.73%
+it  22 moves=24 q=7 sel=10 ['drop', 'extend-right', 'transfer']  0.3s cand 523246 incumbent 409285 gap +3416.73%
+it  23 moves=24 q=7 sel=8 ['drop', 'extend-right', 'shift-right', 'transfer']  0.3s cand 528042 incumbent 409285 gap +3416.73%
+it  24 moves=24 q=7 sel=10 ['drop', 'flip', 'shift-left', 'shift-right']  0.4s cand 619771 incumbent 409285 gap +3416.73%
+it  25 moves=24 q=7 sel=8 ['drop', 'extend-left', 'extend-right', 'shift-right', 'transfer']  0.4s cand 687455 incumbent 409285 gap +3416.73%
+it  26 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'shift-right', 'transfer']  0.4s cand 910207 incumbent 409285 gap +3416.73%
+it  27 moves=24 q=7 sel=11 ['drop', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 864984 incumbent 409285 gap +3416.73%
+it  28 moves=24 q=7 sel=8 ['drop', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 651756 incumbent 409285 gap +3416.73%
+it  29 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-left', 'shrink-right', 'transfer']  0.4s cand 690379 incumbent 409285 gap +3416.73%
+it  30 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-right', 'transfer']  0.4s cand 720754 incumbent 409285 gap +3416.73%
+it  31 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 646684 incumbent 409285 gap +3416.73%
+it  32 moves=24 q=7 sel=10 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 692462 incumbent 409285 gap +3416.73%
+it  33 moves=24 q=7 sel=9 ['extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'shrink-right']  0.3s cand 712969 incumbent 409285 gap +3416.73%
+it  34 moves=24 q=7 sel=11 ['add-hedge', 'drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right']  0.4s cand 833913 incumbent 409285 gap +3416.73%
+it  35 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shrink-left', 'transfer']  0.4s cand 740368 incumbent 409285 gap +3416.73%
+it  36 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'transfer']  0.4s cand 681678 incumbent 409285 gap +3416.73%
+it  37 moves=24 q=7 sel=12 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'shrink-left']  0.4s cand 762966 incumbent 409285 gap +3416.73%
+it  38 moves=24 q=7 sel=9 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 586435 incumbent 409285 gap +3416.73%
+it  39 moves=24 q=7 sel=10 ['drop', 'extend-right', 'shift-right', 'shrink-left', 'shrink-right', 'transfer']  0.3s cand 830921 incumbent 409285 gap +3416.73%
+it  40 moves=24 q=7 sel=9 ['extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 766849 incumbent 409285 gap +3416.73%
+it  41 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shrink-right', 'transfer']  0.4s cand 528105 incumbent 409285 gap +3416.73%
+it  42 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'transfer']  0.4s cand 596936 incumbent 409285 gap +3416.73%
+it  43 moves=24 q=7 sel=11 ['drop', 'extend-right', 'shift-right', 'shrink-right', 'transfer']  0.3s cand 577971 incumbent 409285 gap +3416.73%
+it  44 moves=24 q=7 sel=8 ['drop', 'extend-left', 'extend-right', 'shift-left', 'transfer']  0.4s cand 597550 incumbent 409285 gap +3416.73%
+it  45 moves=24 q=7 sel=9 ['drop', 'extend-left', 'shrink-right', 'transfer']  0.4s cand 594015 incumbent 409285 gap +3416.73%
+it  46 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'shrink-right', 'transfer']  0.4s cand 573384 incumbent 409285 gap +3416.73%
+it  47 moves=24 q=7 sel=11 ['extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.3s cand 683063 incumbent 409285 gap +3416.73%
+it  48 moves=24 q=7 sel=11 ['drop', 'extend-left', 'flip', 'shift-right', 'transfer']  0.4s cand 689396 incumbent 409285 gap +3416.73%
+it  49 moves=24 q=7 sel=10 ['drop', 'extend-left', 'shift-left', 'shift-right', 'transfer']  0.3s cand 567877 incumbent 409285 gap +3416.73%
+it  50 moves=24 q=7 sel=9 ['extend-right', 'flip', 'shift-left', 'shift-right', 'shrink-left']  0.4s cand 830710 incumbent 409285 gap +3416.73%
+it  51 moves=24 q=7 sel=8 ['drop', 'extend-left', 'shrink-left', 'transfer']  0.3s cand 627652 incumbent 409285 gap +3416.73%
+it  52 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right']  0.4s cand 687500 incumbent 409285 gap +3416.73%
+it  53 moves=24 q=7 sel=9 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 852390 incumbent 409285 gap +3416.73%
+it  54 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.3s cand 559072 incumbent 409285 gap +3416.73%
+it  55 moves=24 q=7 sel=9 ['drop', 'shift-left', 'shift-right', 'transfer']  0.3s cand 541081 incumbent 409285 gap +3416.73%
+it  56 moves=24 q=7 sel=9 ['drop', 'extend-left', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 648743 incumbent 409285 gap +3416.73%
+it  57 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 691788 incumbent 409285 gap +3416.73%
+it  58 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'transfer']  0.4s cand 615361 incumbent 409285 gap +3416.73%
+it  59 moves=24 q=7 sel=12 ['drop', 'extend-left', 'shift-left', 'shift-right', 'transfer']  0.4s cand 656159 incumbent 409285 gap +3416.73%
+it  60 moves=24 q=7 sel=11 ['drop', 'flip', 'shift-left', 'shift-right', 'shrink-left']  0.4s cand 631560 incumbent 409285 gap +3416.73%
+it  61 moves=24 q=7 sel=9 ['drop', 'shift-left', 'shift-right', 'shrink-left', 'shrink-right', 'transfer']  0.3s cand 574827 incumbent 409285 gap +3416.73%
+it  62 moves=24 q=7 sel=9 ['extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-right']  0.4s cand 622392 incumbent 409285 gap +3416.73%
+it  63 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 580415 incumbent 409285 gap +3416.73%
+it  64 moves=24 q=7 sel=10 ['drop', 'extend-left', 'flip', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 637604 incumbent 409285 gap +3416.73%
+it  65 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'shrink-left']  0.3s cand 708656 incumbent 409285 gap +3416.73%
+it  66 moves=24 q=7 sel=9 ['drop', 'flip', 'shift-left', 'shift-right', 'shrink-right']  0.4s cand 699878 incumbent 409285 gap +3416.73%
+it  67 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-right', 'shrink-left', 'shrink-right', 'transfer']  0.4s cand 752726 incumbent 409285 gap +3416.73%
+it  68 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'transfer']  0.3s cand 565390 incumbent 409285 gap +3416.73%
+it  69 moves=24 q=7 sel=8 ['drop', 'extend-left', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 577418 incumbent 409285 gap +3416.73%
+it  70 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'shrink-right', 'transfer']  0.3s cand 601359 incumbent 409285 gap +3416.73%
+it  71 moves=24 q=7 sel=10 ['drop', 'extend-left', 'shift-left', 'shift-right', 'transfer']  0.3s cand 915634 incumbent 409285 gap +3416.73%
+it  72 moves=24 q=7 sel=10 ['drop', 'flip', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.3s cand 711034 incumbent 409285 gap +3416.73%
+it  73 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.3s cand 731640 incumbent 409285 gap +3416.73%
+it  74 moves=24 q=7 sel=13 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 796213 incumbent 409285 gap +3416.73%
+it  75 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-left', 'transfer']  0.3s cand 625607 incumbent 409285 gap +3416.73%
+it  76 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'transfer']  0.3s cand 638294 incumbent 409285 gap +3416.73%
+it  77 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shrink-left', 'shrink-right', 'transfer']  0.4s cand 732031 incumbent 409285 gap +3416.73%
+it  78 moves=24 q=7 sel=10 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 577981 incumbent 409285 gap +3416.73%
+it  79 moves=24 q=7 sel=11 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 655000 incumbent 409285 gap +3416.73%
+it  80 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right'] -0.9s cand 780672 incumbent 409285 gap +3416.73%
+it  81 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.3s cand 693107 incumbent 409285 gap +3416.73%
+it  82 moves=24 q=7 sel=11 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 729344 incumbent 409285 gap +3416.73%
+it  83 moves=24 q=7 sel=8 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-right']  0.3s cand 678436 incumbent 409285 gap +3416.73%
+it  84 moves=24 q=7 sel=11 ['drop', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.4s cand 707436 incumbent 409285 gap +3416.73%
+it  85 moves=24 q=7 sel=10 ['drop', 'shift-left', 'shift-right', 'transfer']  0.3s cand 621781 incumbent 409285 gap +3416.73%
+it  86 moves=24 q=7 sel=11 ['extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 643024 incumbent 409285 gap +3416.73%
+it  87 moves=24 q=7 sel=9 ['extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'shrink-right']  0.3s cand 608270 incumbent 409285 gap +3416.73%
+it  88 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.4s cand 661151 incumbent 409285 gap +3416.73%
+it  89 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right']  0.4s cand 825365 incumbent 409285 gap +3416.73%
+it  90 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shrink-left']  0.3s cand 695987 incumbent 409285 gap +3416.73%
+it  91 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right']  0.3s cand 882343 incumbent 409285 gap +3416.73%
+it  92 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 707605 incumbent 409285 gap +3416.73%
+it  93 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'shift-right', 'shrink-right', 'transfer']  0.3s cand 573346 incumbent 409285 gap +3416.73%
+it  94 moves=24 q=7 sel=11 ['drop', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.4s cand 758268 incumbent 409285 gap +3416.73%
+it  95 moves=24 q=7 sel=10 ['extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 770040 incumbent 409285 gap +3416.73%
+it  96 moves=24 q=7 sel=8 ['drop', 'extend-left', 'extend-right', 'shrink-right', 'transfer']  0.4s cand 578725 incumbent 409285 gap +3416.73%
+it  97 moves=24 q=7 sel=11 ['drop', 'extend-right', 'shift-left', 'shift-right', 'shrink-right', 'transfer']  0.3s cand 670691 incumbent 409285 gap +3416.73%
+it  98 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 876054 incumbent 409285 gap +3416.73%
+it  99 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.3s cand 651402 incumbent 409285 gap +3416.73%
+it 100 moves=24 q=7 sel=11 ['extend-left', 'shift-left', 'shift-right', 'transfer']  0.4s cand 669011 incumbent 409285 gap +3416.73%
+it 101 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right']  0.3s cand 664084 incumbent 409285 gap +3416.73%
+it 102 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-left', 'shrink-right', 'transfer']  0.3s cand 626233 incumbent 409285 gap +3416.73%
+it 103 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shrink-right', 'transfer']  0.3s cand 585116 incumbent 409285 gap +3416.73%
+it 104 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shrink-left', 'transfer']  0.3s cand 593814 incumbent 409285 gap +3416.73%
+it 105 moves=24 q=7 sel=11 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 587419 incumbent 409285 gap +3416.73%
+it 106 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shift-right', 'transfer']  0.3s cand 638231 incumbent 409285 gap +3416.73%
+it 107 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.3s cand 743824 incumbent 409285 gap +3416.73%
+it 108 moves=24 q=7 sel=9 ['drop', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 646136 incumbent 409285 gap +3416.73%
+it 109 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 705991 incumbent 409285 gap +3416.73%
+it 110 moves=24 q=7 sel=10 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.3s cand 845252 incumbent 409285 gap +3416.73%
+it 111 moves=24 q=7 sel=12 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 890541 incumbent 409285 gap +3416.73%
+it 112 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'shrink-left']  0.4s cand 900122 incumbent 409285 gap +3416.73%
+it 113 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 576726 incumbent 409285 gap +3416.73%
+it 114 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-left', 'transfer']  0.3s cand 790928 incumbent 409285 gap +3416.73%
+it 115 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 801529 incumbent 409285 gap +3416.73%
+it 116 moves=24 q=7 sel=8 ['drop', 'extend-left', 'extend-right', 'shift-right']  0.4s cand 660843 incumbent 409285 gap +3416.73%
+it 117 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'flip', 'shrink-left', 'shrink-right', 'transfer']  0.3s cand 580572 incumbent 409285 gap +3416.73%
+it 118 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-right', 'shrink-right', 'transfer']  0.4s cand 667115 incumbent 409285 gap +3416.73%
+it 119 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.4s cand 712570 incumbent 409285 gap +3416.73%
+it 120 moves=24 q=7 sel=8 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 537732 incumbent 409285 gap +3416.73%
+it 121 moves=24 q=7 sel=10 ['drop', 'extend-left', 'flip', 'shift-right', 'transfer']  0.3s cand 679361 incumbent 409285 gap +3416.73%
+it 122 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.3s cand 622407 incumbent 409285 gap +3416.73%
+it 123 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'shrink-left', 'transfer']  0.3s cand 593751 incumbent 409285 gap +3416.73%
+it 124 moves=24 q=7 sel=9 ['drop', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 743013 incumbent 409285 gap +3416.73%
+it 125 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-right', 'shrink-right', 'transfer']  0.4s cand 578743 incumbent 409285 gap +3416.73%
+it 126 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'flip', 'shrink-left', 'transfer']  0.4s cand 635885 incumbent 409285 gap +3416.73%
+it 127 moves=24 q=7 sel=10 ['drop', 'extend-left', 'shift-left', 'shift-right', 'shrink-right', 'transfer']  0.3s cand 836501 incumbent 409285 gap +3416.73%
+it 128 moves=24 q=7 sel=8 ['drop', 'shift-left', 'shrink-right', 'transfer']  0.3s cand 522989 incumbent 409285 gap +3416.73%
+it 129 moves=24 q=7 sel=10 ['drop', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 589339 incumbent 409285 gap +3416.73%
+it 130 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.3s cand 852885 incumbent 409285 gap +3416.73%
+it 131 moves=24 q=7 sel=9 ['drop', 'extend-left', 'flip', 'shift-left', 'shrink-right']  0.3s cand 570025 incumbent 409285 gap +3416.73%
+it 132 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 534788 incumbent 409285 gap +3416.73%
+it 133 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.3s cand 684768 incumbent 409285 gap +3416.73%
+it 134 moves=24 q=7 sel=11 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right']  0.3s cand 736711 incumbent 409285 gap +3416.73%
+it 135 moves=24 q=7 sel=12 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 527762 incumbent 409285 gap +3416.73%
+it 136 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-left', 'transfer']  0.4s cand 716294 incumbent 409285 gap +3416.73%
+it 137 moves=24 q=7 sel=10 ['drop', 'extend-right', 'shift-left', 'shrink-left', 'shrink-right', 'transfer']  0.4s cand 454316 incumbent 409285 gap +3416.73%
+it 138 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 814780 incumbent 409285 gap +3416.73%
+it 139 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 613027 incumbent 409285 gap +3416.73%
+it 140 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-left', 'transfer']  0.3s cand 718310 incumbent 409285 gap +3416.73%
+it 141 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'transfer']  0.3s cand 593463 incumbent 409285 gap +3416.73%
+it 142 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-right', 'transfer']  0.3s cand 583642 incumbent 409285 gap +3416.73%
+it 143 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 797125 incumbent 409285 gap +3416.73%
+it 144 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 641322 incumbent 409285 gap +3416.73%
+it 145 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right']  0.3s cand 756980 incumbent 409285 gap +3416.73%
+it 146 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.4s cand 583847 incumbent 409285 gap +3416.73%
+it 147 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shrink-left', 'transfer']  0.3s cand 584808 incumbent 409285 gap +3416.73%
+it 148 moves=24 q=7 sel=10 ['drop', 'extend-left', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 715599 incumbent 409285 gap +3416.73%
+it 149 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'flip']  0.4s cand 676799 incumbent 409285 gap +3416.73%
+it 150 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right']  0.4s cand 640310 incumbent 409285 gap +3416.73%
+it 151 moves=24 q=7 sel=11 ['drop', 'extend-left', 'flip', 'shift-left', 'transfer']  0.4s cand 755536 incumbent 409285 gap +3416.73%
+it 152 moves=24 q=7 sel=10 ['extend-left', 'extend-right', 'shift-left', 'shift-right']  0.4s cand 875351 incumbent 409285 gap +3416.73%
+it 153 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right']  0.3s cand 608886 incumbent 409285 gap +3416.73%
+it 154 moves=24 q=7 sel=11 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 844758 incumbent 409285 gap +3416.73%
+it 155 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 730104 incumbent 409285 gap +3416.73%
+it 156 moves=24 q=7 sel=8 ['drop', 'flip', 'shift-left', 'transfer']  0.4s cand 550555 incumbent 409285 gap +3416.73%
+it 157 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.4s cand 939041 incumbent 409285 gap +3416.73%
+it 158 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shrink-right', 'transfer']  0.4s cand 558736 incumbent 409285 gap +3416.73%
+it 159 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shrink-left', 'transfer']  0.4s cand 964884 incumbent 409285 gap +3416.73%
+it 160 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 600253 incumbent 409285 gap +3416.73%
+it 161 moves=24 q=7 sel=11 ['drop', 'flip', 'shift-left', 'shift-right', 'shrink-right', 'transfer']  0.5s cand 483315 incumbent 409285 gap +3416.73%
+it 162 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shrink-right'] -0.9s cand 680766 incumbent 409285 gap +3416.73%
+it 163 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shrink-left', 'transfer']  0.5s cand 604273 incumbent 409285 gap +3416.73%
+it 164 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'transfer']  0.5s cand 774204 incumbent 409285 gap +3416.73%
+it 165 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right', 'transfer']  0.5s cand 722560 incumbent 409285 gap +3416.73%
+it 166 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'transfer']  0.4s cand 656093 incumbent 409285 gap +3416.73%
+it 167 moves=24 q=7 sel=8 ['drop', 'extend-right', 'shift-right', 'shrink-left', 'shrink-right', 'transfer']  0.4s cand 578010 incumbent 409285 gap +3416.73%
+it 168 moves=24 q=7 sel=10 ['drop', 'extend-left', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 553710 incumbent 409285 gap +3416.73%
+it 169 moves=24 q=7 sel=11 ['drop', 'extend-left', 'extend-right', 'shift-left', 'shift-right']  0.4s cand 620539 incumbent 409285 gap +3416.73%
+it 170 moves=24 q=7 sel=8 ['extend-left', 'flip', 'shift-left', 'transfer']  0.4s cand 731412 incumbent 409285 gap +3416.73%
+it 171 moves=24 q=7 sel=8 ['drop', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 664291 incumbent 409285 gap +3416.73%
+it 172 moves=24 q=7 sel=9 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right']  0.4s cand 616542 incumbent 409285 gap +3416.73%
+it 173 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-right', 'transfer']  0.3s cand 740309 incumbent 409285 gap +3416.73%
+it 174 moves=24 q=7 sel=9 ['drop', 'extend-right', 'shift-right', 'transfer']  0.4s cand 514676 incumbent 409285 gap +3416.73%
+it 175 moves=24 q=7 sel=10 ['drop', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.3s cand 578793 incumbent 409285 gap +3416.73%
+it 176 moves=24 q=7 sel=8 ['drop', 'extend-right', 'shift-left', 'shift-right', 'shrink-left', 'transfer']  0.4s cand 654625 incumbent 409285 gap +3416.73%
+it 177 moves=24 q=7 sel=10 ['drop', 'extend-right', 'shift-right', 'transfer']  0.3s cand 537357 incumbent 409285 gap +3416.73%
+it 178 moves=24 q=7 sel=12 ['extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'shrink-right', 'transfer']  0.4s cand 773057 incumbent 409285 gap +3416.73%
+it 179 moves=24 q=7 sel=10 ['extend-left', 'extend-right', 'flip', 'shift-left', 'shift-right', 'transfer']  0.4s cand 845495 incumbent 409285 gap +3416.73%
+it 180 moves=24 q=7 sel=10 ['drop', 'extend-left', 'extend-right', 'flip', 'shift-right']  0.4s cand 554860 incumbent 409285 gap +3416.73%
