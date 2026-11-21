@@ -1,0 +1,307 @@
+[22:31:11] derived network21 by deletion: 586500
+[22:31:11] network21 start 586500 BKV 569273 gap +3.026%
+[22:31:30]   NEW BEST network21 577630 via descent  (BKV 569273, +1.468%)
+[22:31:30]  cyc1 local opt 577630 (4 imps, origin descent); best 577630
+[22:31:36]   cyc1 QAOA N=16 conf=19 negJ=31 q=1.3s samples=439 bestcomp=577509 (-0.021%, k=3) bestpair=578448 cur=577630
+[22:31:36]   NEW BEST network21 577509 via qaoa-compound  (BKV 569273, +1.447%)
+[22:31:57]   NEW BEST network21 573179 via descent-after-qaoa-improve  (BKV 569273, +0.686%)
+[22:31:57]  cyc2 local opt 573179 (3 imps, origin descent-after-qaoa-improve); best 573179
+[22:32:04]   cyc2 QAOA N=16 conf=19 negJ=32 q=2.7s samples=357 bestcomp=575157 (+0.345%, k=2) bestpair=575157 cur=573179
+[22:32:42]  cyc3 local opt 573179 (2 imps, origin descent-after-qaoa-kick); best 573179
+[22:32:55]   cyc3 QAOA N=16 conf=19 negJ=32 q=6.2s samples=335 bestcomp=575157 (+0.345%, k=2) bestpair=575157 cur=573179
+[22:33:18]  cyc4 local opt 573179 (2 imps, origin descent-after-qaoa-kick); best 573179
+[22:33:27]   cyc4 QAOA N=16 conf=19 negJ=32 q=5.1s samples=129 bestcomp=579100 (+1.033%, k=2) bestpair=575157 cur=573179
+[22:33:27]   restart from best
+[22:33:41]  cyc5 local opt 573179 (0 imps, origin descent-after-qaoa-kick); best 573179
+[22:33:48]   cyc5 QAOA N=16 conf=19 negJ=32 q=3.5s samples=103 bestcomp=581692 (+1.485%, k=2) bestpair=575157 cur=573179
+[22:34:03]  cyc6 local opt 573179 (3 imps, origin descent-after-qaoa-kick); best 573179
+[22:34:13]   cyc6 QAOA N=16 conf=19 negJ=32 q=4.2s samples=383 bestcomp=576740 (+0.621%, k=2) bestpair=575157 cur=573179
+[22:34:56]  cyc7 local opt 573179 (2 imps, origin descent-after-qaoa-kick); best 573179
+[22:35:08]   cyc7 QAOA N=16 conf=19 negJ=32 q=6.0s samples=209 bestcomp=576740 (+0.621%, k=2) bestpair=575157 cur=573179
+[22:35:34]   bank network21 lp=573179 -> 573180 (0.6s)
+[22:35:34] network21 done: start 586500 best 573179 via descent-after-qaoa-improve counts {'descent': 1, 'qaoa-compound': 1, 'descent-after-qaoa-improve': 1}
+[22:35:35] derived network20 by deletion: 540616
+[22:35:35] network20 start 540615 BKV 528528 gap +2.287%
+[22:35:49]   NEW BEST network20 529147 via descent  (BKV 528528, +0.117%)
+[22:35:49]  cyc1 local opt 529147 (4 imps, origin descent); best 529147
+[22:35:56]   cyc1 QAOA N=16 conf=16 negJ=46 q=3.9s samples=776 bestcomp=536019 (+1.299%, k=3) bestpair=532442 cur=529147
+[22:36:13]   NEW BEST network20 528629 via descent-after-qaoa-kick  (BKV 528528, +0.019%)
+[22:36:13]  cyc2 local opt 528629 (2 imps, origin descent-after-qaoa-kick); best 528629
+[22:36:21]   cyc2 QAOA N=16 conf=14 negJ=44 q=4.1s samples=573 bestcomp=531860 (+0.611%, k=2) bestpair=531860 cur=528629
+[22:36:34]  cyc3 local opt 531860 (0 imps, origin descent-after-qaoa-kick); best 528629
+[22:36:44]   cyc3 QAOA N=16 conf=19 negJ=32 q=5.5s samples=153 bestcomp=536758 (+0.921%, k=4) bestpair=528629 cur=531860
+[22:36:52]  cyc4 local opt 528629 (0 imps, origin descent-after-pair-improve); best 528629
+[22:37:00]   cyc4 QAOA N=16 conf=14 negJ=44 q=4.9s samples=275 bestcomp=534500 (+1.111%, k=2) bestpair=531860 cur=528629
+[22:37:00]   restart from best
+[22:37:18]  cyc5 local opt 528629 (0 imps, origin descent-after-qaoa-kick); best 528629
+[22:37:26]   cyc5 QAOA N=16 conf=14 negJ=44 q=4.1s samples=765 bestcomp=531860 (+0.611%, k=2) bestpair=531860 cur=528629
+[22:37:40]  cyc6 local opt 531860 (0 imps, origin descent-after-qaoa-kick); best 528629
+[22:37:47]   cyc6 QAOA N=16 conf=19 negJ=32 q=4.2s samples=259 bestcomp=528629 (-0.608%, k=2) bestpair=528629 cur=531860
+[22:37:58]  cyc7 local opt 528629 (0 imps, origin descent-after-qaoa-improve); best 528629
+[22:38:07]   cyc7 QAOA N=16 conf=14 negJ=44 q=4.0s samples=483 bestcomp=534500 (+1.111%, k=2) bestpair=531860 cur=528629
+[22:38:22]  cyc8 local opt 534136 (2 imps, origin descent-after-qaoa-kick); best 528629
+[22:38:28]   cyc8 QAOA N=16 conf=11 negJ=17 q=2.3s samples=210 bestcomp=542286 (+1.526%, k=2) bestpair=534500 cur=534136
+[22:38:28]   restart from best
+[22:38:37]  cyc9 local opt 528629 (0 imps, origin descent-after-random-kick); best 528629
+[22:38:44]   cyc9 QAOA N=16 conf=14 negJ=44 q=3.2s samples=397 bestcomp=535029 (+1.211%, k=3) bestpair=531860 cur=528629
+[22:39:04]  cyc10 local opt 528629 (3 imps, origin descent-after-qaoa-kick); best 528629
+[22:39:10]   cyc10 QAOA N=16 conf=14 negJ=44 q=3.4s samples=535 bestcomp=531860 (+0.611%, k=2) bestpair=531860 cur=528629
+[22:39:16]  cyc11 local opt 531860 (0 imps, origin descent-after-qaoa-kick); best 528629
+[22:39:19]   cyc11 QAOA N=16 conf=19 negJ=32 q=1.2s samples=166 bestcomp=534702 (+0.534%, k=2) bestpair=528629 cur=531860
+[22:39:24]  cyc12 local opt 528629 (0 imps, origin descent-after-pair-improve); best 528629
+[22:39:28]   cyc12 QAOA N=16 conf=14 negJ=44 q=1.3s samples=385 bestcomp=540355 (+2.218%, k=2) bestpair=531860 cur=528629
+[22:39:28]   restart from best
+[22:39:33]  cyc13 local opt 528629 (0 imps, origin descent-after-random-kick); best 528629
+[22:39:36]   cyc13 QAOA N=16 conf=14 negJ=44 q=1.7s samples=628 bestcomp=531860 (+0.611%, k=2) bestpair=531860 cur=528629
+[22:39:42]  cyc14 local opt 531860 (0 imps, origin descent-after-qaoa-kick); best 528629
+[22:39:46]   cyc14 QAOA N=16 conf=19 negJ=32 q=1.4s samples=1211 bestcomp=528629 (-0.608%, k=2) bestpair=528629 cur=531860
+[22:39:52]   bank network20 lp=528629 -> 528630 (0.1s)
+[22:39:52] network20 done: start 540615 best 528629 via descent-after-qaoa-kick counts {'descent': 1, 'descent-after-qaoa-kick': 1}
+[22:39:52] derived network19 by deletion: 514322
+[22:39:52] network19 start 514321 BKV 492924 gap +4.341%
+[22:40:00]   NEW BEST network19 505771 via descent  (BKV 492924, +2.606%)
+[22:40:00]  cyc1 local opt 505771 (3 imps, origin descent); best 505771
+[22:40:05]   cyc1 QAOA N=16 conf=23 negJ=35 q=2.6s samples=369 bestcomp=505656 (-0.023%, k=2) bestpair=505656 cur=505771
+[22:40:05]   NEW BEST network19 505656 via qaoa-compound  (BKV 492924, +2.583%)
+[22:40:10]  cyc2 local opt 505656 (0 imps, origin descent-after-qaoa-improve); best 505656
+[22:40:13]   cyc2 QAOA N=16 conf=20 negJ=35 q=1.8s samples=287 bestcomp=506000 (+0.068%, k=2) bestpair=506000 cur=505656
+[22:40:24]  cyc3 local opt 505656 (2 imps, origin descent-after-qaoa-kick); best 505656
+[22:40:27]   cyc3 QAOA N=16 conf=20 negJ=35 q=1.8s samples=150 bestcomp=508825 (+0.627%, k=2) bestpair=506000 cur=505656
+[22:40:32]  cyc4 local opt 508825 (0 imps, origin descent-after-qaoa-kick); best 505656
+[22:40:35]   cyc4 QAOA N=16 conf=19 negJ=43 q=1.3s samples=204 bestcomp=507952 (-0.171%, k=2) bestpair=505656 cur=508825
+[22:40:35]   restart from best
+[22:40:39]  cyc5 local opt 505656 (0 imps, origin descent-after-pair-improve); best 505656
+[22:40:41]   cyc5 QAOA N=16 conf=20 negJ=35 q=1.3s samples=153 bestcomp=509327 (+0.726%, k=2) bestpair=506000 cur=505656
+[22:40:51]   NEW BEST network19 497000 via descent-after-qaoa-kick  (BKV 492924, +0.827%)
+[22:40:51]  cyc6 local opt 497000 (5 imps, origin descent-after-qaoa-kick); best 497000
+[22:40:54]   cyc6 QAOA N=16 conf=16 negJ=49 q=1.2s samples=357 bestcomp=501474 (+0.900%, k=2) bestpair=501474 cur=497000
+[22:41:01]  cyc7 local opt 498538 (2 imps, origin descent-after-qaoa-kick); best 497000
+[22:41:04]   cyc7 QAOA N=16 conf=13 negJ=39 q=1.8s samples=295 bestcomp=502250 (+0.744%, k=2) bestpair=500733 cur=498538
+[22:41:13]  cyc8 local opt 498538 (2 imps, origin descent-after-qaoa-kick); best 497000
+[22:41:17]   cyc8 QAOA N=16 conf=13 negJ=39 q=1.9s samples=251 bestcomp=503842 (+1.064%, k=4) bestpair=500733 cur=498538
+[22:41:17]   restart from best
+[22:41:22]  cyc9 local opt 497000 (0 imps, origin descent-after-qaoa-kick); best 497000
+[22:41:27]   cyc9 QAOA N=16 conf=16 negJ=49 q=3.2s samples=140 bestcomp=508078 (+2.229%, k=3) bestpair=501474 cur=497000
+[22:41:41]  cyc10 local opt 507176 (11 imps, origin descent-after-random-kick); best 497000
+[22:41:46]   cyc10 QAOA N=16 conf=11 negJ=41 q=3.4s samples=724 bestcomp=507038 (-0.027%, k=3) bestpair=506609 cur=507176
+[22:41:51]  cyc11 local opt 506609 (0 imps, origin descent-after-pair-improve); best 497000
+[22:41:55]   cyc11 QAOA N=16 conf=13 negJ=38 q=1.7s samples=346 bestcomp=513000 (+1.262%, k=3) bestpair=507176 cur=506609
+[22:41:59]  cyc12 local opt 509361 (1 imps, origin descent-after-qaoa-kick); best 497000
+[22:42:02]   cyc12 QAOA N=16 conf=18 negJ=38 q=1.3s samples=279 bestcomp=508432 (-0.182%, k=2) bestpair=508432 cur=509361
+[22:42:02]   restart from best
+[22:42:06]  cyc13 local opt 497000 (0 imps, origin descent-after-qaoa-improve); best 497000
+[22:42:10]   cyc13 QAOA N=16 conf=16 negJ=49 q=1.9s samples=487 bestcomp=506000 (+1.811%, k=3) bestpair=501474 cur=497000
+[22:42:24]  cyc14 local opt 501000 (12 imps, origin descent-after-random-kick); best 497000
+[22:42:27]   cyc14 QAOA N=16 conf=15 negJ=20 q=1.2s samples=549 bestcomp=502000 (+0.200%, k=2) bestpair=502000 cur=501000
+[22:42:33]  cyc15 local opt 501188 (2 imps, origin descent-after-qaoa-kick); best 497000
+[22:42:36]   cyc15 QAOA N=16 conf=22 negJ=42 q=1.6s samples=411 bestcomp=503826 (+0.526%, k=3) bestpair=504216 cur=501188
+[22:42:41]  cyc16 local opt 503826 (0 imps, origin descent-after-qaoa-kick); best 497000
+[22:42:44]   cyc16 QAOA N=16 conf=21 negJ=36 q=1.6s samples=249 bestcomp=504987 (+0.230%, k=2) bestpair=502692 cur=503826
+[22:42:44]   restart from best
+[22:42:48]  cyc17 local opt 497000 (0 imps, origin descent-after-pair-improve); best 497000
+[22:42:52]   cyc17 QAOA N=16 conf=16 negJ=49 q=1.8s samples=359 bestcomp=501474 (+0.900%, k=2) bestpair=501474 cur=497000
+[22:42:59]  cyc18 local opt 497000 (2 imps, origin descent-after-qaoa-kick); best 497000
+[22:43:04]   cyc18 QAOA N=16 conf=16 negJ=49 q=3.2s samples=385 bestcomp=501474 (+0.900%, k=2) bestpair=501474 cur=497000
+[22:43:11]  cyc19 local opt 497000 (2 imps, origin descent-after-qaoa-kick); best 497000
+[22:43:15]   cyc19 QAOA N=16 conf=16 negJ=49 q=1.8s samples=171 bestcomp=506077 (+1.826%, k=2) bestpair=501474 cur=497000
+[22:43:48]  cyc20 local opt 507250 (27 imps, origin descent-after-random-kick); best 497000
+[22:43:51]   cyc20 QAOA N=16 conf=15 negJ=56 q=1.4s samples=374 bestcomp=509875 (+0.517%, k=3) bestpair=508871 cur=507250
+[22:43:51]   restart from best
+[22:43:55]  cyc21 local opt 497000 (0 imps, origin descent-after-qaoa-kick); best 497000
+[22:43:59]   cyc21 QAOA N=16 conf=16 negJ=49 q=1.7s samples=294 bestcomp=507733 (+2.160%, k=2) bestpair=501474 cur=497000
+[22:44:14]   bank network19 lp=497000 -> 497000 (0.3s)
+[22:44:14] network19 done: start 514321 best 497000 via descent-after-qaoa-kick counts {'descent': 1, 'qaoa-compound': 1, 'descent-after-qaoa-kick': 1}
+[22:44:14] derived network18 by deletion: 493063
+[22:44:14] network18 start 493062 BKV 473375 gap +4.159%
+[22:44:21]   NEW BEST network18 492480 via descent  (BKV 473375, +4.036%)
+[22:44:21]  cyc1 local opt 492480 (1 imps, origin descent); best 492480
+[22:44:25]   cyc1 QAOA N=16 conf=23 negJ=37 q=2.5s samples=369 bestcomp=490385 (-0.425%, k=3) bestpair=491200 cur=492480
+[22:44:25]   NEW BEST network18 490385 via qaoa-compound  (BKV 473375, +3.593%)
+[22:44:34]   NEW BEST network18 486727 via descent-after-qaoa-improve  (BKV 473375, +2.821%)
+[22:44:34]  cyc2 local opt 486727 (2 imps, origin descent-after-qaoa-improve); best 486727
+[22:44:38]   cyc2 QAOA N=16 conf=17 negJ=26 q=2.3s samples=176 bestcomp=491957 (+1.075%, k=3) bestpair=484810 cur=486727
+[22:44:38]   NEW BEST network18 484810 via pair-scan(classical part of QUBO build)  (BKV 473375, +2.416%)
+[22:44:42]  cyc3 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:44:48]   cyc3 QAOA N=16 conf=17 negJ=39 q=3.4s samples=168 bestcomp=495091 (+2.121%, k=3) bestpair=486727 cur=484810
+[22:44:57]  cyc4 local opt 500360 (12 imps, origin descent-after-random-kick); best 484810
+[22:45:00]   cyc4 QAOA N=16 conf=19 negJ=38 q=1.5s samples=138 bestcomp=494542 (-1.163%, k=2) bestpair=494542 cur=500360
+[22:45:00]   restart from best
+[22:45:03]  cyc5 local opt 484810 (0 imps, origin descent-after-qaoa-improve); best 484810
+[22:45:06]   cyc5 QAOA N=16 conf=17 negJ=39 q=1.2s samples=770 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:45:09]  cyc6 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:45:12]   cyc6 QAOA N=16 conf=17 negJ=26 q=1.9s samples=361 bestcomp=488083 (+0.279%, k=2) bestpair=484810 cur=486727
+[22:45:16]  cyc7 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:45:19]   cyc7 QAOA N=16 conf=17 negJ=39 q=1.3s samples=220 bestcomp=493725 (+1.839%, k=3) bestpair=486727 cur=484810
+[22:45:29]  cyc8 local opt 495179 (13 imps, origin descent-after-random-kick); best 484810
+[22:45:34]   cyc8 QAOA N=16 conf=17 negJ=34 q=3.1s samples=479 bestcomp=498652 (+0.701%, k=2) bestpair=498652 cur=495179
+[22:45:34]   restart from best
+[22:45:38]  cyc9 local opt 484810 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:45:42]   cyc9 QAOA N=16 conf=17 negJ=39 q=2.5s samples=560 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:45:46]  cyc10 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:45:49]   cyc10 QAOA N=16 conf=17 negJ=26 q=1.6s samples=175 bestcomp=488083 (+0.279%, k=2) bestpair=484810 cur=486727
+[22:45:53]  cyc11 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:45:58]   cyc11 QAOA N=16 conf=17 negJ=39 q=3.2s samples=768 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:46:02]  cyc12 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:46:05]   cyc12 QAOA N=16 conf=17 negJ=26 q=1.8s samples=463 bestcomp=484810 (-0.394%, k=2) bestpair=484810 cur=486727
+[22:46:05]   restart from best
+[22:46:09]  cyc13 local opt 484810 (0 imps, origin descent-after-qaoa-improve); best 484810
+[22:46:12]   cyc13 QAOA N=16 conf=17 negJ=39 q=1.6s samples=966 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:46:16]  cyc14 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:46:21]   cyc14 QAOA N=16 conf=17 negJ=26 q=3.3s samples=1202 bestcomp=484810 (-0.394%, k=2) bestpair=484810 cur=486727
+[22:46:25]  cyc15 local opt 484810 (0 imps, origin descent-after-qaoa-improve); best 484810
+[22:46:27]   cyc15 QAOA N=16 conf=17 negJ=39 q=1.3s samples=205 bestcomp=493000 (+1.689%, k=2) bestpair=486727 cur=484810
+[22:46:32]  cyc16 local opt 497462 (5 imps, origin descent-after-random-kick); best 484810
+[22:46:35]   cyc16 QAOA N=16 conf=18 negJ=39 q=1.3s samples=268 bestcomp=496393 (-0.215%, k=2) bestpair=494750 cur=497462
+[22:46:35]   restart from best
+[22:46:38]  cyc17 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:46:42]   cyc17 QAOA N=16 conf=17 negJ=39 q=1.7s samples=696 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:46:45]  cyc18 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:46:48]   cyc18 QAOA N=16 conf=17 negJ=26 q=1.2s samples=558 bestcomp=489087 (+0.485%, k=2) bestpair=484810 cur=486727
+[22:46:51]  cyc19 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:46:55]   cyc19 QAOA N=16 conf=17 negJ=39 q=2.1s samples=675 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:46:59]  cyc20 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:47:04]   cyc20 QAOA N=16 conf=17 negJ=26 q=3.3s samples=377 bestcomp=489087 (+0.485%, k=2) bestpair=484810 cur=486727
+[22:47:04]   restart from best
+[22:47:08]  cyc21 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:47:12]   cyc21 QAOA N=16 conf=17 negJ=39 q=1.9s samples=1027 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:47:15]  cyc22 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:47:20]   cyc22 QAOA N=16 conf=17 negJ=26 q=3.0s samples=171 bestcomp=491400 (+0.960%, k=3) bestpair=484810 cur=486727
+[22:47:24]  cyc23 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:47:28]   cyc23 QAOA N=16 conf=17 negJ=39 q=2.5s samples=234 bestcomp=486727 (+0.396%, k=2) bestpair=486727 cur=484810
+[22:47:32]  cyc24 local opt 486727 (0 imps, origin descent-after-qaoa-kick); best 484810
+[22:47:35]   cyc24 QAOA N=16 conf=17 negJ=26 q=1.9s samples=181 bestcomp=489323 (+0.533%, k=2) bestpair=484810 cur=486727
+[22:47:35]   restart from best
+[22:47:39]  cyc25 local opt 484810 (0 imps, origin descent-after-pair-improve); best 484810
+[22:47:42]   cyc25 QAOA N=16 conf=17 negJ=39 q=1.8s samples=173 bestcomp=493000 (+1.689%, k=2) bestpair=486727 cur=484810
+[22:48:01]  cyc26 local opt 492440 (28 imps, origin descent-after-random-kick); best 484810
+[22:48:03]   cyc26 QAOA N=16 conf=13 negJ=40 q=1.3s samples=688 bestcomp=495267 (+0.574%, k=2) bestpair=493000 cur=492440
+[22:48:08]  cyc27 local opt 490676 (3 imps, origin descent-after-qaoa-kick); best 484810
+[22:48:11]   cyc27 QAOA N=16 conf=14 negJ=39 q=1.7s samples=469 bestcomp=491764 (+0.222%, k=4) bestpair=491889 cur=490676
+[22:48:18]   NEW BEST network18 479955 via descent-after-qaoa-kick  (BKV 473375, +1.390%)
+[22:48:18]  cyc28 local opt 479955 (4 imps, origin descent-after-qaoa-kick); best 479955
+[22:48:21]   cyc28 QAOA N=16 conf=10 negJ=40 q=1.6s samples=428 bestcomp=487333 (+1.537%, k=4) bestpair=480338 cur=479955
+[22:48:21]   restart from best
+[22:48:24]  cyc29 local opt 479955 (0 imps, origin descent-after-random-kick); best 479955
+[22:48:30]   cyc29 QAOA N=16 conf=10 negJ=40 q=3.4s samples=462 bestcomp=480338 (+0.080%, k=2) bestpair=480338 cur=479955
+[22:48:33]   bank network18 lp=479955 -> 479955 (0.2s)
+[22:48:33] network18 done: start 493062 best 479955 via descent-after-qaoa-kick counts {'descent': 1, 'qaoa-compound': 1, 'descent-after-qaoa-improve': 1, 'pair-scan(classical part of QUBO build)': 1, 'descent-after-qaoa-kick': 1}
+[22:48:33] derived network17 by deletion: 463250
+[22:48:33] network17 start 463250 BKV 437000 gap +6.007%
+[22:48:39]   NEW BEST network17 454286 via descent  (BKV 437000, +3.956%)
+[22:48:39]  cyc1 local opt 454286 (4 imps, origin descent); best 454286
+[22:48:42]   cyc1 QAOA N=16 conf=15 negJ=40 q=1.4s samples=1505 bestcomp=456045 (+0.387%, k=4) bestpair=452611 cur=454286
+[22:48:42]   NEW BEST network17 452611 via pair-scan(classical part of QUBO build)  (BKV 437000, +3.572%)
+[22:48:45]  cyc2 local opt 452611 (0 imps, origin descent-after-pair-improve); best 452611
+[22:48:49]   cyc2 QAOA N=16 conf=15 negJ=44 q=3.3s samples=153 bestcomp=453737 (+0.249%, k=2) bestpair=453737 cur=452611
+[22:48:53]  cyc3 local opt 453737 (0 imps, origin descent-after-qaoa-kick); best 452611
+[22:48:56]   cyc3 QAOA N=16 conf=20 negJ=45 q=2.1s samples=514 bestcomp=452611 (-0.248%, k=2) bestpair=451348 cur=453737
+[22:48:56]   NEW BEST network17 451348 via pair-scan(classical part of QUBO build)  (BKV 437000, +3.283%)
+[22:49:01]   NEW BEST network17 447225 via descent-after-pair-improve  (BKV 437000, +2.340%)
+[22:49:01]  cyc4 local opt 447225 (3 imps, origin descent-after-pair-improve); best 447225
+[22:49:04]   cyc4 QAOA N=16 conf=17 negJ=45 q=1.4s samples=260 bestcomp=449468 (+0.502%, k=2) bestpair=448957 cur=447225
+[22:49:04]   restart from best
+[22:49:06]  cyc5 local opt 447225 (0 imps, origin descent-after-qaoa-kick); best 447225
+[22:49:09]   cyc5 QAOA N=16 conf=17 negJ=45 q=1.7s samples=424 bestcomp=448957 (+0.387%, k=2) bestpair=448957 cur=447225
+[22:49:14]  cyc6 local opt 447225 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:49:17]   cyc6 QAOA N=16 conf=17 negJ=45 q=1.8s samples=137 bestcomp=448957 (+0.387%, k=2) bestpair=448957 cur=447225
+[22:49:21]  cyc7 local opt 447225 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:49:24]   cyc7 QAOA N=16 conf=17 negJ=45 q=1.6s samples=146 bestcomp=451231 (+0.896%, k=4) bestpair=448957 cur=447225
+[22:49:28]  cyc8 local opt 449667 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:49:30]   cyc8 QAOA N=16 conf=19 negJ=43 q=1.3s samples=165 bestcomp=448800 (-0.193%, k=3) bestpair=449688 cur=449667
+[22:49:30]   restart from best
+[22:49:33]  cyc9 local opt 447225 (0 imps, origin descent-after-qaoa-improve); best 447225
+[22:49:36]   cyc9 QAOA N=16 conf=17 negJ=45 q=1.7s samples=482 bestcomp=448957 (+0.387%, k=2) bestpair=448957 cur=447225
+[22:49:40]  cyc10 local opt 447225 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:49:42]   cyc10 QAOA N=16 conf=17 negJ=45 q=1.3s samples=157 bestcomp=449375 (+0.481%, k=3) bestpair=448957 cur=447225
+[22:49:45]  cyc11 local opt 449312 (1 imps, origin descent-after-qaoa-kick); best 447225
+[22:49:48]   cyc11 QAOA N=16 conf=19 negJ=46 q=2.0s samples=403 bestcomp=448143 (-0.260%, k=3) bestpair=447225 cur=449312
+[22:49:51]  cyc12 local opt 447225 (0 imps, origin descent-after-pair-improve); best 447225
+[22:49:53]   cyc12 QAOA N=16 conf=17 negJ=45 q=1.6s samples=211 bestcomp=449375 (+0.481%, k=3) bestpair=448957 cur=447225
+[22:49:53]   restart from best
+[22:49:56]  cyc13 local opt 447225 (0 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:01]   cyc13 QAOA N=16 conf=17 negJ=45 q=3.7s samples=597 bestcomp=448957 (+0.387%, k=2) bestpair=448957 cur=447225
+[22:50:06]  cyc14 local opt 447225 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:10]   cyc14 QAOA N=16 conf=17 negJ=45 q=2.8s samples=532 bestcomp=448957 (+0.387%, k=2) bestpair=448957 cur=447225
+[22:50:15]  cyc15 local opt 447225 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:18]   cyc15 QAOA N=16 conf=17 negJ=45 q=1.4s samples=333 bestcomp=451679 (+0.996%, k=2) bestpair=448957 cur=447225
+[22:50:21]  cyc16 local opt 447225 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:24]   cyc16 QAOA N=16 conf=17 negJ=45 q=1.9s samples=332 bestcomp=448957 (+0.387%, k=2) bestpair=448957 cur=447225
+[22:50:24]   restart from best
+[22:50:26]  cyc17 local opt 447225 (0 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:31]   cyc17 QAOA N=16 conf=17 negJ=45 q=3.2s samples=180 bestcomp=450690 (+0.775%, k=2) bestpair=448957 cur=447225
+[22:50:38]  cyc18 local opt 448786 (3 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:41]   cyc18 QAOA N=16 conf=14 negJ=59 q=2.2s samples=935 bestcomp=453061 (+0.953%, k=4) bestpair=450357 cur=448786
+[22:50:45]  cyc19 local opt 451867 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:47]   cyc19 QAOA N=16 conf=26 negJ=32 q=1.3s samples=263 bestcomp=452632 (+0.169%, k=2) bestpair=452632 cur=451867
+[22:50:52]  cyc20 local opt 448933 (2 imps, origin descent-after-qaoa-kick); best 447225
+[22:50:56]   cyc20 QAOA N=16 conf=20 negJ=33 q=1.9s samples=118 bestcomp=450000 (+0.238%, k=3) bestpair=445682 cur=448933
+[22:50:56]   NEW BEST network17 445682 via pair-scan(classical part of QUBO build)  (BKV 437000, +1.987%)
+[22:50:56]   restart from best
+[22:50:58]  cyc21 local opt 445682 (0 imps, origin descent-after-pair-improve); best 445682
+[22:51:01]   cyc21 QAOA N=16 conf=28 negJ=23 q=1.7s samples=78 bestcomp=450840 (+1.157%, k=2) bestpair=448933 cur=445682
+[22:51:04]  cyc22 local opt 445682 (2 imps, origin descent-after-qaoa-kick); best 445682
+[22:51:07]   cyc22 QAOA N=16 conf=28 negJ=23 q=1.3s samples=426 bestcomp=451447 (+1.294%, k=2) bestpair=448933 cur=445682
+[22:51:09]  cyc23 local opt 451447 (0 imps, origin descent-after-qaoa-kick); best 445682
+[22:51:12]   cyc23 QAOA N=16 conf=20 negJ=57 q=2.0s samples=139 bestcomp=452143 (+0.154%, k=2) bestpair=445682 cur=451447
+[22:51:15]  cyc24 local opt 445682 (0 imps, origin descent-after-pair-improve); best 445682
+[22:51:20]   cyc24 QAOA N=16 conf=28 negJ=23 q=3.2s samples=96 bestcomp=450840 (+1.157%, k=2) bestpair=448933 cur=445682
+[22:51:20]   restart from best
+[22:51:23]  cyc25 local opt 445682 (0 imps, origin descent-after-qaoa-kick); best 445682
+[22:51:26]   cyc25 QAOA N=16 conf=28 negJ=23 q=1.9s samples=135 bestcomp=448933 (+0.730%, k=2) bestpair=448933 cur=445682
+[22:51:28]  cyc26 local opt 448933 (0 imps, origin descent-after-qaoa-kick); best 445682
+[22:51:33]   cyc26 QAOA N=16 conf=20 negJ=33 q=3.4s samples=445 bestcomp=445682 (-0.724%, k=2) bestpair=445682 cur=448933
+[22:51:35]  cyc27 local opt 445682 (0 imps, origin descent-after-qaoa-improve); best 445682
+[22:51:41]   cyc27 QAOA N=16 conf=28 negJ=23 q=3.5s samples=53 bestcomp=448933 (+0.730%, k=2) bestpair=448933 cur=445682
+[22:51:44]  cyc28 local opt 448933 (0 imps, origin descent-after-qaoa-kick); best 445682
+[22:51:47]   cyc28 QAOA N=16 conf=20 negJ=33 q=1.8s samples=109 bestcomp=446952 (-0.441%, k=2) bestpair=445682 cur=448933
+[22:51:47]   restart from best
+[22:51:49]  cyc29 local opt 445682 (0 imps, origin descent-after-pair-improve); best 445682
+[22:51:53]   cyc29 QAOA N=16 conf=27 negJ=24 q=2.5s samples=58 bestcomp=448966 (+0.737%, k=2) bestpair=448933 cur=445682
+[22:51:56]  cyc30 local opt 445682 (2 imps, origin descent-after-qaoa-kick); best 445682
+[22:52:00]   cyc30 QAOA N=16 conf=28 negJ=23 q=2.5s samples=250 bestcomp=448966 (+0.737%, k=2) bestpair=448933 cur=445682
+[22:52:08]  cyc31 local opt 445682 (4 imps, origin descent-after-qaoa-kick); best 445682
+[22:52:10]   cyc31 QAOA N=16 conf=28 negJ=23 q=1.4s samples=49 bestcomp=456231 (+2.367%, k=2) bestpair=448933 cur=445682
+[22:52:15]  cyc32 local opt 448733 (5 imps, origin descent-after-random-kick); best 445682
+[22:52:18]   cyc32 QAOA N=16 conf=17 negJ=43 q=1.8s samples=207 bestcomp=448929 (+0.044%, k=3) bestpair=448917 cur=448733
+[22:52:18]   restart from best
+[22:52:20]  cyc33 local opt 445682 (0 imps, origin descent-after-qaoa-kick); best 445682
+[22:52:23]   cyc33 QAOA N=16 conf=28 negJ=23 q=1.4s samples=51 bestcomp=456000 (+2.315%, k=4) bestpair=448933 cur=445682
+[22:52:26]  cyc34 local opt 468647 (9 imps, origin descent-after-random-kick); best 445682
+[22:52:29]   cyc34 QAOA N=16 conf=18 negJ=52 q=1.6s samples=180 bestcomp=467700 (-0.202%, k=6) bestpair=466600 cur=468647
+[22:52:32]  cyc35 local opt 466600 (0 imps, origin descent-after-pair-improve); best 445682
+[22:52:34]   cyc35 QAOA N=16 conf=13 negJ=52 q=1.3s samples=1077 bestcomp=464913 (-0.362%, k=3) bestpair=463000 cur=466600
+[22:52:43]  cyc36 local opt 450000 (6 imps, origin descent-after-pair-improve); best 445682
+[22:52:48]   cyc36 QAOA N=16 conf=19 negJ=33 q=3.3s samples=144 bestcomp=453295 (+0.732%, k=3) bestpair=448944 cur=450000
+[22:52:48]   restart from best
+[22:52:51]  cyc37 local opt 445682 (0 imps, origin descent-after-pair-improve); best 445682
+[22:52:54]   cyc37 QAOA N=16 conf=28 negJ=23 q=1.9s samples=94 bestcomp=450840 (+1.157%, k=2) bestpair=448933 cur=445682
+[22:52:57]  cyc38 local opt 445682 (2 imps, origin descent-after-qaoa-kick); best 445682
+[22:53:00]   cyc38 QAOA N=16 conf=28 negJ=23 q=1.5s samples=53 bestcomp=453214 (+1.690%, k=2) bestpair=448933 cur=445682
+[22:53:12]  cyc39 local opt 455188 (17 imps, origin descent-after-random-kick); best 445682
+[22:53:17]   cyc39 QAOA N=16 conf=32 negJ=30 q=3.5s samples=63 bestcomp=450467 (-1.037%, k=3) bestpair=452417 cur=455188
+[22:53:19]  cyc40 local opt 450467 (0 imps, origin descent-after-qaoa-improve); best 445682
+[22:53:22]   cyc40 QAOA N=16 conf=18 negJ=39 q=1.5s samples=260 bestcomp=453000 (+0.562%, k=2) bestpair=449200 cur=450467
+[22:53:22]   restart from best
+[22:53:25]  cyc41 local opt 445682 (0 imps, origin descent-after-pair-improve); best 445682
+[22:53:30]   cyc41 QAOA N=16 conf=28 negJ=23 q=3.4s samples=90 bestcomp=451667 (+1.343%, k=2) bestpair=448933 cur=445682
+[22:53:36]  cyc42 local opt 449938 (2 imps, origin descent-after-qaoa-kick); best 445682
+[22:53:39]   cyc42 QAOA N=16 conf=32 negJ=34 q=1.7s samples=60 bestcomp=454389 (+0.989%, k=2) bestpair=450745 cur=449938
+[22:53:43]  cyc43 local opt 448846 (4 imps, origin descent-after-qaoa-kick); best 445682
+[22:53:45]   cyc43 QAOA N=16 conf=26 negJ=20 q=1.2s samples=106 bestcomp=448667 (-0.040%, k=2) bestpair=448667 cur=448846
+[22:53:47]  cyc44 local opt 448667 (0 imps, origin descent-after-qaoa-improve); best 445682
+[22:53:49]   cyc44 QAOA N=16 conf=21 negJ=44 q=1.2s samples=258 bestcomp=448429 (-0.053%, k=2) bestpair=448429 cur=448667
+[22:53:49]   restart from best
+[22:53:51]  cyc45 local opt 445682 (0 imps, origin descent-after-qaoa-improve); best 445682
+[22:53:53]   cyc45 QAOA N=16 conf=28 negJ=23 q=1.3s samples=9 bestcomp=448966 (+0.737%, k=2) bestpair=448933 cur=445682
+[22:53:57]  cyc46 local opt 445682 (2 imps, origin descent-after-qaoa-kick); best 445682
+[22:53:59]   cyc46 QAOA N=16 conf=27 negJ=24 q=1.3s samples=52 bestcomp=453910 (+1.846%, k=2) bestpair=448933 cur=445682
+[22:54:03]  cyc47 local opt 462778 (8 imps, origin descent-after-random-kick); best 445682
+[22:54:06]   cyc47 QAOA N=16 conf=19 negJ=29 q=1.9s samples=634 bestcomp=462583 (-0.042%, k=2) bestpair=462583 cur=462778
+[22:54:10]  cyc48 local opt 460500 (1 imps, origin descent-after-qaoa-improve); best 445682
+[22:54:13]   cyc48 QAOA N=16 conf=15 negJ=36 q=1.3s samples=241 bestcomp=458229 (-0.493%, k=3) bestpair=458833 cur=460500
+[22:54:13]   restart from best
+[22:54:15]  cyc49 local opt 445682 (0 imps, origin descent-after-qaoa-improve); best 445682
+[22:54:17]   cyc49 QAOA N=16 conf=28 negJ=23 q=1.8s samples=54 bestcomp=454133 (+1.896%, k=3) bestpair=448933 cur=445682
+[22:54:22]   bank network17 lp=445682 -> 445682 (0.1s)
+[22:54:22] network17 done: start 463250 best 445682 via pair-scan(classical part of QUBO build) counts {'descent': 1, 'pair-scan(classical part of QUBO build)': 3, 'descent-after-pair-improve': 1}
+[22:54:22] all done

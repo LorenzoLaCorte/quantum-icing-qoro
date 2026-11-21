@@ -1,0 +1,167 @@
+[22:29:46] network23 start 642084 BKV 659369 gap -2.621%
+BANKED network23 642084 (BKV 659369, -2.621%) -> solutions/agent_qcompound/small/network23.sol
+[22:29:47]   bank network23 lp=642084 -> 642084 (0.1s)
+[22:30:14]   NEW BEST network23 639738 via descent  (BKV 659369, -2.977%)
+[22:30:14]  cyc1 local opt 639738 (2 imps, origin descent); best 639738
+[22:30:41]   cyc1 QAOA N=18 conf=24 negJ=47 q=18.7s samples=78 bestcomp=645141 (+0.844%, k=3) bestpair=641321 cur=639738
+[22:31:01]  cyc2 local opt 640238 (3 imps, origin descent-after-qaoa-kick); best 639738
+[22:31:14]   cyc2 QAOA N=18 conf=21 negJ=57 q=9.5s samples=71 bestcomp=656900 (+2.602%, k=3) bestpair=641030 cur=640238
+BANKED network23 639739 (BKV 659369, -2.977%) -> solutions/agent_qcompound/small/network23.sol
+[22:32:02]   bank network23 lp=639738 -> 639739 (0.3s)
+[22:32:02] network23 done: start 642084 best 639738 via descent counts {'descent': 1}
+[22:32:02] derived network22 by deletion: 610880
+[22:32:02] network22 start 610880 BKV 618135 gap -1.174%
+BANKED network22 610880 (BKV 618135, -1.174%) -> solutions/agent_qcompound/small/network22.sol
+[22:32:03]   bank network22 lp=610880 -> 610880 (0.3s)
+[22:32:19]   NEW BEST network22 609765 via descent  (BKV 618135, -1.354%)
+[22:32:19]  cyc1 local opt 609765 (1 imps, origin descent); best 609765
+[22:32:58]   cyc1 QAOA N=18 conf=26 negJ=54 q=33.1s samples=100 bestcomp=606829 (-0.482%, k=2) bestpair=606829 cur=609765
+[22:32:58]   NEW BEST network22 606829 via qaoa-compound  (BKV 618135, -1.829%)
+[22:33:16]   NEW BEST network22 606423 via descent-after-qaoa-improve  (BKV 618135, -1.895%)
+[22:33:16]  cyc2 local opt 606423 (1 imps, origin descent-after-qaoa-improve); best 606423
+[22:33:47]   cyc2 QAOA N=18 conf=21 negJ=28 q=24.8s samples=389 bestcomp=609929 (+0.578%, k=2) bestpair=608630 cur=606423
+[22:34:22]  cyc3 local opt 606423 (2 imps, origin descent-after-qaoa-kick); best 606423
+[22:35:08]   cyc3 QAOA N=18 conf=21 negJ=28 q=38.2s samples=382 bestcomp=606943 (+0.086%, k=3) bestpair=608630 cur=606423
+[22:35:23]  cyc4 local opt 606943 (0 imps, origin descent-after-qaoa-kick); best 606423
+[22:35:42]   cyc4 QAOA N=18 conf=22 negJ=38 q=15.2s samples=219 bestcomp=614476 (+1.241%, k=3) bestpair=608593 cur=606943
+[22:35:42]   restart from best
+[22:35:54]  cyc5 local opt 606423 (0 imps, origin descent-after-qaoa-kick); best 606423
+[22:36:22]   cyc5 QAOA N=18 conf=21 negJ=28 q=23.1s samples=89 bestcomp=612097 (+0.936%, k=2) bestpair=608630 cur=606423
+BANKED network22 606424 (BKV 618135, -1.895%) -> solutions/agent_qcompound/small/network22.sol
+[22:36:33]   bank network22 lp=606423 -> 606424 (0.4s)
+[22:36:33] network22 done: start 610880 best 606423 via descent-after-qaoa-improve counts {'descent': 1, 'qaoa-compound': 1, 'descent-after-qaoa-improve': 1}
+[22:36:33] derived network21 by deletion: 573625
+[22:36:33] network21 start 573625 BKV 569273 gap +0.764%
+[22:36:57]   NEW BEST network21 569352 via descent  (BKV 569273, +0.014%)
+[22:36:57]  cyc1 local opt 569352 (3 imps, origin descent); best 569352
+[22:37:38]   cyc1 QAOA N=18 conf=23 negJ=44 q=35.6s samples=693 bestcomp=568619 (-0.129%, k=3) bestpair=562362 cur=569352
+[22:37:38]   NEW BEST network21 562362 via pair-scan(classical part of QUBO build)  (BKV 569273, -1.214%)
+BANKED network21 562362 (BKV 569273, -1.214%) -> solutions/agent_qcompound/small/network21.sol
+[22:37:38]   bank network21 lp=562362 -> 562362 (0.3s)
+[22:37:51]  cyc2 local opt 562362 (0 imps, origin descent-after-pair-improve); best 562362
+[22:38:23]   cyc2 QAOA N=18 conf=27 negJ=57 q=26.4s samples=80 bestcomp=570645 (+1.473%, k=3) bestpair=565276 cur=562362
+[22:38:57]  cyc3 local opt 565188 (6 imps, origin descent-after-qaoa-kick); best 562362
+[22:39:14]   cyc3 QAOA N=18 conf=21 negJ=43 q=14.3s samples=85 bestcomp=570222 (+0.891%, k=5) bestpair=565889 cur=565188
+[22:39:32]  cyc4 local opt 565458 (5 imps, origin descent-after-qaoa-kick); best 562362
+[22:39:45]   cyc4 QAOA N=18 conf=22 negJ=54 q=9.8s samples=111 bestcomp=569538 (+0.722%, k=3) bestpair=563379 cur=565458
+[22:39:45]   restart from best
+[22:39:52]  cyc5 local opt 562362 (0 imps, origin descent-after-pair-improve); best 562362
+[22:40:09]   cyc5 QAOA N=18 conf=27 negJ=57 q=14.6s samples=67 bestcomp=573409 (+1.964%, k=2) bestpair=565276 cur=562362
+[22:40:40]  cyc6 local opt 583538 (13 imps, origin descent-after-random-kick); best 562362
+[22:40:52]   cyc6 QAOA N=18 conf=19 negJ=29 q=9.5s samples=161 bestcomp=590220 (+1.145%, k=2) bestpair=584027 cur=583538
+[22:41:03] network21 done: start 573625 best 562362 via pair-scan(classical part of QUBO build) counts {'descent': 1, 'pair-scan(classical part of QUBO build)': 1}
+[22:41:03] derived network20 by deletion: 529967
+[22:41:03] network20 start 529967 BKV 528528 gap +0.272%
+[22:41:16]   NEW BEST network20 527444 via descent  (BKV 528528, -0.205%)
+BANKED network20 527445 (BKV 528528, -0.205%) -> solutions/agent_qcompound/small/network20.sol
+[22:41:17]   bank network20 lp=527444 -> 527445 (0.1s)
+[22:41:17]  cyc1 local opt 527444 (3 imps, origin descent); best 527444
+[22:41:34]   cyc1 QAOA N=18 conf=18 negJ=48 q=14.3s samples=166 bestcomp=534784 (+1.391%, k=2) bestpair=528556 cur=527444
+[22:41:40]  cyc2 local opt 527444 (2 imps, origin descent-after-qaoa-kick); best 527444
+[22:41:56]   cyc2 QAOA N=18 conf=18 negJ=48 q=13.7s samples=142 bestcomp=533944 (+1.232%, k=4) bestpair=528556 cur=527444
+[22:42:04]   NEW BEST network20 526873 via descent-after-qaoa-kick  (BKV 528528, -0.313%)
+[22:42:04]  cyc3 local opt 526873 (3 imps, origin descent-after-qaoa-kick); best 526873
+[22:42:15]   cyc3 QAOA N=18 conf=23 negJ=60 q=8.7s samples=183 bestcomp=532187 (+1.009%, k=2) bestpair=528818 cur=526873
+[22:42:31]   NEW BEST network20 519343 via descent-after-qaoa-kick  (BKV 528528, -1.738%)
+[22:42:31]  cyc4 local opt 519343 (6 imps, origin descent-after-qaoa-kick); best 519343
+[22:42:44]   cyc4 QAOA N=18 conf=24 negJ=58 q=10.1s samples=543 bestcomp=528917 (+1.843%, k=4) bestpair=523125 cur=519343
+[22:42:44]   restart from best
+[22:42:50]  cyc5 local opt 519343 (0 imps, origin descent-after-random-kick); best 519343
+[22:43:07]   cyc5 QAOA N=18 conf=24 negJ=58 q=14.5s samples=502 bestcomp=528917 (+1.843%, k=4) bestpair=523125 cur=519343
+[22:43:26]  cyc6 local opt 519343 (11 imps, origin descent-after-random-kick); best 519343
+[22:43:41]   cyc6 QAOA N=18 conf=24 negJ=58 q=12.4s samples=465 bestcomp=527793 (+1.627%, k=4) bestpair=523125 cur=519343
+[22:43:48]  cyc7 local opt 526429 (3 imps, origin descent-after-random-kick); best 519343
+[22:44:00]   cyc7 QAOA N=18 conf=17 negJ=64 q=9.7s samples=864 bestcomp=527452 (+0.194%, k=2) bestpair=525886 cur=526429
+[22:44:07]  cyc8 local opt 522684 (1 imps, origin descent-after-pair-improve); best 519343
+[22:44:25]   cyc8 QAOA N=18 conf=20 negJ=40 q=14.9s samples=1984 bestcomp=525500 (+0.539%, k=2) bestpair=525500 cur=522684
+[22:44:25]   restart from best
+[22:44:31]  cyc9 local opt 519343 (0 imps, origin descent-after-qaoa-kick); best 519343
+[22:44:48]   cyc9 QAOA N=18 conf=24 negJ=58 q=15.3s samples=484 bestcomp=527793 (+1.627%, k=4) bestpair=523125 cur=519343
+[22:45:05]  cyc10 local opt 532714 (15 imps, origin descent-after-random-kick); best 519343
+[22:45:16]   cyc10 QAOA N=18 conf=18 negJ=52 q=9.0s samples=122 bestcomp=545800 (+2.456%, k=4) bestpair=532125 cur=532714
+BANKED network20 519343 (BKV 528528, -1.738%) -> solutions/agent_qcompound/small/network20.sol
+[22:45:22]   bank network20 lp=519343 -> 519343 (0.1s)
+[22:45:22] network20 done: start 529967 best 519343 via descent-after-qaoa-kick counts {'descent': 1, 'descent-after-qaoa-kick': 2}
+[22:45:22] derived network19 by deletion: 502600
+[22:45:22] network19 start 502600 BKV 492924 gap +1.963%
+[22:45:29]   NEW BEST network19 501824 via descent  (BKV 492924, +1.805%)
+[22:45:29]  cyc1 local opt 501824 (2 imps, origin descent); best 501824
+[22:45:45]   cyc1 QAOA N=18 conf=22 negJ=59 q=14.0s samples=137 bestcomp=504462 (+0.526%, k=2) bestpair=501053 cur=501824
+[22:45:45]   NEW BEST network19 501053 via pair-scan(classical part of QUBO build)  (BKV 492924, +1.649%)
+[22:45:50]   NEW BEST network19 497347 via descent-after-pair-improve  (BKV 492924, +0.897%)
+[22:45:50]  cyc2 local opt 497347 (1 imps, origin descent-after-pair-improve); best 497347
+[22:46:04]   cyc2 QAOA N=18 conf=16 negJ=50 q=12.3s samples=1067 bestcomp=496000 (-0.271%, k=4) bestpair=497143 cur=497347
+[22:46:04]   NEW BEST network19 496000 via qaoa-compound  (BKV 492924, +0.624%)
+[22:46:09]  cyc3 local opt 496000 (0 imps, origin descent-after-qaoa-improve); best 496000
+[22:46:25]   cyc3 QAOA N=18 conf=20 negJ=54 q=13.5s samples=2000 bestcomp=497347 (+0.272%, k=4) bestpair=495128 cur=496000
+[22:46:25]   NEW BEST network19 495128 via pair-scan(classical part of QUBO build)  (BKV 492924, +0.447%)
+[22:46:33]   NEW BEST network19 488895 via descent-after-pair-improve  (BKV 492924, -0.817%)
+BANKED network19 488895 (BKV 492924, -0.817%) -> solutions/agent_qcompound/small/network19.sol
+[22:46:33]   bank network19 lp=488895 -> 488895 (0.1s)
+[22:46:33]  cyc4 local opt 488895 (3 imps, origin descent-after-pair-improve); best 488895
+[22:46:45]   cyc4 QAOA N=18 conf=16 negJ=39 q=9.9s samples=1479 bestcomp=492545 (+0.747%, k=2) bestpair=492545 cur=488895
+[22:46:45]   restart from best
+[22:46:49]  cyc5 local opt 488895 (0 imps, origin descent-after-qaoa-kick); best 488895
+[22:47:07]   cyc5 QAOA N=18 conf=16 negJ=39 q=15.4s samples=302 bestcomp=492545 (+0.747%, k=2) bestpair=492545 cur=488895
+[22:47:15]  cyc6 local opt 488895 (2 imps, origin descent-after-qaoa-kick); best 488895
+[22:47:33]   cyc6 QAOA N=18 conf=16 negJ=39 q=15.7s samples=231 bestcomp=494250 (+1.095%, k=3) bestpair=492545 cur=488895
+[22:47:41]  cyc7 local opt 493900 (2 imps, origin descent-after-qaoa-kick); best 488895
+[22:47:54]   cyc7 QAOA N=18 conf=28 negJ=20 q=11.1s samples=743 bestcomp=490697 (-0.649%, k=2) bestpair=490697 cur=493900
+[22:48:01]  cyc8 local opt 488895 (1 imps, origin descent-after-qaoa-improve); best 488895
+[22:48:14]   cyc8 QAOA N=18 conf=16 negJ=39 q=10.1s samples=686 bestcomp=492545 (+0.747%, k=2) bestpair=492545 cur=488895
+[22:48:14]   restart from best
+[22:48:17]  cyc9 local opt 488895 (0 imps, origin descent-after-qaoa-kick); best 488895
+[22:48:34]   cyc9 QAOA N=18 conf=16 negJ=39 q=14.1s samples=409 bestcomp=492545 (+0.747%, k=2) bestpair=492545 cur=488895
+[22:48:40]  cyc10 local opt 488895 (2 imps, origin descent-after-qaoa-kick); best 488895
+[22:48:57]   cyc10 QAOA N=18 conf=16 negJ=39 q=14.8s samples=231 bestcomp=497909 (+1.844%, k=2) bestpair=492545 cur=488895
+[22:49:12]  cyc11 local opt 498125 (9 imps, origin descent-after-random-kick); best 488895
+[22:49:24]   cyc11 QAOA N=18 conf=21 negJ=48 q=9.8s samples=342 bestcomp=502122 (+0.802%, k=2) bestpair=498611 cur=498125
+[22:49:29]  cyc12 local opt 498125 (2 imps, origin descent-after-qaoa-kick); best 488895
+[22:49:40]   cyc12 QAOA N=18 conf=21 negJ=48 q=9.4s samples=334 bestcomp=502067 (+0.791%, k=4) bestpair=498611 cur=498125
+[22:49:40]   restart from best
+[22:49:45] network19 done: start 502600 best 488895 via descent-after-pair-improve counts {'descent': 1, 'pair-scan(classical part of QUBO build)': 2, 'descent-after-pair-improve': 2, 'qaoa-compound': 1}
+[22:49:45] derived network18 by deletion: 481400
+[22:49:45] network18 start 481400 BKV 473375 gap +1.695%
+[22:49:53]   NEW BEST network18 473000 via descent  (BKV 473375, -0.079%)
+BANKED network18 473000 (BKV 473375, -0.079%) -> solutions/agent_qcompound/small/network18.sol
+[22:49:54]   bank network18 lp=473000 -> 473000 (0.1s)
+[22:49:54]  cyc1 local opt 473000 (3 imps, origin descent); best 473000
+[22:50:12]   cyc1 QAOA N=18 conf=17 negJ=31 q=16.5s samples=252 bestcomp=484143 (+2.356%, k=2) bestpair=474410 cur=473000
+[22:50:24]  cyc2 local opt 487852 (16 imps, origin descent-after-random-kick); best 473000
+[22:50:42]   cyc2 QAOA N=18 conf=20 negJ=54 q=15.3s samples=547 bestcomp=493077 (+1.071%, k=3) bestpair=488259 cur=487852
+[22:50:51]  cyc3 local opt 484860 (6 imps, origin descent-after-qaoa-kick); best 473000
+[22:51:03]   cyc3 QAOA N=18 conf=21 negJ=71 q=10.3s samples=188 bestcomp=488474 (+0.745%, k=4) bestpair=485179 cur=484860
+[22:51:08]  cyc4 local opt 485643 (2 imps, origin descent-after-qaoa-kick); best 473000
+[22:51:24]   cyc4 QAOA N=18 conf=32 negJ=41 q=13.5s samples=99 bestcomp=481424 (-0.869%, k=3) bestpair=482059 cur=485643
+[22:51:24]   restart from best
+[22:51:27]  cyc5 local opt 473000 (0 imps, origin descent-after-qaoa-improve); best 473000
+[22:51:46]   cyc5 QAOA N=18 conf=17 negJ=31 q=17.0s samples=296 bestcomp=477000 (+0.846%, k=2) bestpair=474410 cur=473000
+[22:51:50]  cyc6 local opt 477000 (0 imps, origin descent-after-qaoa-kick); best 473000
+[22:52:07]   cyc6 QAOA N=18 conf=25 negJ=46 q=14.9s samples=71 bestcomp=474727 (-0.476%, k=2) bestpair=473000 cur=477000
+[22:52:10]  cyc7 local opt 473000 (0 imps, origin descent-after-pair-improve); best 473000
+[22:52:21]   cyc7 QAOA N=18 conf=17 negJ=31 q=9.8s samples=689 bestcomp=479929 (+1.465%, k=2) bestpair=474410 cur=473000
+[22:52:27]  cyc8 local opt 474410 (2 imps, origin descent-after-qaoa-kick); best 473000
+[22:52:32]   cyc8 QAOA N=17 conf=21 negJ=37 q=3.6s samples=501 bestcomp=477938 (+0.744%, k=3) bestpair=473000 cur=474410
+[22:52:32]   restart from best
+[22:52:35]  cyc9 local opt 473000 (0 imps, origin descent-after-pair-improve); best 473000
+[22:52:50]   cyc9 QAOA N=18 conf=17 negJ=31 q=13.9s samples=158 bestcomp=482786 (+2.069%, k=4) bestpair=474410 cur=473000
+[22:53:01]  cyc10 local opt 480852 (15 imps, origin descent-after-random-kick); best 473000
+[22:53:18]   cyc10 QAOA N=18 conf=22 negJ=43 q=15.3s samples=407 bestcomp=487563 (+1.396%, k=2) bestpair=479762 cur=480852
+[22:53:22]  cyc11 local opt 476455 (1 imps, origin descent-after-pair-improve); best 473000
+[22:53:39]   cyc11 QAOA N=18 conf=22 negJ=54 q=14.9s samples=130 bestcomp=487929 (+2.408%, k=2) bestpair=479598 cur=476455
+[22:53:59]  cyc12 local opt 486323 (26 imps, origin descent-after-random-kick); best 473000
+[22:54:11]   cyc12 QAOA N=18 conf=17 negJ=45 q=9.9s samples=196 bestcomp=488214 (+0.389%, k=2) bestpair=484286 cur=486323
+[22:54:11]   restart from best
+[22:54:14]  cyc13 local opt 473000 (0 imps, origin descent-after-pair-improve); best 473000
+[22:54:25]   cyc13 QAOA N=18 conf=17 negJ=31 q=9.7s samples=951 bestcomp=474410 (+0.298%, k=2) bestpair=474410 cur=473000
+[22:54:28]  cyc14 local opt 474410 (0 imps, origin descent-after-qaoa-kick); best 473000
+[22:54:35]   cyc14 QAOA N=17 conf=21 negJ=37 q=5.4s samples=240 bestcomp=473000 (-0.297%, k=2) bestpair=473000 cur=474410
+[22:54:39]  cyc15 local opt 473000 (0 imps, origin descent-after-qaoa-improve); best 473000
+[22:54:54]   cyc15 QAOA N=18 conf=17 negJ=31 q=13.4s samples=255 bestcomp=479211 (+1.313%, k=2) bestpair=474410 cur=473000
+[22:55:00]  cyc16 local opt 473000 (2 imps, origin descent-after-qaoa-kick); best 473000
+[22:55:15]   cyc16 QAOA N=18 conf=17 negJ=31 q=13.7s samples=151 bestcomp=483818 (+2.287%, k=2) bestpair=474410 cur=473000
+[22:55:15]   restart from best
+[22:55:18]  cyc17 local opt 473000 (0 imps, origin descent-after-random-kick); best 473000
+[22:55:29]   cyc17 QAOA N=18 conf=17 negJ=31 q=9.4s samples=801 bestcomp=477000 (+0.846%, k=2) bestpair=474410 cur=473000
+[22:55:32] network18 done: start 481400 best 473000 via descent counts {'descent': 1}
+[22:55:32] all done

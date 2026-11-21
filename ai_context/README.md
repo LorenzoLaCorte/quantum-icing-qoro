@@ -5,6 +5,10 @@ that reached 657,121 on `network24`. The [original English overview](reports/net
 covers the broader experiment history and the Divi comparison. The [hand-in folder](../deliverables/)
 contains the final checked solutions.
 
+**network18–network23 (below BKV, hybrid with QAOA):** start from
+[quantum_networks/READ_ME_FIRST.txt](quantum_networks/READ_ME_FIRST.txt). It lists every file to read,
+the method, the logs, the transcripts, and what the quantum step did and did not contribute.
+
 ## Network05 from 83000 to the proven optimum
 
 1. Read the top-left 5 × 5 block of the demand matrix. A candidate topology chooses 10 of the 20 possible directed links and gives every node exactly two incoming and two outgoing links. `random_topology` draws two link permutations with no self-loops or duplicate links. [Demand loader and topology generator](../qoblib_tools.py)
@@ -63,6 +67,12 @@ extract only the `"type":"assistant"` text messages, rather than reading them wh
 | `make_report_eng.py` | Original ReportLab generator for the [archived English overview](reports/network24_report_eng.tex). |
 | `plot_pt_report.py` | Rebuilds the judge report's figures from the archived PT and ILS logs. Run `python ai_context/scripts/plot_pt_report.py` from the repo root with Matplotlib installed. |
 | `analyze.py` | Summarises the Divi experiment log `solutions/agent_divi/divi_run_divi_s1.jsonl` (sampler comparison table). |
+
+## divi_docs_context7.md
+
+Divi documentation snippets (install, QAOA, PCE, partitioning ensembles, pipelines, backends) copied
+on 2026-11-21 from https://context7.com/qoroquantum/divi. They track Divi's `main` branch, while the
+repo pins `qoro-divi==0.16.2`: check an API against the installed version before using it.
 
 ## Verifying the solution yourself
 
