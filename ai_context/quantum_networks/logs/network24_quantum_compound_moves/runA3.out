@@ -1,0 +1,37 @@
+start mode=A seed=3 N=[20] z0=657120.97 score=657121
+it1 [A] z_cur 657121 best 657121 nLP 1166 Nc 20 K 5 | E_q -4.447 (chk -4.447, 101 circ, 50.2s) E_sa -4.559 (0.1s) feasE q -4.447400902353099 sa -4.559043796282786 | LPbest pair 661655 q 662684 (40) sa 670167 (5) refit nan (0) | compounds 45 t 78.8s
+it1 kick -> z 661655 (4 arcs changed)
+it2 [A] z_cur 661655 best 657121 nLP 2328 Nc 20 K 3 | E_q 0.757 (chk 0.757, 101 circ, 53.3s) E_sa -1.015 (0.1s) feasE q 0.757067889820789 sa -1.0150867023354198 | LPbest pair 667300 q 681855 (40) sa 669025 (5) refit nan (0) | compounds 90 t 80.2s
+it2 kick -> z 667730 (4 arcs changed)
+it3 descent z 667730->666769 best 657121 nLP 3266 t 21.0s
+it4 [A] z_cur 666769 best 657121 nLP 4426 Nc 20 K 5 | E_q -3.215 (chk -3.215, 101 circ, 53.9s) E_sa -3.724 (0.1s) feasE q -3.2148409524930233 sa -3.724231017601208 | LPbest pair 666603 q 667490 (40) sa 674577 (2) refit nan (0) | compounds 132 t 82.7s
+it4 kick -> z 667490 (6 arcs changed)
+it5 [A] z_cur 667490 best 657121 nLP 5588 Nc 20 K 4 | E_q -2.595 (chk -2.595, 101 circ, 54.1s) E_sa -2.640 (0.1s) feasE q -2.0057684157228755 sa -2.6403356895779906 | LPbest pair 667520 q 675444 (40) sa 670923 (2) refit nan (0) | compounds 174 t 81.6s
+it5 restart from best
+it6 [A] z_cur 657121 best 657121 nLP 6753 Nc 20 K 5 | E_q -4.150 (chk -4.150, 101 circ, 56.9s) E_sa -4.530 (0.1s) feasE q -4.150285717038427 sa -4.529956018035936 | LPbest pair 661655 q 662929 (40) sa 670167 (6) refit nan (0) | compounds 220 t 85.2s
+it6 kick -> z 661655 (4 arcs changed)
+it7 [A] z_cur 661655 best 657121 nLP 7914 Nc 20 K 5 | E_q -4.149 (chk -4.149, 101 circ, 58.4s) E_sa -4.262 (0.1s) feasE q -4.149107730070552 sa -4.262389625650273 | LPbest pair 668301 q 674417 (40) sa 690148 (1) refit nan (0) | compounds 261 t 86.2s
+it7 kick -> z 669043 (4 arcs changed)
+it8 [A] z_cur 669043 best 657121 nLP 9074 Nc 20 K 3 | E_q -1.093 (chk -1.093, 101 circ, 54.1s) E_sa -1.471 (0.1s) feasE q -1.0471891299867568 sa -1.3921865552621124 | LPbest pair 671235 q 679232 (40) sa 679228 (2) refit nan (0) | compounds 303 t 83.7s
+it8 kick -> z 671235 (4 arcs changed)
+it9 [A] z_cur 671235 best 657121 nLP 10236 Nc 20 K 3 | E_q -0.786 (chk -0.786, 101 circ, 57.5s) E_sa -1.128 (0.1s) feasE q -0.7857827287927877 sa -1.0686068455148778 | LPbest pair 670162 q 678652 (40) sa 675571 (4) refit nan (0) | compounds 347 t 86.4s
+it9 restart from best
+it10 [A] z_cur 657121 best 657121 nLP 11397 Nc 20 K 4 | E_q -2.762 (chk -2.762, 101 circ, 60.7s) E_sa -2.762 (0.1s) feasE q -2.761661662080336 sa -2.761661662080336 | LPbest pair 662361 q 662684 (40) sa 670517 (2) refit nan (0) | compounds 389 t 89.6s
+it10 kick -> z 662361 (4 arcs changed)
+it11 [A] z_cur 662361 best 657121 nLP 12560 Nc 20 K 5 | E_q -2.730 (chk -2.730, 101 circ, 59.4s) E_sa -3.987 (0.1s) feasE q -2.7297851184449486 sa -3.9865775687097784 | LPbest pair 665627 q 681500 (40) sa 672913 (4) refit nan (0) | compounds 433 t 87.0s
+it11 kick -> z 665627 (4 arcs changed)
+it12 descent z 665627->665067 best 657121 nLP 13498 t 20.0s
+it13 [A] z_cur 665067 best 657121 nLP 14656 Nc 20 K 5 | E_q -4.260 (chk -4.260, 101 circ, 53.2s) E_sa -4.260 (0.1s) feasE q -4.259593994411838 sa -4.259593994411838 | LPbest pair 667545 q 670083 (40) sa nan (0) refit nan (0) | compounds 473 t 81.8s
+it13 kick -> z 668269 (4 arcs changed)
+it14 [A] z_cur 668269 best 657121 nLP 15818 Nc 20 K 3 | E_q -1.117 (chk -1.117, 101 circ, 43.6s) E_sa -1.479 (0.1s) feasE q -1.1165208169723853 sa -1.4788745999694677 | LPbest pair 670893 q 676207 (40) sa 674360 (4) refit nan (0) | compounds 517 t 68.6s
+it14 restart from best
+it15 [A] z_cur 657121 best 657121 nLP 16981 Nc 20 K 3 | E_q -0.419 (chk -0.419, 101 circ, 43.1s) E_sa -1.311 (0.1s) feasE q -0.19205483311019222 sa -1.3107989953005938 | LPbest pair 661655 q 669643 (40) sa 662684 (5) refit nan (0) | compounds 562 t 66.5s
+it15 kick -> z 661655 (4 arcs changed)
+it16 [A] z_cur 661655 best 657121 nLP 18145 Nc 20 K 4 | E_q -2.178 (chk -2.178, 101 circ, 45.1s) E_sa -2.489 (0.1s) feasE q -2.1778720931163136 sa -2.4886332895403864 | LPbest pair 667300 q 671564 (40) sa 672027 (6) refit nan (0) | compounds 608 t 68.3s
+it16 kick -> z 667730 (4 arcs changed)
+it17 descent z 667730->666769 best 657121 nLP 19083 t 18.7s
+it18 [A] z_cur 666769 best 657121 nLP 20240 Nc 20 K 3 | E_q -1.323 (chk -1.323, 101 circ, 43.3s) E_sa -1.323 (0.1s) feasE q -1.3225337550771343 sa -1.3225337550771343 | LPbest pair 666603 q 667490 (40) sa nan (0) refit nan (0) | compounds 648 t 67.5s
+it18 kick -> z 667490 (6 arcs changed)
+it19 [A] z_cur 667490 best 657121 nLP 21401 Nc 20 K 3 | E_q -1.583 (chk -1.583, 101 circ, 43.4s) E_sa -1.583 (0.1s) feasE q -1.5689246759709292 sa nan | LPbest pair 667520 q 676400 (40) sa nan (0) refit nan (0) | compounds 688 t 67.1s
+it19 restart from best
+END best 657121 z 657120.97 nLP 21401 compounds 688

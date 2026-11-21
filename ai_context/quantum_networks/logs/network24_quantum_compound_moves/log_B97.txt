@@ -1,0 +1,3 @@
+start mode=B seed=97 N=[30] z0=657120.97 score=657121
+it1 [B] z_cur 657121 best 657121 nLP 1411 Nc 30 K 3 | E_q 13.642 (chk 13.642, 3201 circ, 8.8s) E_sa -0.880 (0.2s) feasE q -0.600020682946123 sa -0.8802806295169257 | LPbest pair 661655 q 669579 (40) sa 662684 (5) refit 673733 (13) | compounds 58 t 89.9s
+END best 657121 z 657120.97 nLP 1411 compounds 58

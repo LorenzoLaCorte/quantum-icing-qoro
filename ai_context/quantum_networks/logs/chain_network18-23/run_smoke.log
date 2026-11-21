@@ -1,0 +1,15 @@
+[22:26:19] derived network22 by deletion: 623250
+[22:26:19] network22 start inf BKV 618135 gap +inf%
+[22:26:19]  cyc1 local opt inf (0 imps, origin descent); best inf
+[22:27:40] derived network22 by deletion: 623250
+[22:27:40] network22 start 623250 BKV 618135 gap +0.827%
+[22:27:57]   NEW BEST network22 615308 via descent  (BKV 618135, -0.457%)
+[22:27:57]   bank network22 lp=615308 -> 615308 (0.1s)
+[22:27:57]  cyc1 local opt 615308 (4 imps, origin descent); best 615308
+[22:28:03]   cyc1 QAOA N=16 conf=16 negJ=21 q=0.7s samples=39 bestcomp=621208 (+0.959%, k=2) bestpair=614895 cur=615308
+[22:28:21]  cyc2 local opt 615500 (3 imps, origin descent-after-qaoa-kick); best 615308
+[22:28:25]   cyc2 QAOA N=16 conf=17 negJ=19 q=0.8s samples=34 bestcomp=621370 (+0.954%, k=3) bestpair=614894 cur=615500
+[22:28:39]  cyc3 local opt 616609 (2 imps, origin descent-after-qaoa-kick); best 615308
+[22:28:42]   cyc3 QAOA N=16 conf=24 negJ=46 q=0.7s samples=19 bestcomp=623750 (+1.158%, k=2) bestpair=616000 cur=616609
+[22:29:17] network22 done: start 623250 best 615308 via descent counts {'descent': 1}
+[22:29:17] all done

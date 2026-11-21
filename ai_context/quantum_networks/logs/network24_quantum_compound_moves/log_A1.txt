@@ -1,0 +1,12 @@
+start mode=A seed=1 N=[20] z0=657120.97 score=657121
+it1 [A] z_cur 657121 best 657121 nLP 1160 Nc 20 K 3 | E_q -1.197 (chk -1.197, 101 circ, 47.1s) E_sa -1.197 (0.1s) | LPbest pair 661655 q 662684 (40) sa nan (0) refit nan (0) | compounds 40 t 75.6s
+it1 kick -> z 662361 (4 arcs changed)
+it2 [A] z_cur 662361 best 657121 nLP 2324 Nc 20 K 5 | E_q -3.705 (chk -3.705, 101 circ, 54.7s) E_sa -3.705 (0.1s) | LPbest pair 665627 q 667923 (40) sa 672913 (5) refit nan (0) | compounds 85 t 82.9s
+it2 kick -> z 665627 (4 arcs changed)
+it3 descent z 665627->665067 best 657121 nLP 3262 t 22.2s
+it4 [A] z_cur 665067 best 657121 nLP 4419 Nc 20 K 3 | E_q -1.304 (chk -1.304, 101 circ, 90.6s) E_sa -1.732 (0.1s) | LPbest pair 667545 q 674099 (40) sa 678760 (1) refit nan (0) | compounds 126 t 118.4s
+it4 kick -> z 667545 (4 arcs changed)
+it5 [A] z_cur 667545 best 657121 nLP 5580 Nc 20 K 5 | E_q -2.864 (chk -2.864, 101 circ, 97.7s) E_sa -2.864 (0.1s) | LPbest pair 671571 q 672312 (40) sa 679227 (3) refit nan (0) | compounds 169 t 141.2s
+it5 restart from best
+it6 [A] z_cur 657121 best 657121 nLP 6737 Nc 20 K 4 | E_q -2.684 (chk -2.684, 101 circ, 109.0s) E_sa -2.684 (0.1s) | LPbest pair 661655 q 662684 (40) sa nan (0) refit nan (0) | compounds 209 t 152.2s
+it6 kick -> z 662684 (6 arcs changed)
