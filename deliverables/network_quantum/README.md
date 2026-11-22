@@ -2,6 +2,8 @@
 
 The campaign improved five of the seven starting topologies from commit `4bdab9b`. Four results also improve on the hand-in at `253fcbf`, the repository revision used to archive this campaign. The best result is `network23` at **632,319**, down 7,420 from the hand-in and 4.10% below the QOBLIB reference. The upstream Rust checker validated all five exported solutions. [Checker output](logs/checker.log) · [QOBLIB reference scores](https://github.com/ZIB-AOPT/QOBLIB/blob/main/08-network/solutions/README.md)
 
+The follow-up on `network10`–`network17` improved seven of eight starting solutions and took `network15` to **369,637**. [Follow-up results and logs](extension_10_17/README.md)
+
 | Instance | Campaign start | Campaign best | Hand-in at `253fcbf` | Campaign vs hand-in |
 | --- | ---: | ---: | ---: | ---: |
 | [network18](network18.sol) | 472,112 | 471,395 | **469,000** | +2,395 |

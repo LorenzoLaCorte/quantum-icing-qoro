@@ -1,0 +1,36 @@
+{
+  "start": 442158,
+  "checked_best": 439134,
+  "qoblib": 437000,
+  "rounds": 52,
+  "max_index_qubits": 11,
+  "parameters": {
+    "nodes": 17,
+    "start": "runs/network-grover/extension-10-17/starts/network17.sol",
+    "output_dir": "runs/network-grover/extension-10-17/network17",
+    "seed": 73,
+    "rounds": 52,
+    "radii": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "subsets": 950,
+    "shortlist": 3250,
+    "passes": 5,
+    "budget": 120,
+    "shots": 2048,
+    "mark_fraction": 0.12,
+    "workers": 2,
+    "restart": 19,
+    "slack": 18000.0,
+    "uphill": 0.35,
+    "methods": [
+      "quantum",
+      "greedy",
+      "uniform"
+    ]
+  }
+}
