@@ -381,7 +381,7 @@ valid.
 | 10 | 210,800 | yes | 173,000 | 0.821 | — | — |
 | 18 | 473,375 | — | 362,111 | 0.765 | 469,000 | 29.5% |
 | 19 | 492,924 | — | 372,184 | 0.755 | 488,895 | 31.4% |
-| 20 | 528,528 | — | 392,650 | 0.743 | 519,207 | 32.2% |
+| 20 | 528,528 | — | 392,650 | 0.743 | 518,305 | 32.0% |
 | 21 | 569,273 | — | 428,238 | 0.752 | 562,362 | 31.3% |
 | 22 | 618,135 | — | 459,704 | 0.744 | 604,540 | 31.5% |
 | 23 | 659,369 | — | 490,760 | 0.744 | 639,739 | 30.4% |
@@ -450,12 +450,15 @@ Three of the five restarts landed on a *different* certified radius-3 optimum th
 left, which is the measurement the design was for: 472,112, 474,038, 476,218 and 469,000 are all
 proven radius-3 local optima of the same instance, spread over 1.5%.
 
-### network20: 519,343 -> 519,207
+### network20: 519,343 -> 519,207 -> 518,305
 
-The same search on network20, seed 20, kicks of 4 to 6 arcs: **519,207 after 18 minutes**,
-−1.738% → −1.764% against best known, seven arcs from the topology it left. Small in value and
-the same lesson in kind — seven arcs is outside radius 3, and outside the radius-4 sweep that
-was running on this instance when the kick found it.
+The same search on network20, seed 20, kicks of 4 to 6 arcs. The first improvement came after
+18 minutes, 519,207, seven arcs from the topology it left. The second came 95 minutes later:
+**518,305, −1.738% → −1.934% against best known**, eight arcs from the first.
+
+Both are outside radius 3, and outside the radius-4 sweep that was running on this very instance
+when the first kick found it. Two improvements on one instance also answer the obvious worry
+about a search with a 24-minute local step: it does keep moving, it is not a one-off.
 
 ### And the headline
 
