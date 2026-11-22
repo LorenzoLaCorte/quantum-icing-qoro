@@ -1,4 +1,4 @@
-# Qoro x QOBLIB hackathon: portfolio_search.py tabu seed=11 1.0min init=zero
+# opus_lab exact MILP (lambda=0 is linear; HiGHS) proven optimal
 instance po_a400_t15_s01
 budget 100
 lambda 0

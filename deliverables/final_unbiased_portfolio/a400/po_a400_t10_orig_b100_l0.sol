@@ -1,8 +1,8 @@
-# opus_lab missing: pool chain-DP + context ILS-tabu
+# opus_lab exact MILP (lambda=0 is linear; HiGHS) proven optimal
 instance po_a400_t10_orig
 budget 100
 lambda 0
-objective -2694202
+objective -2695464
 # period symbol long short
 0 ANET 3 0
 0 AVGO 3 0
@@ -117,6 +117,7 @@ objective -2694202
 3 CRM 0 3
 3 CRWD 0 3
 3 DXCM 0 3
+3 F 0 1
 3 FSLR 3 0
 3 GE 3 0
 3 GIS 3 0
@@ -126,7 +127,6 @@ objective -2694202
 3 LMT 3 0
 3 LULU 0 3
 3 MTD 0 3
-3 MU 0 1
 3 NEE 3 0
 3 NEM 3 0
 3 NVDA 0 3
@@ -146,38 +146,34 @@ objective -2694202
 4 AWK 0 3
 4 CEG 3 0
 4 CHTR 0 3
-4 CMS 0 2
+4 CMS 0 3
 4 CSGP 3 0
 4 DELL 3 0
 4 DRI 0 3
 4 DXCM 3 0
-4 EQT 0 1
 4 ETN 3 0
-4 FE 0 2
 4 GE 3 0
 4 HPQ 0 3
 4 HSY 0 3
-4 IFF 0 1
 4 INTC 0 3
 4 IP 0 3
 4 JBL 3 0
 4 LII 1 0
 4 MCD 0 3
 4 META 3 0
-4 MKC 0 1
 4 NEM 3 0
 4 NFLX 3 0
 4 NOC 0 3
 4 NOW 3 0
 4 NRG 3 0
 4 ODFL 3 0
-4 SBUX 0 1
 4 SMCI 0 3
-4 T 0 1
 4 TSLA 0 3
 4 VST 3 0
 4 WBD 0 3
 4 WDC 3 0
+4 WEC 0 3
+4 ZBRA 0 3
 5 AVB 3 0
 5 BDX 0 3
 5 BLDR 0 3
@@ -228,7 +224,6 @@ objective -2694202
 6 HIG 0 3
 6 LLY 0 3
 6 MCHP 3 0
-6 MPC 0 1
 6 MTD 3 0
 6 NXPI 3 0
 6 ON 3 0
@@ -242,6 +237,7 @@ objective -2694202
 6 SMCI 0 3
 6 TER 3 0
 6 TRV 0 3
+6 TSLA 1 0
 6 VLO 0 3
 6 VST 0 3
 6 WRB 0 3
