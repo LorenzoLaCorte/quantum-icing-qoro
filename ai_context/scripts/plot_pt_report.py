@@ -1,4 +1,4 @@
-"""Generate the network24 report figures from archived search logs."""
+"""Generate the network design report figures from logs and checked solutions."""
 
 import ast
 import math
@@ -25,6 +25,8 @@ RATES = re.compile(r"^temps (\[[^\]]+\]) swap rates (\[[^\]]+\]) acc (\[[^\]]+\]
 ILS_BANK = re.compile(
     r"^(\d{2}:\d{2}:\d{2}) \[seed \d+\] bank: banked (\d+) \([^\n]* was (\d+)\)", re.M
 )
+CHAIN_START = re.compile(r"^\[([\d:]+)\] network(\d+) start (\d+) BKV (\d+)")
+CHAIN_BEST = re.compile(r"^\[([\d:]+)\]\s+NEW BEST network(\d+) (\d+) via (.+?)\s+\(BKV ")
 
 
 def checked_trace(log):
@@ -125,6 +127,81 @@ def plot_diagnostics(log):
     plt.close(figure)
 
 
+def plot_benchmark_comparison():
+    import qoblib_tools as qt
+    from network_design.pipeline import BKV
+
+    nodes = list(range(18, 25))
+    reductions, saturated = [], []
+    for n in nodes:
+        instance = f"network{n:02d}"
+        path = ROOT / "deliverables" / instance / f"{instance}.sol"
+        valid, score, message = qt.check_network_solution(path, n, qt.load_network_demand(n))
+        if not valid:
+            raise ValueError(f"{path.name}: {message}")
+        _, arcs, flows = qt.read_network_solution(path)
+        loads = dict.fromkeys(arcs, 0)
+        for (_, u, v), flow in flows.items():
+            loads[u, v] += flow
+        reductions.append((BKV[n] - score) / BKV[n])
+        saturated.append(sum(load == score for load in loads.values()) / len(arcs))
+
+    figure, (gap, bottlenecks) = plt.subplots(1, 2, figsize=(6.65, 2.25), layout="constrained")
+    gap.bar(nodes, reductions, color="0.35", width=0.6)
+    gap.set(ylim=(0, 0.032), xticks=nodes)
+    gap.yaxis.set_major_locator(MultipleLocator(0.01))
+    gap.yaxis.set_major_formatter(PercentFormatter(1, decimals=0))
+    format_axis(gap, "(a)", "Number of vertices", "Reduction from QOBLIB")
+
+    bottlenecks.plot(nodes, saturated, linestyle="none", marker="o", markersize=4, color="black")
+    bottlenecks.set(ylim=(0, 0.6), xticks=nodes)
+    bottlenecks.yaxis.set_major_locator(MultipleLocator(0.2))
+    bottlenecks.yaxis.set_major_formatter(PercentFormatter(1, decimals=0))
+    format_axis(bottlenecks, "(b)", "Number of vertices", "Arcs at maximum load")
+    figure.savefig(FIGURES / "benchmark-comparison.pdf", metadata={"CreationDate": None})
+    plt.close(figure)
+
+
+def plot_chain_progress(log):
+    started, references, traces = {}, {}, {}
+    for line in log.splitlines():
+        if start := CHAIN_START.match(line):
+            clock, instance, score, reference = start.groups()
+            started[instance] = datetime.strptime(clock, "%H:%M:%S")
+            references[instance] = int(reference)
+            traces[instance] = [(0, int(score), "Warm start")]
+        elif best := CHAIN_BEST.match(line):
+            clock, instance, score, origin = best.groups()
+            seconds = (datetime.strptime(clock, "%H:%M:%S") - started[instance]).total_seconds()
+            if origin.startswith("pair-scan"):
+                label = "Pair scan"
+            elif origin == "qaoa-compound":
+                label = "QAOA compound"
+            else:
+                label = "Descent"
+            traces[instance].append((seconds, int(score), label))
+
+    figure, axes = plt.subplots(2, 3, sharex=True, sharey=True, figsize=(6.65, 3.35), layout="constrained")
+    markers = {"Warm start": "D", "Descent": "o", "Pair scan": "s", "QAOA compound": "^"}
+    for axis, (instance, trace) in zip(axes.flat, traces.items(), strict=True):
+        seconds, scores, labels = zip(*trace)
+        ref = references[instance]
+        gaps = [(score - ref) / ref for score in scores]
+        axis.axhline(0, ls=":", color="0.4", lw=0.8)
+        axis.step(seconds, gaps, where="post", color="black")
+        for time, gap, label in zip(seconds, gaps, labels):
+            axis.plot(time, gap, marker=markers[label], color="black", linestyle="none",
+                      markerfacecolor="white" if label == "Warm start" else "black")
+        format_axis(axis, f"network{instance}", "", "")
+    axes[0, 0].set(xlim=(-4, 96), ylim=(-0.033, 0.024), xticks=(0, 30, 60, 90))
+    axes[0, 0].yaxis.set_major_locator(MultipleLocator(0.02))
+    axes[0, 0].yaxis.set_major_formatter(PercentFormatter(1, decimals=0))
+    figure.supxlabel("Seconds since instance start", fontsize=9)
+    figure.supylabel("Gap to QOBLIB reference", fontsize=9)
+    figure.savefig(FIGURES / "chain-progress.pdf", metadata={"CreationDate": None})
+    plt.close(figure)
+
+
 if __name__ == "__main__":
     plt.rcParams.update({
         "font.family": "serif", "font.serif": ["STIXGeneral"], "font.size": 9,
@@ -143,3 +220,6 @@ if __name__ == "__main__":
         record_log,
     )
     plot_diagnostics(record_log)
+    plot_benchmark_comparison()
+    chain_log = ROOT / "ai_context/quantum_networks/logs/chain_network18-23/run_p1.log"
+    plot_chain_progress(chain_log.read_text())

@@ -2,18 +2,18 @@
 
 Notebook 00 asks for each checked `.sol` file, the instance and binary variable count, the largest quantum program in qubits, the official objective alongside QOBLIB's best-known value, and the method and settings needed to reproduce the result. **Source code is optional under the notebook instructions.** Follow any additional directions Qoro announces at the event. [Handing in](../00_main_qubo_101.ipynb)
 
-| Instance | Solution | Binary variables | Qubits used to produce solution | Checked objective | QOBLIB reference | Gap | Certified |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| `network05` | [network05.sol](network05/network05.sol) | 20 | 0 | 65,500 | 65,500 (proven optimum) | 0.00% | optimal (all 216 topologies) |
-| `network18` | [network18.sol](network18/network18.sol) | 306 | 18 | 472,112 | 473,375 (best known) | −0.27% | radius 3 |
-| `network19` | [network19.sol](network19/network19.sol) | 342 | 18 | 488,895 | 492,924 (best known) | −0.82% | radius 3 |
-| `network20` | [network20.sol](network20/network20.sol) | 380 | 18 | 519,343 | 528,528 (best known) | −1.74% | radius 3 |
-| `network21` | [network21.sol](network21/network21.sol) | 420 | 18 | 562,362 | 569,273 (best known) | −1.21% | radius 3 |
-| `network22` | [network22.sol](network22/network22.sol) | 462 | 18 | 604,540 | 618,135 (best known) | −2.20% | radius 3 |
-| `network23` | [network23.sol](network23/network23.sol) | 506 | 18 | 639,739 | 659,369 (best known) | −2.98% | radius 3 |
-| `network24` | [network24.sol](network24/network24.sol) | 552 | 0 | 657,121 | 663,688 (best known) | −0.99% | radius 3 |
+| Instance | Solution | Binary variables | Qubits used to produce solution | Checked objective | QOBLIB reference | Gap |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| `network05` | [network05.sol](network05/network05.sol) | 20 | 0 | 65,500 | 65,500 (proven optimum) | 0.00% |
+| `network18` | [network18.sol](network18/network18.sol) | 306 | 18 | 473,000 | 473,375 | −0.079% |
+| `network19` | [network19.sol](network19/network19.sol) | 342 | 18 | 488,895 | 492,924 | −0.817% |
+| `network20` | [network20.sol](network20/network20.sol) | 380 | 18 | 519,343 | 528,528 | −1.738% |
+| `network21` | [network21.sol](network21/network21.sol) | 420 | 18 | 562,362 | 569,273 | −1.214% |
+| `network22` | [network22.sol](network22/network22.sol) | 462 | 18 | 606,424 | 618,135 | −1.895% |
+| `network23` | [network23.sol](network23/network23.sol) | 506 | 0 | 639,739 | 659,369 | −2.977% |
+| `network24` | [network24.sol](network24/network24.sol) | 552 | 0 | 657,121 | 663,688 (best known) | −0.99% |
 
-The `network05` and `network24` solutions were found by classical searches. `network18`–`network23` come from a hybrid chain, network23 → network18. Each instance starts from the polished topology of the next larger one with its last node deleted. Exact-LP 2-exchange descent refines it, and a QAOA step (Divi, local Maestro simulator, 18 qubits, p=2) samples combinations of 2-exchange moves to escape local optima. QAOA samples gave direct improvements on network22 and network19 and kicks before later descents on network20, while most of the gain came from the classical descent and the exact pair scan. The search code is [solutions/agent_qcompound/small/qls.py](../solutions/agent_qcompound/small/qls.py). The logs, transcripts and a reading guide are in [ai_context/quantum_networks/](../ai_context/quantum_networks/READ_ME_FIRST.txt). The [network24 report](reports/network24_report_eng.tex) describes how parallel tempering and iterated local search were combined to produce the checked result.
+The [report](reports/network24_report.tex) documents both the classical search for `network24` and the vertex-deletion chain through `network18`. The `network23` solution was found before its first QAOA call. The `network18` and `network21` results came from classical steps with starts inherited from the hybrid chain. The circuit width for those entries records the inherited QAOA stage.
 
 **Every hand-in above is a certified radius-3 local optimum.** The `Certified` column is a proof, not a search result: for each instance, *every* topology differing from the one handed in by two or three arcs has been enumerated and refuted. Degrees force any move between two valid topologies differing in k arcs to be a derangement of the heads of those k arcs, so each radius is finite — 630 moves at radius 2 and 14,280 at radius 3 on 18 nodes, 1,128 and 34,592 on 24 — and [TheGOAT_Testing/certify_descent.py](../TheGOAT_Testing/certify_descent.py) enumerates them all against a warm dual simplex bounded at the incumbent, taking the single best improving move and repeating until a pass comes back empty. `network05` is stronger still: all 216 valid topologies were scored, so its optimum is proven outright.
 
@@ -23,8 +23,11 @@ The portfolio hand-in (QOBLIB 06, 221 configurations, 6 below the best-known val
 
 ## Method and settings
 
+The [selected portfolio solutions](portfolio/README.md) cover five improvements over published best-known values and 65 optimum matches, including three results reached by PCE quantum large-neighborhood search. The folder contains 70 primary files and three classical DP alternatives, with source paths and verification results in its audit. The [portfolio report](reports/portfolio_report.tex) gives the formulation, methods, and experimental evidence.
+
 - `network05` used seed `0`, a random starting topology, degree-preserving link swaps, and exact LP routing. The verification command uses a batch of 8 moves, 2 LP workers, and a 0.2-minute budget. The banked sequence was 83,000 → 81,500 → 74,000 → 71,500 → 65,500. [Banking log](../solutions/log.csv) · [Methodology and reproduction](../ai_context/README.md#network05-from-83000-to-the-proven-optimum)
 - `network24` followed a PT → ILS → PT sequence. PT run `r6` supplied the 670,621 topology. ILS run `run8` reduced it to 661,760, then PT run `r7` reached 657,121 after 62 seconds from that warm start. The report gives the settings for all three runs. [Initial PT log](../ai_context/logs/parallel_tempering/pt_r6.log) · [ILS log](../ai_context/logs/ils_stdout/ils_run8.out) · [Final PT log](../ai_context/logs/parallel_tempering/pt_r7.log)
+- `network18`–`network23` used vertex-deletion warm starts and exact-LP two-arc descent. A two-layer, 18-qubit QAOA routine sampled compound moves on Divi's local Maestro simulator. [Search code](../solutions/agent_qcompound/small/qls.py) · [Run log](../ai_context/quantum_networks/logs/chain_network18-23/run_p1.log) · [Replay instructions](../ai_context/quantum_networks/READ_ME_FIRST.txt)
 
 ## Verify and build
 
@@ -32,8 +35,9 @@ From the repo root, run the referee on each submitted file.
 
 ```bash
 source venv/bin/activate
-NETWORK_SOL_DIR=deliverables/network05 python network_pipeline.py status
-NETWORK_SOL_DIR=deliverables/network24 python network_pipeline.py status
+for instance in network05 network{18..24}; do
+  NETWORK_SOL_DIR="deliverables/$instance" python network_pipeline.py status
+done
 ```
 
 ### Replay the network24 stages
@@ -54,13 +58,13 @@ For the initial PT run, use the same PT settings with `--minutes 30 --seed 7 --t
 
 ### Build the report
 
-Open the repo folder in VS Code with the LaTeX Workshop extension installed. With [the report](reports/network24_report_eng.tex) active, run **LaTeX Workshop: Build LaTeX project** from the Command Palette, then **LaTeX Workshop: View LaTeX PDF file**. The [workspace recipe](../.vscode/settings.json) uses XeLaTeX and writes to `deliverables/reports/build/`. If VS Code cannot find `latexmk`, make sure the TeX installation is on its PATH. On macOS with MacTeX, launch VS Code from a terminal that has `/Library/TeX/texbin` on its PATH. [LaTeX Workshop build documentation](https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile)
+Open the repo folder in VS Code with the LaTeX Workshop extension installed. With [the report](reports/network24_report.tex) active, run **LaTeX Workshop: Build LaTeX project** from the Command Palette, then **LaTeX Workshop: View LaTeX PDF file**. The [workspace recipe](../.vscode/settings.json) uses XeLaTeX and writes to `deliverables/reports/build/`. If VS Code cannot find `latexmk`, make sure the TeX installation is on its PATH. On macOS with MacTeX, launch VS Code from a terminal that has `/Library/TeX/texbin` on its PATH. [LaTeX Workshop build documentation](https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile)
 
 The equivalent terminal build from the repo root is
 
 ```bash
 latexmk -cd -xelatex -synctex=1 -interaction=nonstopmode -file-line-error \
-  -halt-on-error -outdir=build deliverables/reports/network24_report_eng.tex
+  -halt-on-error -outdir=build deliverables/reports/network24_report.tex
 ```
 
 For optional code sharing, the solver implementations live in [network_design/](../network_design/), the referee is [qoblib_tools.py](../qoblib_tools.py), and the Python dependencies are in [requirements.txt](../requirements.txt). Submitting a benchmark to QOBLIB is a separate process with its own checker and submission metadata. [QOBLIB contribution guide](https://github.com/ZIB-AOPT/QOBLIB/blob/main/CONTRIBUTING.md)

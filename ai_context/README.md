@@ -1,6 +1,6 @@
 # Methodology and run evidence
 
-The [PT–ILS–PT report](../deliverables/reports/network24_report_eng.tex) explains the search
+The [network design report](../deliverables/reports/network24_report.tex) explains the search
 that reached 657,121 on `network24`. The [original English overview](reports/network24_report_eng.tex)
 covers the broader experiment history and the Divi comparison. The [hand-in folder](../deliverables/)
 contains the final checked solutions.
@@ -71,7 +71,8 @@ extract only the `"type":"assistant"` text messages, rather than reading them wh
 | File | What it is |
 |---|---|
 | `make_report_eng.py` | Original ReportLab generator for the [archived English overview](reports/network24_report_eng.tex). |
-| `plot_pt_report.py` | Rebuilds the judge report's figures from the archived PT and ILS logs. Run `python ai_context/scripts/plot_pt_report.py` from the repo root with Matplotlib installed. |
+| `plot_pt_report.py` | Rebuilds the report figures from the archived PT, ILS, and compound-move logs and the checked network solutions. Run `python -m ai_context.scripts.plot_pt_report` from the repo root with Matplotlib installed. |
+| `plot_portfolio_report.py` | Rebuilds the portfolio report figures from the saved PCE JSON traces, classical logs, and solution audit. Run `python -m ai_context.scripts.plot_portfolio_report` from the repo root. |
 | `analyze.py` | Summarises the Divi experiment log `solutions/agent_divi/divi_run_divi_s1.jsonl` (sampler comparison table). |
 
 ## divi_docs_context7.md
