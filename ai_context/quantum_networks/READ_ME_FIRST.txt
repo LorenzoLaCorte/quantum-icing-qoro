@@ -23,6 +23,10 @@ Every .sol file below passes the official checker (qoblib_tools.check_network_so
   network24  552        0            657,121    663,688     -0.99%   deliverables/network24/network24.sol (unchanged; classical, found earlier)
   network17  272        16           445,682    437,000     +1.99%   not handed in (above BKV)
 
+network06-network17 were run with the same method on 2026-11-22: see
+section 6. Four match proven optima (06-09), network12 matches its reference
+value, and the rest stay 0.5-2% above QOBLIB.
+
 The QOBLIB BKVs for network11-23 come from one parallel-tempering submission
 (20260818_ParallelTempering_Gupta). Our network24 (657,121) was already lower
 than that submission's network23 BKV (659,369), even though network23 is a
@@ -194,7 +198,76 @@ Re-run the winning chain (needs qoro-divi 0.16.2; about 30 minutes; one process)
   numbers can differ.
 
 ======================================================================
-6. OPEN POINTS / IDEAS NOT YET DONE
+6. SECOND ROUND: network06-network17 (2026-11-22, 08:28-09:05 CET)
+======================================================================
+
+Same search (small/qls.py), extended with three options:
+  --start random   start from a random valid topology instead of a .sol
+  early stop       stop an instance once it matches a proven optimum (network05-10)
+  tiny-pool guard  skip the QAOA step when fewer than 3 candidate moves exist
+bank.BKV now also holds the network05-10 optima.
+
+Processes (all QAOA p=2, MonteCarloOptimizer(population_size=16), MaestroSimulator(shots=4000)):
+  q1: --start deliverables/network18/network18.sol, deletion chain 17 -> 11,
+      4.5 min each, nq 18, qiters 8
+  q2: --start random --start-n 17, chain 17 -> 14, 7.5 min each, nq 16, qiters 6
+  q3: --start random --start-n 13, chain 13 -> 8 (7 min for 13-11, 3 min for 10-8),
+      nq 16, qiters 6
+  q4: network10 from a new random start. Killed early for RAM (another
+      session's jobs left under 1 GB); its 214,200 was never banked.
+  q5: network10 from a random start, 8 min (seed 32)
+In q2 and q3, every instance after the first was derived by node deletion from
+the polished larger instance, exactly as in round 1.
+
+Results (best over the processes, each checked with the official checker,
+files in deliverables/networkNN/networkNN.sol):
+  instance   variables  our score  QOBLIB value         gap      from
+  network06  30         101,000    101,000 (optimal)    0.00%    smoke run (random start at 7, chain 7->6, seed 5)
+  network07  42         142,400    142,400 (optimal)    0.00%    smoke run (same)
+  network08  56         170,231    170,231 (optimal)    0.00%    q3
+  network09  72         196,750    196,750 (optimal)    0.00%    q3
+  network10  90         215,077    210,800 (optimal)    +2.03%   q5
+  network11  110        240,889    238,334              +1.07%   q3
+  network12  132        276,474    276,474 (reference)  0.00%    q1
+  network13  156        304,273    300,620              +1.22%   q1
+  network14  182        344,910    343,091              +0.53%   q2
+  network15  210        376,305    370,870              +1.47%   q1
+  network16  240        403,637    397,908              +1.44%   q1
+  network17  272        442,158    437,000              +1.18%   q1
+
+Takeaways:
+- No BKV was beaten below network18. The network18-23 gains came from the
+  very strong network24 topology, the product of long PT and ILS runs, and
+  the deletion chain loses quality with each node removed. Random starts
+  with about 5-7 minutes per instance are not enough to reach the
+  parallel-tempering BKVs.
+- network10 (only 90 variables) did not reach its proven optimum in about
+  11 minutes over two random starts. The 2-exchange landscape there seems to
+  have deep local optima, so many more restarts are needed.
+- The log labels show where improvements came from. "qaoa-compound" appears
+  often (for example, the final best of network13 and network10). Check the
+  "bestcomp ... k=, bestpair=" fields on the line before each NEW BEST to see
+  whether the QAOA compound did better than the exact best pair (k >= 3 and
+  bestcomp < bestpair) or matched it (k = 2).
+
+The smoke run's own log file was deleted before the real runs. Its output
+is only in the main session transcript (search for "smoke_small").
+
+Logs: ai_context/quantum_networks/logs/chain_network06-17/
+  run_q1.log ... run_q5.log  (structured log per process)
+  q1.out ... q5.out          (raw stdout)
+  log.csv                    (every banked solution, both rounds)
+
+Reproduce one process, e.g. q3 (from the repo root; --end is a wall-clock
+stop time today, HH:MM:SS):
+  PYTHONPATH=. python solutions/agent_qcompound/small/qls.py --start random --start-n 13 --chain 13,12,11,10,9,8 --minutes 7,7,7,3,3,3 --seed 23 --tag q3 --nq 16 --qiters 6 --end HH:MM:SS
+
+Note: other sessions later improved network18-23 further with a simulated
+Grover search (network_design/quantum_congestion.py). For the current
+hand-in values, see deliverables/README.md.
+
+======================================================================
+7. OPEN POINTS / IDEAS NOT YET DONE
 ======================================================================
 - A fair A/B test: same chain with the QAOA proposer replaced by SA, or by
   random compounds, at an equal LP budget. Without it, no claim that quantum

@@ -1,6 +1,6 @@
 """bank(n, arcs, method, outdir): integral routing -> .sol -> official checker -> log. Returns score or None."""
 import csv, datetime, os, qoblib_tools as qt
-BKV={11:238334,12:276474,13:300620,14:343091,15:370870,16:397908,17:437000,18:473375,19:492924,20:528528,21:569273,22:618135,23:659369,24:663688}
+BKV={5:65500,6:101000,7:142400,8:170231,9:196750,10:210800,11:238334,12:276474,13:300620,14:343091,15:370870,16:397908,17:437000,18:473375,19:492924,20:528528,21:569273,22:618135,23:659369,24:663688}
 def bank(n, arcs, method, outdir):
     D=qt.load_network_demand(n)
     arcs=[tuple(map(int,a)) for a in arcs]
