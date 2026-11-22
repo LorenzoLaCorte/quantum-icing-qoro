@@ -213,13 +213,32 @@ On `network18`, the weakest hand-in at −0.079%:
 | 2 | 3 | 10,885 | 112 s | none better → certified |
 
 **473,000 → 472,112 in 247 s, gap to best known from −0.08% to −0.27%**, checked by QOBLIB's
-own checker and installed as the hand-in. The move that did it is a 3-rotation — a move type
-the team's ILS already samples. It was missed because the ILS samples the neighbourhood and
-this exhausts it, which is the whole point: on an instance that several hours of heuristic
-search had polished, enumerating 14,280 moves found something in two minutes.
+own checker and installed as the hand-in.
 
-The starting topology came from the team's hybrid chain, so the 18-qubit QAOA step stays in
-this solution's ancestry; the final refinement is classical and exhaustive.
+Then the same descent over the rest of the chain, one worker each:
+
+| instance | arcs | start | final | gap | r = 3 scan | certified |
+|---|---:|---:|---:|---:|---:|---|
+| network18 | 36 | 473,000 | **472,112** | −0.27% | 10,887 LPs, 126 s | radius 3 |
+| network19 | 38 | 488,895 | 488,895 | −0.82% | 13,062 LPs, 154 s | radius 3 |
+| network20 | 40 | 519,343 | 519,343 | −1.74% | 15,509 LPs, 211 s | radius 3 |
+| network21 | 42 | 562,362 | 562,362 | −1.21% | 18,247 LPs, 265 s | radius 3 |
+| network22 | 44 | 606,424 | **604,540** | −2.20% | 21,286 LPs, 456 s | radius 3 |
+| network23 | 46 | 639,739 | 639,739 | −2.98% | 24,647 LPs, 610 s | radius 3 |
+
+**Two hand-ins improved, all six certified, in 40 minutes on one core.** Both improving moves
+are 3-rotations — a move type the chain's ILS already samples — and that is the finding:
+sampling a neighbourhood is not exhausting it. On instances several hours of heuristic search
+had polished, enumerating fourteen to twenty-one thousand moves found something in minutes.
+
+The starting topologies came from the team's hybrid chain, so the 18-qubit QAOA step stays in
+these solutions' ancestry; only the final refinement is classical and exhaustive.
+
+One detail for the radius-4 scan still running on network24. The nine derangements of a
+4-subset split into six 4-cycles and **three double transpositions**, and a double transposition
+is exactly two disjoint 2-exchanges applied together — the compound move the team's QAOA step
+was built to find. Radius 4 on network24 therefore enumerates all C(48,4) × 3 = 583,740 pairs
+of disjoint 2-exchanges, exhaustively rather than by sampling.
 
 ## What did not work, and why
 
