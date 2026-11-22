@@ -234,13 +234,19 @@ had polished, enumerating fourteen to twenty-one thousand moves found something 
 The starting topologies came from the team's hybrid chain, so the 18-qubit QAOA step stays in
 these solutions' ancestry; only the final refinement is classical and exhaustive.
 
-### Radius 4 on network18: 472,112 holds
+### Radius 4 on network18 and network19
 
-| radius | moves | distinct valid | LPs cut by the bound | improving | time |
-|---:|---:|---:|---:|---:|---:|
-| 2 | 630 | 490 | 490 | 0 | 5 s |
-| 3 | 14,280 | 10,885 | 10,885 | 0 | 115 s |
-| 4 | 530,145 | 370,545 | 370,545 | 0 | 4,527 s |
+| instance | radius | moves | distinct valid | LPs cut by the bound | improving | time |
+|---|---:|---:|---:|---:|---:|---:|
+| network18 | 2 | 630 | 490 | 490 | 0 | 5 s |
+| network18 | 3 | 14,280 | 10,885 | 10,885 | 0 | 115 s |
+| network18 | 4 | 530,145 | 370,545 | 370,545 | 0 | 4,527 s |
+| network19 | 2 | 703 | 551 | 551 | 0 | 9 s |
+| network19 | 3 | 16,872 | 13,062 | 13,062 | 0 | 226 s |
+| network19 | 4 | 664,335 | 472,184 | 472,184 | 0 | 9,651 s |
+
+**`network19`'s 488,895 is a certified radius-4 local optimum**, 485,797 LPs over 2 h 41 on one
+core, every one abandoned by the dual simplex at the incumbent bound.
 
 **472,112 is a certified radius-4 local optimum**: 381,920 LPs, 77 minutes on one core, every
 one abandoned by the dual simplex as soon as the incumbent bound was reached. 30% of the
