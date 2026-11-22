@@ -1,4 +1,88 @@
-# Portfolio optimisation (QOBLIB 06): classical hand-in
+# Portfolio optimisation (QOBLIB 06-portfolio) hand-in
+
+This folder holds two sets of solutions:
+
+* **Highlights** (one subfolder per configuration): our selected results, from the quantum pipeline (PCE-QLNS) and from classical pool-DP + LNS. They are described in [Highlights](#highlights).
+* **Full classical sweep** (flat `.sol` files at this level): 221 configurations from the classical search in [portfolio_search.py](../../portfolio_search.py). They are described in [Full classical sweep](#full-classical-sweep).
+
+The two sets were produced independently. When a configuration appears in both, the two files are different solutions, and the better one is not always in the same set. For example, `po_a050_t10_s00` at λ=1e-2 is −19,785 in the sweep and −17,675 in the highlights, while `po_a200_t10_orig` at λ=1e-3 is −818,362 in the highlights and −809,239 in the sweep. The tables below give each file's own checked objective.
+
+## Highlights
+
+This section lists our highlighted portfolio results. Each instance folder holds one `.sol` file in QOBLIB's canonical format. Every file passes QOBLIB's official Rust checker (`06-portfolio/check`) and the Python referee (`qoblib_tools.PortfolioModel.score`). For both, a lower score is better. Gap = (our score − QOBLIB reference) / |reference|, so a negative gap beats QOBLIB. The full write-up is the [portfolio report](../../portfolio_QIcing/report/portfolio_qicing.pdf).
+
+The selection has three groups:
+
+* **Beats QOBLIB:** 5 best-known values improved on 50-asset instances. All five came from classical search.
+* **First value:** `a200` and `a400`, where QOBLIB lists no solution.
+* **Quantum:** the best result of the quantum pipeline (PCE quantum large-neighbourhood search), where it comes within 20% of the reference.
+
+The other 64 `a010` instances match QOBLIB exactly. Our exact dynamic program proves them optimal, so they are not repeated here.
+
+"Binary variables" is the size of QOBLIB's reference QUBO model (`bqp_u3_c10`, 3 unit copies per asset and direction, 4+7 slack bits per day). Our quantum runs use a compact equivalent QUBO: 630 variables for `a010_t10` and 3,090 for `a050_t10`.
+
+| Instance | B | λ | Solution | Binary variables | Qubits used | Checked objective | QOBLIB reference | Gap |
+| --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| **Beats QOBLIB** | | | | | | | | |
+| `po_a050_t10_s00` | 20 | 1e-2 | [.sol](po_a050_t10_s00_b020_l1e-2/po_a050_t10_s00_b020_l1e-2.sol) | 3,110 | 0 | −17,675 | −12,340 (best known) | −43.23% |
+| `po_a050_t15_orig` | 20 | 1e-2 | [.sol](po_a050_t15_orig_b020_l1e-2/po_a050_t15_orig_b020_l1e-2.sol) | 4,665 | 0 | −45,031 | −31,504 (best known) | −42.94% |
+| `po_a050_t10_s02` | 20 | 1e-2 | [.sol](po_a050_t10_s02_b020_l1e-2/po_a050_t10_s02_b020_l1e-2.sol) | 3,110 | 0 | −45,069 | −43,565 (best known) | −3.45% |
+| `po_a050_t15_s02` | 20 | 1e-2 | [.sol](po_a050_t15_s02_b020_l1e-2/po_a050_t15_s02_b020_l1e-2.sol) | 4,665 | 0 | −41,517 | −40,622 (best known) | −2.20% |
+| `po_a050_t10_s00` | 20 | 5e-4 | [.sol](po_a050_t10_s00_b020_l5e-4/po_a050_t10_s00_b020_l5e-4.sol) | 3,110 | 0 | −234,587 | −234,259 (best known) | −0.14% |
+| **First value** | | | | | | | | |
+| `po_a200_t10_orig` | 50 | 1e-3 | [.sol](po_a200_t10_orig_b050_l1e-3/po_a200_t10_orig_b050_l1e-3.sol) | 12,110 | 0 | −818,362 | none | first value |
+| `po_a400_t10_orig` | 100 | 1e-3 | [.sol](po_a400_t10_orig_b100_l1e-3/po_a400_t10_orig_b100_l1e-3.sol) | 24,110 | 0 | −1,896,257 | none | first value |
+| **Quantum** | | | | | | | | |
+| `po_a010_t10_orig` | 4 | 1e-4 | [.sol](po_a010_t10_orig_b004_l1e-4/po_a010_t10_orig_b004_l1e-4.sol) | 710 | 9 | −69,482 | −69,482 (proven optimal by our DP) | 0.000% |
+| `po_a010_t10_orig` | 4 | 5e-4 | [.sol](po_a010_t10_orig_b004_l5e-4/po_a010_t10_orig_b004_l5e-4.sol) | 710 | 9 | −27,044 | −27,044 (proven optimal by our DP) | 0.000% |
+| `po_a010_t10_orig` | 4 | 1e-3 | [.sol](po_a010_t10_orig_b004_l1e-3/po_a010_t10_orig_b004_l1e-3.sol) | 710 | 9 | −8,397 | −8,397 (proven optimal by our DP) | 0.000% |
+| `po_a010_t10_s02` | 4 | 1e-4 | [.sol](po_a010_t10_s02_b004_l1e-4/po_a010_t10_s02_b004_l1e-4.sol) | 710 | 9 | −53,220 | −53,255 (proven optimal by our DP) | +0.066% |
+| `po_a050_t10_s00` | 20 | 1e-4 | [.sol](po_a050_t10_s00_b020_l1e-4/po_a050_t10_s00_b020_l1e-4.sol) | 3,110 | 9 | −340,222 | −355,530 (best known) | +4.31% |
+| `po_a050_t10_s00` | 20 | 1e-3 | [.sol](po_a050_t10_s00_b020_l1e-3/po_a050_t10_s00_b020_l1e-3.sol) | 3,110 | 9 | −157,229 | −191,879 (best known) | +18.06% |
+
+### Highlights: method and settings
+
+Each `.sol` header records the method, the full settings, and whether a quantum circuit produced it. The copies here are byte-identical to the originals in [portfolio_QIcing/solutions/](../../portfolio_QIcing/solutions/), which keeps every run.
+
+- **Quantum (PCE-QLNS).** [run_qlns.py](../../portfolio_QIcing/run_qlns.py) starts from an empty portfolio and repeatedly picks a window of 5–6 assets over one or two days. It builds the exact conditional sub-QUBO of the compact model and solves it with Divi PCE (`n_layers=3`, at most 9 qubits, 4,000 shots, local Maestro simulator). It accepts the best feasible spliced sample. The `a010` results chain 2–3 runs from empty: 0.22 M circuits for λ=1e-4, 0.29 M for 5e-4, 0.91 M for 1e-3 and 0.73 M for `s02`. The `a050` results are single 30-minute runs from empty: seeds 22 and 21, 0.90 M and 0.94 M circuits.
+- **Classical (pool-DP + LNS).** [lns.py](../../portfolio_QIcing/lns.py) / [run_lns.py](../../portfolio_QIcing/run_lns.py) work in three steps. First they build a per-day candidate pool (convex relaxation rounded at many scales, pair-move descent, ILS, SA). Then an exact DP picks one pool vector per day with the true transaction costs. Finally an LNS re-optimises k ≤ 4 assets exactly over all days, for 150–232 s with seed 0. The `a050_t10_s02` result comes from a 120 s `run_lns.solve` run with seed 1, the equal-wall-time baseline for the parallel-tempering experiments.
+
+| Deliverable | Original file |
+| --- | --- |
+| `po_a010_t10_orig_b004_l1e-3` | `po_a010_t10_orig_b004_l1e-3__qlns-pce__20261121-223909.sol` |
+| `po_a010_t10_orig_b004_l1e-4` | `po_a010_t10_orig_b004_l1e-4__qlns-pce__20261121-221811.sol` |
+| `po_a010_t10_orig_b004_l5e-4` | `po_a010_t10_orig_b004_l5e-4__qlns-pce__20261121-222829.sol` |
+| `po_a010_t10_s02_b004_l1e-4` | `po_a010_t10_s02_b004_l1e-4__qlns-pce__20261121-223909.sol` |
+| `po_a050_t10_s00_b020_l1e-2` | `po_a050_t10_s00_b020_l1e-2__lns__20261121-221132.sol` |
+| `po_a050_t10_s00_b020_l1e-3` | `po_a050_t10_s00_b020_l1e-3__qlns-pce__20261121-235627.sol` |
+| `po_a050_t10_s00_b020_l1e-4` | `po_a050_t10_s00_b020_l1e-4__qlns-pce__20261121-235627.sol` |
+| `po_a050_t10_s00_b020_l5e-4` | `po_a050_t10_s00_b020_l5e-4__lns__20261121-221402.sol` |
+| `po_a050_t10_s02_b020_l1e-2` | `po_a050_t10_s02_b020_l1e-2__pooldp__20261122-002024.sol` |
+| `po_a050_t15_orig_b020_l1e-2` | `po_a050_t15_orig_b020_l1e-2__lns__20261121-222308.sol` |
+| `po_a050_t15_s02_b020_l1e-2` | `po_a050_t15_s02_b020_l1e-2__lns__20261121-222307.sol` |
+| `po_a200_t10_orig_b050_l1e-3` | `po_a200_t10_orig_b050_l1e-3__lns__20261121-222313.sol` |
+| `po_a400_t10_orig_b100_l1e-3` | `po_a400_t10_orig_b100_l1e-3__lns__20261121-222416.sol` |
+
+## Verify
+
+This builds QOBLIB's official checker and runs it on the highlight files in the subfolders. The full sweep is verified with the Python scorer, see [Full classical sweep: verify](#full-classical-sweep-verify).
+
+Build QOBLIB's checker once (it needs a Rust toolchain), then run it on every file from the repo root.
+
+```bash
+git clone --depth 1 --filter=blob:none --sparse https://github.com/ZIB-AOPT/QOBLIB.git /tmp/qoblib
+git -C /tmp/qoblib sparse-checkout set 06-portfolio/check
+(cd /tmp/qoblib/06-portfolio/check && cargo build --release)
+
+for f in deliverables/portfolio/*/*.sol; do
+  /tmp/qoblib/06-portfolio/check/target/release/check_portfolio \
+    qoblib_data/06-portfolio/instances "$f" | tail -1
+done
+```
+
+Each line should read `Solution successfully verified`. The checker reads the instance, budget and λ from the file header.
+
+## Full classical sweep
 
 This folder holds 221 checked `.sol` files for QOBLIB 06, multi-period portfolio optimisation (notebook 01). They cover 221 (instance, budget, λ) configurations, from `po_a010_t10` (710 binary variables) to `po_a400_t15` (36,165 binary variables). All of them come from a **classical** search: no quantum program was used, so the qubit count is 0. The search code is [portfolio_search.py](../../portfolio_search.py). The logs, the run history and a reading guide are in [ai_context/portfolio_classical/](../../ai_context/portfolio_classical/READ_ME_FIRST.txt).
 
@@ -11,7 +95,7 @@ This folder holds 221 checked `.sol` files for QOBLIB 06, multi-period portfolio
 
 The budget B is 4, 20, 50 and 100 open units for 10, 50, 200 and 400 assets. λ = 0 was run only for the 12 `po_a200`/`po_a400` seed instances (`s00`–`s02`), and the tiny `a003`–`a005` instances were not run. "Binary variables" is the size of the notebook's official QUBO (`qoblib_tools.PortfolioQUBO`): 6 position bits per asset and day plus 11 slack bits per day.
 
-## Verify
+### Full classical sweep: verify
 
 Every file is re-scored with `qoblib_tools.PortfolioModel.score`, the notebook's port of QOBLIB's checker. It reproduces the published objective of QOBLIB's reference solutions exactly. From the repo root:
 
@@ -23,7 +107,7 @@ PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py status   # o
 
 The run of 2026-11-22 printed `OK` for the first 125 files ([verify_official_scorer.txt](../../ai_context/portfolio_classical/logs/verify_official_scorer.txt)) and for the 96 seed-instance files ([verify log of the seed campaign](../../ai_context/portfolio_classical/logs/campaign_seeds/verify_official_scorer.txt)).
 
-## Method and settings
+### Method and settings
 
 The model is rewritten on one integer per asset and day, v = long − short in −3..3. Holding long and short units of the same asset at once never helps. The cost then equals the official score, which `python portfolio_search.py selftest` checks on random states against `PortfolioModel.score_arrays`. Four moves are combined:
 
@@ -45,7 +129,7 @@ PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py run \
 
 ¹ **Provenance note for `po_a050_t10_orig`, λ = 1e-2.** The file comes from a run started from QOBLIB's published reference solution (`--init …/po_a050_t10_orig_b020_l1e-2.bst.sol`, objective −37,107). That run improved it to −44,208. It is a valid improvement of the published solution, but not an independent result. An independent 3-minute run from the empty portfolio, with the campaign settings (hybrid, seed 11), reached −34,853, which is 6.07% above the best-known value ([log](../../ai_context/portfolio_classical/logs/development/a050_t10_orig_1e-2_independent_from_zero.log)).
 
-## All configurations
+### All configurations
 
 Objectives are minimised, so a negative gap means below the QOBLIB best-known value. Those gaps are in bold.
 

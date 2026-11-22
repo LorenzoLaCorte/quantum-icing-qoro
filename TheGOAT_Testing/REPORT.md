@@ -33,7 +33,17 @@ compound-move search on network24 (SA matched or beat QAOA in 21/21 rounds,
    blocks reach 0.17–0.23 of the way from SA's optimum to a random permutation; quantum natural
    gradient costs 6,782 circuits per block for no gain; QN-SPSA matches Monte Carlo with a third
    of the circuits.
-6. **Angle warm start halves the optimizer's distance to the QUBO optimum, and the LP does not
+7. **The certificate machinery moved three other hand-ins, and bounds how much is left.**
+   What could not beat network24 beat its smaller siblings. Exhaustive radius-3 descent took
+   `network18` to 472,112 and `network22` to 604,540 (section 7); kicking a *proven* optimum by
+   five arcs and exhausting radius 3 again took `network18` to **469,000**, −0.27% → −0.92%
+   against best known, and `network20` to 519,207 (section 10). The winning topology on
+   network18 is **ten arcs** from the certified one, which is the clearest thing measured all
+   night about what a local certificate buys. And from the other side, a bound that holds for
+   every 2-in/2-out topology puts every hand-in within 28.5–32.3% of the true optimum
+   (section 9) — the one number here that no better search can improve.
+
+8. **Angle warm start halves the optimizer's distance to the QUBO optimum, and the LP does not
    follow.** Starting each block from the previous block's best angles: gap 0.100 vs 0.202 cold
    (4 blocks, same 412 circuits), but the LP value of the resulting candidates was better in 1
    block and worse in 3. A better-optimized surrogate is not a better topology: the bottleneck is
@@ -234,11 +244,228 @@ had polished, enumerating fourteen to twenty-one thousand moves found something 
 The starting topologies came from the team's hybrid chain, so the 18-qubit QAOA step stays in
 these solutions' ancestry; only the final refinement is classical and exhaustive.
 
-One detail for the radius-4 scan still running on network24. The nine derangements of a
-4-subset split into six 4-cycles and **three double transpositions**, and a double transposition
-is exactly two disjoint 2-exchanges applied together — the compound move the team's QAOA step
-was built to find. Radius 4 on network24 therefore enumerates all C(48,4) × 3 = 583,740 pairs
-of disjoint 2-exchanges, exhaustively rather than by sampling.
+### Radius 4 on network18 and network19
+
+| instance | radius | moves | distinct valid | LPs cut by the bound | improving | time |
+|---|---:|---:|---:|---:|---:|---:|
+| network18 | 2 | 630 | 490 | 490 | 0 | 5 s |
+| network18 | 3 | 14,280 | 10,885 | 10,885 | 0 | 115 s |
+| network18 | 4 | 530,145 | 370,545 | 370,545 | 0 | 4,527 s |
+| network19 | 2 | 703 | 551 | 551 | 0 | 9 s |
+| network19 | 3 | 16,872 | 13,062 | 13,062 | 0 | 226 s |
+| network19 | 4 | 664,335 | 472,184 | 472,184 | 0 | 9,651 s |
+
+**`network19`'s 488,895 is a certified radius-4 local optimum**, 485,797 LPs over 2 h 41 on one
+core, every one abandoned by the dual simplex at the incumbent bound.
+
+**472,112 is a certified radius-4 local optimum**: 381,920 LPs, 77 minutes on one core, every
+one abandoned by the dual simplex as soon as the incumbent bound was reached. 30% of the
+enumerated moves are not distinct valid topologies — a duplicated arc, a self-loop, or a
+permutation that rebuilds the same topology — and are rejected before the LP.
+
+That certificate was true and the hand-in is no longer that topology. §10 found **469,000** on
+network18, and it differs from 472,112 in **ten** arcs — outside every radius any certificate
+here can reach. The two results do not conflict: nothing within four arcs of 472,112 is better,
+and the thing that is better was never within four arcs. It is the cleanest statement in this
+report about what a local certificate does and does not buy.
+
+The nine derangements of a 4-subset split into six 4-cycles and **three double transpositions**,
+and a double transposition is exactly two disjoint 2-exchanges applied together — the compound
+move the team's QAOA step was built to find. Radius 4 therefore contains all C(36,4) × 3 =
+176,715 pairs of disjoint 2-exchanges on network18, and all C(48,4) × 3 = 583,740 of them on
+network24, enumerated rather than sampled.
+
+## 8. How much further the certificate can reach
+
+Each radius costs a factor of thirty: radius 3 on network18 is 10,885 LPs, radius 4 is 370,545,
+radius 5 would be about 11 million and radius 6 about 400 million. At the measured 12 ms a move
+that is 37 hours and 55 days. Two ways out were measured, and neither works.
+
+### A cheap lower bound in place of the LP (`bound_prune.py`)
+
+The certificate only needs to know whether a candidate *can* beat the incumbent, so a valid
+lower bound that already reaches the incumbent would let it skip the LP and stay a proof. LP
+duality hands one over for free: for any nonnegative arc weights `w`,
+
+    z(arcs)  >=  1000 * sum_ij d_ij dist_w(i,j) / sum_a w_a
+
+Unit weights give the demand-weighted hop bound; the incumbent's own duals give the weights that
+are optimal *there*, and the script checks that it reproduces the LP to six digits as a test of
+the dual extraction. On a candidate the k new arcs have no dual, so they are filled with 0, the
+mean or the max. 800 sampled candidates of network18 at radii 3 and 4:
+
+| weights | ms | valid bound | bound / LP | pruned at the incumbent |
+|---|---:|---|---:|---:|
+| incumbent duals, new arcs 0 | 1.46 | yes | 0.849 | 33.5% |
+| incumbent duals, new arcs mean | 1.22 | yes | 0.853 | 3.9% |
+| incumbent duals, new arcs max | 1.15 | yes | 0.810 | 1.4% |
+| unit (hop bound) | 1.10 | yes | 0.897 | 20.0% |
+
+Every bound held on every sample, and every one is far too loose. Candidates around a polished
+incumbent sit a fraction of a percent above it, so pruning needs a bound within a fraction of a
+percent; the best of these is 15% low. The ceiling on the idea is **1.27x** — a third of the
+candidates skipped at 1.5 ms against 12 ms for the exact answer. Radius 5 needs 20x.
+
+The reason is the same one that sinks the hop count as a surrogate, and it is worth stating
+because it generalises: the objective is a *max* over arcs, so the dual concentrates on the few
+congested ones (13 of 36 arcs carry the whole dual on network18), and a radius-k move is chosen
+precisely to disturb those arcs. The weights that certify the incumbent are the weights a
+promising candidate invalidates. Re-tightening them per candidate *is* the dual simplex, which
+is what the warm LP already does in 12 ms.
+
+### Re-deriving the chain, and where the hand-ins' quality actually comes from (`node_deletion.py`)
+
+The hand-ins network18–23 were built downwards, each from the next larger topology with a node
+deleted. `node_deletion.py` goes back down and enumerates the whole step: delete a node, repair
+the four broken degrees (two ways), relabel, score with the exact LP.
+
+The demand matrices are exactly nested — `load_network_demand(n)` is `load_network_demand(n+1)`
+cut to its leading block, asserted in the tests — so deleting the **last** node is the only
+deletion that keeps every survivor's demand attached to its own label. The measurement says that
+is also the best one, at every level and by a wide margin: on all 44 deletions of network22, the
+chain's node gives 568,429 and the next best is 587,516, +4.5%.
+
+What the full sweep shows is more interesting than the node choice. Delete one node from the
+hand-in above, repair the degrees, and stop — no search of any kind:
+
+| n | delete a node and stop | vs best known | our polished hand-in | vs best known | what polishing added |
+|---:|---:|---:|---:|---:|---:|
+| 18 | 481,400 | +1.70% | 472,112 | −0.27% | 1.97% |
+| 19 | 502,600 | +1.96% | 488,895 | −0.82% | 2.80% |
+| 20 | 529,967 | +0.27% | 519,343 | −1.74% | 2.05% |
+| 21 | 568,429 | −0.15% | 562,362 | −1.21% | 1.08% |
+| 22 | 610,880 | −1.17% | 604,540 | −2.20% | 1.05% |
+| 23 | 642,084 | −2.62% | 639,739 | −2.98% | 0.37% |
+
+**At n = 21, 22 and 23, deleting a single node from the solution one level up already beats
+QOBLIB's published best-known value for that instance** — with no search at that level at all.
+The level above is of course not free, but everything the hybrid chain then does at each level,
+over hours of ILS, parallel tempering and QAOA sampling, is worth between 0.37% and 2.80%.
+
+That is a statement about the instance family, not about the search: these demand matrices are
+nested, so a good solution at n = 24 contains a good solution at every smaller n, and the whole
+descending chain is carried by the quality of the one topology at the top. It also says where
+the remaining effort belongs. Improving network24 by one point improves the floor of all six
+instances below it; improving network18 improves network18.
+
+The improved `network22` does buy its child a better start — 568,429 against the old 573,625,
+two topologies three arcs apart — and a radius-3 descent from it is the one branch of the chain
+that was never run with this ancestor.
+
+## 9. A bound from below: how far from optimal can the hand-ins be? (`instance_bound.py`)
+
+Everything above bounds the optimum from *above* -- a solution is an upper bound, and a
+certificate says no nearby solution is better. Nothing so far says the optimum is not far
+below. This does, for every 2-in/2-out topology at once, in microseconds.
+
+1. Each unit of demand from i to j crosses at least `dist(i,j)` arcs, so the total load over all
+   arcs is at least `sum_ij d_ij dist(i,j)`.
+2. Out-degree 2 caps proximity: at most 2 nodes at distance 1 from i, 4 more at distance 2, 8 at
+   distance 3 (the directed Moore bound). For a fixed multiset of distances the sum in (1) is
+   smallest when the largest demands take the shortest distances, so sorting row i downwards and
+   assigning it to 1, 1, 2, 2, 2, 2, 3, ... lower-bounds `sum_j d_ij dist(i,j)` for *every*
+   topology. In-degree 2 gives the same argument on the columns; both hold, so take the larger.
+3. The objective is the maximum arc load, which is at least the average, total / 2n.
+
+Independently, all demand leaving node i must go out on its 2 arcs, so the busiest arc carries
+at least `sum_j d_ij / 2`. On these instances that is weaker, but the maximum of valid bounds is
+valid.
+
+| n | QOBLIB reference | proven? | bound | bound / reference | our hand-in | provable gap |
+|---:|---:|---|---:|---:|---:|---:|
+| 5 | 65,500 | yes | 63,000 | 0.962 | 65,500 | 4.0% |
+| 6 | 101,000 | yes | 99,500 | 0.985 | — | — |
+| 7 | 142,400 | yes | 133,000 | 0.934 | — | — |
+| 8 | 170,231 | yes | 153,000 | 0.899 | — | — |
+| 9 | 196,750 | yes | 173,000 | 0.879 | — | — |
+| 10 | 210,800 | yes | 173,000 | 0.821 | — | — |
+| 18 | 473,375 | — | 362,111 | 0.765 | 469,000 | 29.5% |
+| 19 | 492,924 | — | 372,184 | 0.755 | 488,895 | 31.4% |
+| 20 | 528,528 | — | 392,650 | 0.743 | 518,305 | 32.0% |
+| 21 | 569,273 | — | 428,238 | 0.752 | 562,362 | 31.3% |
+| 22 | 618,135 | — | 459,704 | 0.744 | 604,540 | 31.5% |
+| 23 | 659,369 | — | 490,760 | 0.744 | 639,739 | 30.4% |
+| 24 | 663,688 | — | 511,229 | 0.770 | 657,121 | 28.5% |
+
+The bound holds on all twenty instances with a published value, which the tests assert, and
+QOBLIB proves the optimum for n = 5..10, so its looseness is measurable where the truth is
+known: **1.5% below the optimum at n = 6, 3.8% at n = 5, then 6.6%, 10.1%, 12.1%, 17.9%** as n
+grows and both the Moore step and the max-versus-average step weaken. From n = 11 it flattens
+at 0.74-0.77 of the best-known value and stays flat to n = 24.
+
+Two readings, and only one of them is a proof.
+
+The proof: **every network hand-in is within 28.5% to 32.3% of the true optimum**, and that is
+the first statement in this repo that cannot be improved by a better search -- only by a better
+bound. `network05` shows the scale: it sits 4.0% above the bound and is nevertheless optimal.
+
+The inference, which is not a proof: the ratio is flat across fourteen instances where the
+optimum is unknown, and decaying where it is known. A family of best-known values that drifted
+away from optimal as n grew would show the ratio falling, not flattening. So the large instances
+are not a different regime from the small ones -- but a uniformly good family and a uniformly
+bad one look the same from here, and this bound cannot separate them.
+
+## 10. Certified local optima are plural (`certified_ils.py`)
+
+The re-derived chain start for network21 gave a negative result and a better idea. Descending
+from it -- 568,429, the deletion of the improved network22 -- lands on **565,343, a certified
+radius-3 local optimum that is worse than the 562,362 already handed in**. The experiment fails:
+the improved ancestor does not buy a better child.
+
+What it shows is that network21 has at least two proven radius-3 local optima, 3,086 apart, and
+that the one we hold was reached by luck of trajectory rather than by any property of the
+landscape. network05 makes the same point at a scale where everything is checkable: 10 arcs, 216
+valid topologies, the optimum proven at 65,500 -- and a radius-3 descent from a kicked start
+still stalls at 70,000, because radius 3 on 10 arcs cannot see the whole space either.
+
+So the certificate is worth turning into an iterated local search. The team's ILS samples
+2-exchanges, 3-rotations and cycle reversals and stops when it stops improving, which is a
+statement about the sampler. Here the local search *exhausts* radius 2..3, so each stop is a
+proven local optimum, and the certified radius tells the kick exactly how far it must reach to
+escape: kicks of 5, 6 and 7 arcs on an incumbent certified to 4.
+
+One detail the tests caught. A radius-k move does not always land k arcs away: every node has
+in-degree 2, so two arcs in the chosen subset can share a head, and swapping those two heads
+rebuilds the same pair. Inside the certificate that is harmless -- such a move was already
+enumerated at a smaller radius -- but a kick that lands inside the exhausted radius is undone by
+the first descent step, so `kick()` measures the distance and draws again.
+
+Validation on network05, where the answer is known: 61 restarts, every one returning to 65,500,
+one distinct optimum, spread 0.
+
+### network18: 472,112 -> 469,000
+
+| restart | kick | after the kick | descended to | LPs | time |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 6 | 548,858 | 474,038 | 13,818 | 196 s |
+| 2 | 6 | 552,334 | 476,218 | 16,257 | 258 s |
+| 3 | 5 | 516,500 | 472,112 | 14,307 | 182 s |
+| 4 | 5 | 541,385 | 472,112 | 12,844 | 193 s |
+| 5 | 5 | 567,000 | **469,000** | 37,538 | 565 s |
+
+**469,000, gap −0.92% against QOBLIB's 473,375** — from −0.27%, in five restarts and
+twenty-four minutes on one core. Checked by QOBLIB's own checker and installed as the hand-in.
+
+Three of the five restarts landed on a *different* certified radius-3 optimum than the one they
+left, which is the measurement the design was for: 472,112, 474,038, 476,218 and 469,000 are all
+proven radius-3 local optima of the same instance, spread over 1.5%.
+
+### network20: 519,343 -> 519,207 -> 518,305
+
+The same search on network20, seed 20, kicks of 4 to 6 arcs. The first improvement came after
+18 minutes, 519,207, seven arcs from the topology it left. The second came 95 minutes later:
+**518,305, −1.738% → −1.934% against best known**, eight arcs from the first.
+
+Both are outside radius 3, and outside the radius-4 sweep that was running on this very instance
+when the first kick found it. Two improvements on one instance also answer the obvious worry
+about a search with a 24-minute local step: it does keep moving, it is not a one-off.
+
+### And the headline
+
+**469,000 differs from 472,112 in ten of thirty-six arcs.** The radius-4
+certificate on 472,112 enumerated 530,145 moves and was right about every one of them. The
+better solution was simply never inside it. A certificate bounds a neighbourhood; it says
+nothing about the instance, and the only way past it is to leave.
 
 ## What did not work, and why
 
@@ -248,6 +475,8 @@ of disjoint 2-exchanges, exhaustively rather than by sampling.
 | soft read-out of PCE (per-cell expectations → Hungarian) | no better than bitstrings | the expectations are far from the QUBO optimum: the optimizer, not the read-out, limits |
 | swap variables (y = 1 if two arcs swap heads), exact second-order QUBO | without a trust region SA and PCE score worse than random | the QUBO optimum stacks many swaps, where third-order terms dominate; a cost per swap fixes SA, not PCE |
 | quantum natural gradient | gap 0.204 at 6,782 circuits per block | no gain over Monte Carlo (0.172) or QN-SPSA (0.182 at 412 circuits) |
+| weak-duality bound in place of the LP in the certificate | valid on 800/800 samples, 15% too loose, 1.27x ceiling | the objective is a max over arcs; the dual concentrates on the congested few and a radius-k move disturbs exactly those |
+| deleting a node other than the last to re-derive the chain | best alternative +4.5%, the chain's choice +1.1% | the demand matrices are nested, so only the last node keeps every survivor's demand on its own label |
 | QAOA at 25 qubits on qoro_gpu | 16 min and ~34 credits per step | each batch of 20 circuits is 84 s of GPU time with the 800-string exchange mixer; blocks of 5 arcs are small enough that every proposer finds the block optimum |
 
 ## Reproduce

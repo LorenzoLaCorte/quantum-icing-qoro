@@ -1,8 +1,8 @@
-# Quantum LNS (qlns-qaoa); start=qbest seed=21 kround=16 kmove=7 p_round=0.7 p_block=0.0 noise=0.15 iters=455 layers=5 shots=4000 retrain=300 cloud=False qaoa_calls=455 circuits=1068 train_circuits=158 max_qubits=18
+# paired-transfer QAOA (p=3, local statevector, <=16 qubits, 448 shots); start=portfolio_quantum/solutions/po_a050_t15_s01_b020_l5e-4/po_a050_t15_s01_b020_l5e-4__paired-transfer-qaoa__20261122-054309.sol (-304307); seed=11 minutes=35.0 steps=8905 circuits=166110
 instance po_a050_t15_s01
 budget 20
 lambda 0.0005
-objective -304271
+objective -304333
 # period symbol long short
 0 ABT 0 2
 0 ADBE 0 2
@@ -181,16 +181,18 @@ objective -304271
 12 UNH 0 2
 12 V 1 0
 12 WFC 1 0
-13 AAPL 3 0
-13 ABBV 1 0
+13 AAPL 2 0
+13 ACN 1 0
+13 ADBE 1 0
 13 BAC 3 0
 13 CRM 0 2
 13 DIS 1 0
 13 GE 0 1
 13 GS 1 0
-13 IBM 0 1
-13 JPM 0 2
+13 IBM 0 2
+13 JPM 0 1
 13 MS 0 1
+13 TMUS 0 1
 13 UNH 1 0
 13 WFC 1 0
-13 XOM 0 2
+13 XOM 0 1

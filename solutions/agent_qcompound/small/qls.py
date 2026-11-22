@@ -15,6 +15,7 @@ from network_ils import WarmLP, move_2ex
 import shrink, bank
 
 OUT = 'solutions/agent_qcompound/small'
+OPTIMAL = {5, 6, 7, 8, 9, 10}  # QOBLIB status 'optimal': stop once matched
 ap = argparse.ArgumentParser()
 ap.add_argument('--start'); ap.add_argument('--start-n', type=int)
 ap.add_argument('--chain'); ap.add_argument('--minutes')
@@ -79,6 +80,7 @@ class Search:
     def compound(self, deltas, label):
         """QAOA compound step. Returns (z_best_compound, arcs, info)."""
         N = min(args.nq, len(deltas))
+        if N < 3: return (np.inf, None, None), (np.inf, None)
         cand = [(p, q) for _, p, q in deltas[:N]]; d = np.array([x[0] for x in deltas[:N]])
         J = {}; conflict = set()
         for i, j in itertools.combinations(range(N), 2):
@@ -154,6 +156,7 @@ class Search:
             nimp, deltas = self.descent(deadline)
             self.upd(origin if origin != 'descent' else 'descent')
             if deltas is None or time.time() > deadline - 15: break
+            if self.n in OPTIMAL and np.ceil(self.best[0] - 1e-6) <= bank.BKV[self.n]: log(f'  network{self.n:02d} at the proven optimum'); break
             log(f' cyc{cyc} local opt {self.z:.0f} ({nimp} imps, origin {origin}); best {self.best[0]:.0f}')
             (zc, newc, idx), (zp, mvp) = self.compound(deltas, f'cyc{cyc}')
             if mvp is not None and zp < self.z - 0.5 and (newc is None or zp < zc - 0.5):
@@ -179,7 +182,10 @@ class Search:
         return self.best
 
 
-_, arcs, _ = qt.read_network_solution(args.start)
+if args.start == 'random':  # random valid topology on --start-n nodes
+    arcs = qt.random_topology(args.start_n, rng)
+else:
+    _, arcs, _ = qt.read_network_solution(args.start)
 arcs = [tuple(map(int, a)) for a in arcs]; n = args.start_n
 chain = [int(x) for x in args.chain.split(',')]; mins = [float(x) for x in args.minutes.split(',')]
 for k, NN in enumerate(chain):

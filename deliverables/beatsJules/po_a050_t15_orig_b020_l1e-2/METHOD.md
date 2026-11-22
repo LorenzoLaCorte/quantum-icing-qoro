@@ -1,0 +1,1 @@
+Classical (0 qubits): a stronger per-day candidate pool (randomised rounding of each day's convex relaxation, then pair-move descent and iterated local search) fed to an exact chain DP over days, then exact-DP LNS polish (`portfolio_QIcing/reset-3AM/strongpool.py`).

@@ -1,1 +1,14 @@
-{"settings": "start=qbest seed=21 kround=16 kmove=7 p_round=0.7 p_block=0.0 noise=0.15 iters=455 layers=5 shots=4000 retrain=300 cloud=False qaoa_calls=455 circuits=1068 train_circuits=158 max_qubits=18", "start": -303567, "final": -304271, "bkv": [-304289.0, "best known"], "accepted": [{"it": 23, "kind": "round", "qubits": 15, "gain": -150, "obj": -303717, "t": 1795312508.2}, {"it": 31, "kind": "round", "qubits": 16, "gain": -8, "obj": -303725, "t": 1795312512.2}, {"it": 178, "kind": "round", "qubits": 16, "gain": -161, "obj": -303886, "t": 1795312595.3}, {"it": 251, "kind": "day:corr", "qubits": 14, "gain": -103, "obj": -303989, "t": 1795312630.3}, {"it": 365, "kind": "round", "qubits": 16, "gain": -282, "obj": -304271, "t": 1795312760.6}], "hit_checks": 23, "hits": 10, "max_qubits": 16}
+{
+"settings": "paired-transfer QAOA (p=3, local statevector, <=16 qubits, 448 shots); start=portfolio_quantum/solutions/po_a050_t15_s01_b020_l5e-4/po_a050_t15_s01_b020_l5e-4__paired-transfer-qaoa__20261122-054309.sol (-304307); seed=11 minutes=35.0 steps=8905 circuits=166110",
+"start": -304307,
+"final": -304333,
+"accepted": [
+{
+"step": 7819,
+"day": 13,
+"obj": -304333,
+"gain": -26,
+"circuits": 145907
+}
+]
+}

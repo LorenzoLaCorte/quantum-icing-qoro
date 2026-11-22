@@ -80,7 +80,7 @@ def _cd(R, lin, sc, absc, wprev, aprev, wnext, bnext, mu, ub, v, sweeps, tol):
     return v
 
 
-def solve_day(p, v_int, t, sweeps=400, tol=1e-6, iters=40, R_override=None, tilt=None, budget=None, ub_mask=None):
+def solve_day(p, v_int, t, sweeps=400, tol=1e-6, iters=40, R_override=None, tilt=None, budget=None, ub_mask=None, capital=True):
     """Relaxed optimum of day t with days t-1, t+1 fixed at v_int.  Returns float vector."""
     n, ub = p.n, float(p.ub)
     B = float(p.budget if budget is None else budget)
@@ -98,24 +98,56 @@ def solve_day(p, v_int, t, sweeps=400, tol=1e-6, iters=40, R_override=None, tilt
     aprev = v_int[t - 1].astype(np.float64) if t > 0 else np.zeros(n)
     wnext = p.w[t + 1].astype(np.float64) if t + 1 < p.T else np.zeros(n)
     bnext = v_int[t + 1].astype(np.float64) if t + 1 < p.T else np.zeros(n)
-    v = v_int[t].astype(np.float64).copy()
-    v = _cd(R, lin, sc, absc, wprev, aprev, wnext, bnext, 0.0, ub, v, sweeps, tol)
-    if np.abs(v).sum() <= B + 1e-6:
-        return v, 0.0
-    lo, hi = 0.0, 1.0
-    while True:
-        w = _cd(R, lin, sc, absc, wprev, aprev, wnext, bnext, hi, ub, v.copy(), sweeps, tol)
-        if np.abs(w).sum() <= B:
+    v0 = v_int[t].astype(np.float64).copy()
+
+    def budget_solve(shift, v_start, sweeps_, iters_):
+        ln = lin + shift
+        v = _cd(R, ln, sc, absc, wprev, aprev, wnext, bnext, 0.0, ub, v_start.copy(), sweeps_, tol)
+        if np.abs(v).sum() <= B + 1e-6:
+            return v, 0.0
+        lo, hi = 0.0, 1.0
+        while True:
+            w = _cd(R, ln, sc, absc, wprev, aprev, wnext, bnext, hi, ub, v.copy(), sweeps_, tol)
+            if np.abs(w).sum() <= B:
+                break
+            lo, hi = hi, hi * 4
+        best = w
+        for _ in range(iters_):
+            mid = 0.5 * (lo + hi)
+            w = _cd(R, ln, sc, absc, wprev, aprev, wnext, bnext, mid, ub, best.copy(), sweeps_, tol)
+            if np.abs(w).sum() <= B:
+                hi, best = mid, w
+            else:
+                lo = mid
+            if hi - lo < 1e-3 * max(1.0, hi):
+                break
+        return best, hi
+
+    v, mu = budget_solve(0.0, v0, sweeps, iters)
+    if not capital:
+        return v, mu
+    # capital rule C - maxcash <= sum v <= C: a multiplier nu on sum v, found by bisection, keeps the
+    # relaxed day inside it (with one unit of margin), so its rounding window has feasible points
+    cap_hi, cap_lo = p.C - 1.0, p.C - p.maxcash + 1.0
+    net = v.sum()
+    if cap_lo <= net <= cap_hi:
+        return v, mu
+    sgn = 1.0 if net > cap_hi else -1.0
+    target = cap_hi if sgn > 0 else cap_lo
+    lo_nu, hi_nu, best = 0.0, 50.0, None
+    for _ in range(12):  # grow until the net is on the right side
+        w, m = budget_solve(sgn * hi_nu, v, sweeps // 2, 20)
+        if (w.sum() <= target) if sgn > 0 else (w.sum() >= target):
+            best = (w, m)
             break
-        lo, hi = hi, hi * 4
-    best = w
-    for _ in range(iters):
-        mid = 0.5 * (lo + hi)
-        w = _cd(R, lin, sc, absc, wprev, aprev, wnext, bnext, mid, ub, best.copy(), sweeps, tol)
-        if np.abs(w).sum() <= B:
-            hi, best = mid, w
+        lo_nu, hi_nu = hi_nu, hi_nu * 3
+    if best is None:
+        return v, mu
+    for _ in range(10):
+        mid = 0.5 * (lo_nu + hi_nu)
+        w, m = budget_solve(sgn * mid, best[0], sweeps // 2, 20)
+        if (w.sum() <= target) if sgn > 0 else (w.sum() >= target):
+            hi_nu, best = mid, (w, m)
         else:
-            lo = mid
-        if hi - lo < 1e-3 * max(1.0, hi):
-            break
-    return best, hi
+            lo_nu = mid
+    return best

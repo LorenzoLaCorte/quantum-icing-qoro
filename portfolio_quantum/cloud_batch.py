@@ -40,6 +40,9 @@ def main():
     ap.add_argument("--angles", default=str(Path(__file__).resolve().parent / "angles" / "a050_l1e-3.json"))
     ap.add_argument("--local", action="store_true", help="Maestro simulator instead of the cloud (testing)")
     ap.add_argument("--warm", type=float, default=0.0, help="share of windows seeded from the relaxation's rounding")
+    ap.add_argument("--variants", type=int, default=1, help="windows per day and round (different noise/band)")
+    ap.add_argument("--band", type=float, default=0.0, help="slots with frac within band of 0/1 get no qubit")
+    ap.add_argument("--grouped", action="store_true", help="grouped Dicke start (budget + capital exact)")
     a = ap.parse_args()
 
     p = ps.Problem(a.inst, a.lam)
@@ -63,7 +66,8 @@ def main():
         credits0 = float(svc.get_credit_balance()["balance"])
     # one solver per thread (programs keep their own state); angles read-only (no retraining)
     solvers = [qs.QAOASolver(layers=a.layers, shots=a.shots, cloud=not a.local, seed=a.seed + k,
-                             retrain_every=10**9, angles_file=None) for k in range(p.T)]
+                             retrain_every=10**9, angles_file=None, grouped_dicke=True)
+               for k in range(p.T * a.variants)]
     lib = json.loads(Path(a.angles).read_text())
     for sv in solvers:
         sv.library["xy"] = np.array(lib[f"xy_p{a.layers}"])
@@ -78,30 +82,36 @@ def main():
         days = [t for t in range(p.T - 1) if t % 2 == parity]
         windows = []
         for t in days:
-            w = qlns.round_window(s, t, rng, a.kround, noise=a.noise * rng.random())
-            if w is not None:
-                windows.append((t, w, qlns.round_window.prior.copy(), rng.random() < a.warm))
+            for var in range(a.variants):
+                noise = 0.0 if var == 0 else a.noise * rng.random()
+                band = a.band if var % 2 == 0 else a.band / 2
+                w = qlns.round_window(s, t, rng, a.kround, noise=noise, band=band)
+                if w is not None:
+                    windows.append((t, w, qlns.round_window.prior.copy(), rng.random() < a.warm))
         t0 = time.time()
 
         def job(item):
             k, (t, (tmp, moves, hw), prior, warm) = item
             if hw is None and len(moves) > 22:  # free-weight windows would add slack: keep them small
                 moves, prior = moves[:22], prior[:22]
-            seed = qlns.warm_seed(prior, hw) if (warm and hw is not None) else None
+            seed = qlns.warm_seed(prior, hw) if ((warm or a.grouped) and hw is not None) else None
             res = qlns.run_window(s, tmp, moves, solvers[k], True, hw=hw, seed=seed, prior=prior)
             return t, moves, res
 
         with ThreadPoolExecutor(max_workers=len(windows)) as ex:
             results = list(ex.map(job, enumerate(windows)))
         v_new = s.v.copy()
-        gains = []
+        best_day = {}
         for t, moves, res in results:
             if res is None:
                 continue
             v2, obj, ncand, e = res
-            if obj < s.obj:  # this day's window alone improves the incumbent
-                v_new[t] = v2[t]
-                gains.append((t, obj - s.obj, len(moves)))
+            if obj < s.obj and (t not in best_day or obj < best_day[t][0]):  # best variant per day
+                best_day[t] = (obj, v2[t].copy(), len(moves))
+        gains = []
+        for t, (obj, row, nq) in best_day.items():
+            v_new[t] = row
+            gains.append((t, obj - s.obj, nq))
         new_obj = p.objective(v_new)
         expect = s.obj + sum(g for _, g, _ in gains)
         assert new_obj == expect, (new_obj, expect)  # independence of same-parity days
@@ -110,7 +120,19 @@ def main():
               f"{len(gains)} improved, {s.obj} -> {new_obj}", flush=True)
         log.append(dict(round=r, programs=len(windows), max_qubits=qubits, improved=len(gains),
                         obj=new_obj, seconds=round(time.time() - t0)))
+        improved_round = new_obj < s.obj
         s = qc.State(p, v_new)
+        if improved_round:  # never lose progress: save after every improving round
+            circ = sum(sv.circuits for sv in solvers)
+            path, obj = qlns.save(p, s.v, "qlns-qaoa-cloudbatch", f"start={a.start} kround={a.kround} band={a.band} "
+                                  f"variants={a.variants} grouped={a.grouped} round={r} cloud={not a.local} "
+                                  f"circuits={circ} max_qubits={max(sv.max_qubits for sv in solvers)}", log)
+            with open(path.with_suffix(".log.json"), "w") as fh:
+                json.dump(dict(settings=f"start={a.start} kround={a.kround} band={a.band} variants={a.variants} "
+                               f"grouped={a.grouped} cloud={not a.local} circuits={circ} "
+                               f"max_qubits={max(sv.max_qubits for sv in solvers)}",
+                               start=start, final=s.obj, rounds=log), fh)
+            print("  saved", path.name, obj, flush=True)
     circuits = sum(sv.circuits for sv in solvers)
     maxq = max(sv.max_qubits for sv in solvers)
     used = None

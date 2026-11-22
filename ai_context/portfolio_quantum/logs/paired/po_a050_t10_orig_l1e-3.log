@@ -1,0 +1,4 @@
+po_a050_t10_orig_b020_l1e-3: start -205672 from deliverables/portfolio/po_a050_t10_orig_b020_l1e-3.sol
+step 259 day 1: -205699 (-27), circuits 3081
+final -205699 (start -205672), 10474 steps, 121517 QAOA circuits
+saved /home/danie/quantum-icing-qoro/portfolio_quantum/solutions/po_a050_t10_orig_b020_l1e-3/po_a050_t10_orig_b020_l1e-3__paired-transfer-qaoa__20261122-061837.sol -205699
