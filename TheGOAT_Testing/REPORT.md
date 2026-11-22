@@ -16,10 +16,12 @@ compound-move search on network24 (SA matched or beat QAOA in 21/21 rounds,
    `network_qlns` sub-QUBO ranks rewirings with Spearman 0.33–0.67 against the exact LP; the
    demand-weighted hop count reaches 0.85–0.89 and puts the LP-best rewiring first in 6/6
    blocks. Every quantum run below samples a QUBO learned from the hop count.
-2. **The 657,121 hand-in is a strict local optimum for block moves.** Six blocks enumerated
-   exhaustively (r = 6–7, 72–2,428 valid rewirings each): zero improving rewirings, the
-   incumbent is the unique best. 182 time-limited MILP block steps (r = 8–16, `network_lns.py`):
-   zero improvements.
+2. **No block move found anything better than 657,121.** Six blocks enumerated exhaustively
+   (r = 6–7, 72–2,428 valid rewirings each): zero improving rewirings. 182 time-limited MILP
+   block steps (r = 8–16, `network_lns.py`): zero improvements, though most hit the 20 s limit
+   without closing. *This is evidence, not a certificate*: those six blocks are six subsets out
+   of the C(48,6) ≈ 12.3 million there are. Section 6 says what a certificate would cost and
+   provides the script; it has not been run.
 3. **Quantum proposers run in the loop on the full network24 instance, always valid, at
    14–25 qubits.** Hungarian decoding makes every PCE sample a valid topology; the QAOA
    warm-started at the incumbent with a 2-exchange mixer keeps 100% of raw samples on valid
@@ -118,6 +120,73 @@ and the best of 1,500 hop-ranked samples in most blocks with cell variables), bu
 learned QUBO finds better candidates, and a local search started from quantum candidates ends
 where one started from random candidates ends. On blocks of 4–5 arcs every proposer finds the
 block optimum, so the 16- and 25-qubit runs show validity and scale, not an edge.
+
+## 5. A surrogate that models the max instead of bounding it — measured, and it fails
+
+Every surrogate above (`hops`, `bound`, the team sub-QUBO) is the weak-duality bound
+`sum_ij d_ij dist_w(i,j) / sum_a w_a`: a **sum** over paths, while the referee minimises a
+**max** over links. That gap is where the remaining margin lives — the hand-in is 6.74% above
+its own hop bound (657,121 against 615,604) and its routing leaves many links at the maximum —
+and it explains why the hop count ranks block rewirings at rho 0.85–0.89 but collapses to
+rho 0.17 among already-good topologies (section 4).
+
+So `load_surrogate.py` routes the demand instead of bounding it: all-pairs shortest paths with
+the demand split evenly over equal-length paths, loads accumulated per arc, the arc weights
+then raised on congested arcs and the routing repeated. Its maximum is a feasible routing's
+maximum, hence an *upper* bound on the LP where the hop count is a lower one.
+
+| | value on the hand-in | vs the LP | time |
+|---|---|---|---|
+| exact LP (referee) | 657,121 | — | **60 ms** |
+| ECMP, 1 iteration | 813,000 | +23.7% | 17 ms |
+| congestion-aware, 6 iterations | 777,000 | +18.2% | 68 ms |
+
+**The idea is dead, and the reason is worth keeping: the exact LP costs 60 ms.** A surrogate
+has to be much cheaper than that to be worth any approximation error, and a routing good enough
+to track the LP is not. The premise that the referee is expensive — which is what justifies a
+surrogate for *ranking* candidates at all — does not hold at n = 24. Surrogates are still
+needed for the one thing an LP cannot be: the closed-form quadratic a sampler optimises.
+
+## 6. What a certificate would cost, and the script for it (`certify_radius.py`, not run)
+
+Degrees pin the neighbourhood down exactly. If two 2-in/2-out topologies differ in k arcs, each
+node loses as many out-arcs as it gains, and the same for in-arcs, so the added arcs carry
+exactly the removed arcs' tails and heads: the move is a **permutation of the heads of those k
+arcs**, and a permutation fixing an arc is a smaller move. The radius-k neighbourhood is
+therefore every k-subset times every **derangement** of k — finite and enumerable:
+
+| radius | subsets | derangements | moves | note |
+|---|---:|---:|---:|---|
+| 2 | 1,128 | 1 | **1,128** | the 2-exchange scan the team's ILS already does |
+| 3 | 17,296 | 2 | **34,592** | the two 3-rotations per triple |
+| 4 | 194,580 | 9 | **1,751,220** | |
+| 6 | 12,271,512 | 265 | 3.3 billion | the regime the six enumerated blocks sampled |
+
+This claim is what the certificate rests on, so it is checked by brute force rather than
+asserted: `tests/test_certify_radius.py` enumerates all 216 valid topologies of network05 and
+confirms that every one within distance 5 of a reference is reached by a derangement of exactly
+the differing arcs (32 tests pass).
+
+`certify_radius.py` enumerates those moves against a warm-started dual simplex with
+`objective_bound` at the incumbent, so HiGHS abandons a candidate as soon as it can prove it is
+no better instead of solving it. At the cold-LP rate of 60 ms, r = 2 is about a minute and
+r = 3 about 17 minutes on 2 workers; with the bound cutting most candidates early it should be
+well under that, and r = 4 is the first radius that is out of reach overnight.
+
+**Status: written and unit-tested, never executed.** Every attempt to run it on this machine
+was refused by the sandbox's auto-mode classifier, including the plainest form
+(`venv/bin/python TheGOAT_Testing/certify_radius.py --r 2`), while `pytest` and the other
+scripts ran normally. Nothing in the report above depends on it. One command gives the result:
+
+```bash
+venv/bin/python TheGOAT_Testing/certify_radius.py --n 24 --r 3 --workers 2
+```
+
+If it comes back clean it upgrades verdict 2 from evidence to proof — *every* topology within
+three arcs of the hand-in is no better — which is a stronger statement than any search result,
+and it also draws the line where the quantum proposer earns its place: radii 2 and 3 are
+settled by enumeration, and the LNS blocks at r = 8–10 are past the point where that is
+possible.
 
 ## What did not work, and why
 
