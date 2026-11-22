@@ -253,6 +253,68 @@ move the team's QAOA step was built to find. Radius 4 therefore contains all C(3
 176,715 pairs of disjoint 2-exchanges on network18, and all C(48,4) × 3 = 583,740 of them on
 network24, enumerated rather than sampled.
 
+## 8. How much further the certificate can reach
+
+Each radius costs a factor of thirty: radius 3 on network18 is 10,885 LPs, radius 4 is 370,545,
+radius 5 would be about 11 million and radius 6 about 400 million. At the measured 12 ms a move
+that is 37 hours and 55 days. Two ways out were measured, and neither works.
+
+### A cheap lower bound in place of the LP (`bound_prune.py`)
+
+The certificate only needs to know whether a candidate *can* beat the incumbent, so a valid
+lower bound that already reaches the incumbent would let it skip the LP and stay a proof. LP
+duality hands one over for free: for any nonnegative arc weights `w`,
+
+    z(arcs)  >=  1000 * sum_ij d_ij dist_w(i,j) / sum_a w_a
+
+Unit weights give the demand-weighted hop bound; the incumbent's own duals give the weights that
+are optimal *there*, and the script checks that it reproduces the LP to six digits as a test of
+the dual extraction. On a candidate the k new arcs have no dual, so they are filled with 0, the
+mean or the max. 800 sampled candidates of network18 at radii 3 and 4:
+
+| weights | ms | valid bound | bound / LP | pruned at the incumbent |
+|---|---:|---|---:|---:|
+| incumbent duals, new arcs 0 | 1.46 | yes | 0.849 | 33.5% |
+| incumbent duals, new arcs mean | 1.22 | yes | 0.853 | 3.9% |
+| incumbent duals, new arcs max | 1.15 | yes | 0.810 | 1.4% |
+| unit (hop bound) | 1.10 | yes | 0.897 | 20.0% |
+
+Every bound held on every sample, and every one is far too loose. Candidates around a polished
+incumbent sit a fraction of a percent above it, so pruning needs a bound within a fraction of a
+percent; the best of these is 15% low. The ceiling on the idea is **1.27x** — a third of the
+candidates skipped at 1.5 ms against 12 ms for the exact answer. Radius 5 needs 20x.
+
+The reason is the same one that sinks the hop count as a surrogate, and it is worth stating
+because it generalises: the objective is a *max* over arcs, so the dual concentrates on the few
+congested ones (13 of 36 arcs carry the whole dual on network18), and a radius-k move is chosen
+precisely to disturb those arcs. The weights that certify the incumbent are the weights a
+promising candidate invalidates. Re-tightening them per candidate *is* the dual simplex, which
+is what the warm LP already does in 12 ms.
+
+### Re-deriving the chain from the improved ancestor (`node_deletion.py`)
+
+The hand-ins network18–23 were built downwards, each from the next larger topology with a node
+deleted. `network22` has since improved to 604,540 — after everything below it had been derived
+from the old 606,424 — so the levels below were grown from a worse ancestor. `node_deletion.py`
+goes back down: delete a node, repair the four broken degrees (two ways), relabel, score with
+the exact LP.
+
+The demand matrices are exactly nested (`load_network_demand(n)` is `load_network_demand(n+1)`
+cut to its leading block, asserted in the tests), so deleting the **last** node is the only
+deletion that keeps every survivor's demand attached to its own label. That is the deletion the
+chain used, and the measurement says it was the right one: on all 44 deletions of network22,
+
+| deletion | network21 start | vs the 562,362 hand-in |
+|---|---:|---:|
+| node 21 (the chain's choice) | 568,429 | +1.1% |
+| node 20 | 587,516 | +4.5% |
+| node 19 | 590,485 | +5.0% |
+
+Every other node is at least 4.5% worse, so there is no untried basin hiding in the node choice.
+What the improved ancestor does buy is a better start at the same node: **568,429 against the old
+573,625**, two topologies three arcs apart. A radius-3 descent from it is the one experiment the
+chain never got to run.
+
 ## What did not work, and why
 
 | attempt | measured | reason |
@@ -261,6 +323,8 @@ network24, enumerated rather than sampled.
 | soft read-out of PCE (per-cell expectations → Hungarian) | no better than bitstrings | the expectations are far from the QUBO optimum: the optimizer, not the read-out, limits |
 | swap variables (y = 1 if two arcs swap heads), exact second-order QUBO | without a trust region SA and PCE score worse than random | the QUBO optimum stacks many swaps, where third-order terms dominate; a cost per swap fixes SA, not PCE |
 | quantum natural gradient | gap 0.204 at 6,782 circuits per block | no gain over Monte Carlo (0.172) or QN-SPSA (0.182 at 412 circuits) |
+| weak-duality bound in place of the LP in the certificate | valid on 800/800 samples, 15% too loose, 1.27x ceiling | the objective is a max over arcs; the dual concentrates on the congested few and a radius-k move disturbs exactly those |
+| deleting a node other than the last to re-derive the chain | best alternative +4.5%, the chain's choice +1.1% | the demand matrices are nested, so only the last node keeps every survivor's demand on its own label |
 | QAOA at 25 qubits on qoro_gpu | 16 min and ~34 credits per step | each batch of 20 circuits is 84 s of GPU time with the 800-string exchange mixer; blocks of 5 arcs are small enough that every proposer finds the block optimum |
 
 ## Reproduce
