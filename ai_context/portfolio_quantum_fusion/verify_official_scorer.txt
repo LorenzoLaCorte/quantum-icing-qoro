@@ -1,0 +1,3 @@
+Official referee (qoblib_tools.PortfolioModel.score), 2026-11-22 07:44 CET
+OK   deliverables/portfolio_quantum/po_a400_t15_orig_b100_l1e-3__balanced-fusion-grover.sol  objective=-3167105 (feasible; risk=60398, return=-3464925, transaction=237450, cash_interest=-1660, short_cost=1632, liquidation=0)
+OK   deliverables/portfolio_quantum/po_a400_t15_orig_b100_l1e-3__paired-trajectory-qaoa.sol  objective=-3163545 (feasible; risk=63973, return=-3466135, transaction=238654, cash_interest=-1670, short_cost=1633, liquidation=0)
