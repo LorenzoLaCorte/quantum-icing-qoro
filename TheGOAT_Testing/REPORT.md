@@ -33,7 +33,17 @@ compound-move search on network24 (SA matched or beat QAOA in 21/21 rounds,
    blocks reach 0.17–0.23 of the way from SA's optimum to a random permutation; quantum natural
    gradient costs 6,782 circuits per block for no gain; QN-SPSA matches Monte Carlo with a third
    of the circuits.
-6. **Angle warm start halves the optimizer's distance to the QUBO optimum, and the LP does not
+7. **The certificate machinery moved three other hand-ins, and bounds how much is left.**
+   What could not beat network24 beat its smaller siblings. Exhaustive radius-3 descent took
+   `network18` to 472,112 and `network22` to 604,540 (section 7); kicking a *proven* optimum by
+   five arcs and exhausting radius 3 again took `network18` to **469,000**, −0.27% → −0.92%
+   against best known, and `network20` to 519,207 (section 10). The winning topology on
+   network18 is **ten arcs** from the certified one, which is the clearest thing measured all
+   night about what a local certificate buys. And from the other side, a bound that holds for
+   every 2-in/2-out topology puts every hand-in within 28.5–32.3% of the true optimum
+   (section 9) — the one number here that no better search can improve.
+
+8. **Angle warm start halves the optimizer's distance to the QUBO optimum, and the LP does not
    follow.** Starting each block from the previous block's best angles: gap 0.100 vs 0.202 cold
    (4 blocks, same 412 circuits), but the LP value of the resulting candidates was better in 1
    block and worse in 3. A better-optimized surrogate is not a better topology: the bottleneck is
