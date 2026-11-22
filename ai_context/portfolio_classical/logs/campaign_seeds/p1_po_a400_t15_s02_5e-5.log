@@ -1,0 +1,13 @@
+po_a400_t15_s02_b100_l5e-5: n=400 T=15 B=100 vars=12000  start=zero obj=-1500  BKV=None
+[    0.0s] start: -1500
+[   11.6s] tabu day=2 tried=1: -3498195
+[   22.0s] tabu day=11 tried=8: -3499468
+[   24.8s] tabu day=4 tried=9: -3499555
+[   27.6s] tabu day=13 tried=10: -3499754
+[   30.4s] tabu day=3 tried=11: -3500398
+[   35.8s] tabu day=0 tried=14: -3500614
+[   40.4s] tabu day=12 tried=16: -3500793
+[   47.9s] tabu day=0 tried=21: -3500961
+[   53.1s] tabu day=8 tried=24: -3500987
+[   55.7s] tabu day=3 tried=25: -3501065
+FINAL po_a400_t15_s02_b100_l5e-5: -3501065  -> po_a400_t15_s02_b100_l5e-5.sol (file best -3501065)

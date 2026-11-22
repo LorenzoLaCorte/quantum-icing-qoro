@@ -1,0 +1,2 @@
+po_a050_t10_s01_b020_l1e-2: start -1000  BKV (-2248.0, 'best known')  solver oracle
+final -1000 (start -1000, BKV (-2248.0, 'best known')) its=4038 accepted={}

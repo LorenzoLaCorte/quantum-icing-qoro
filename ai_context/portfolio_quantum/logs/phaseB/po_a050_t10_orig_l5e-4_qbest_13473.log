@@ -1,0 +1,8 @@
+/home/danie/quantum-icing-qoro/.venv/bin/python /home/danie/quantum-icing-qoro/portfolio_quantum/qlns.py --inst po_a050_t10_orig --lam 5e-4 --start qbest --minutes 12 --solver qaoa --seed 21 --kround 16 --kmove 7 --p-round 0.7 --p-block 0 --check-oracle 0.05 --angles portfolio_quantum/angles/a050_l5e-4.json
+po_a050_t10_orig_b020_l5e-4: start -254857  BKV (-254972.0, 'best known')  solver qaoa
+  [qaoa] trained xy p=5 on 16 qubits: loss 0.508, 168 circuits, 173s
+  [qaoa] trained xy p=5 on 16 qubits: loss -0.736, 160 circuits, 13s
+  [qaoa] trained xy p=5 on 16 qubits: loss -0.304, 169 circuits, 16s
+QAOA: 1028 windows, 2553 circuits (497 for angle training), largest program 18 qubits
+final -254857 (start -254857, BKV (-254972.0, 'best known')) its=1028 accepted={}
+window-optimum hit rate: 29/51 = 56.9%

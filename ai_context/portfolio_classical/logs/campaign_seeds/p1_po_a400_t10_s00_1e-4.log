@@ -1,0 +1,28 @@
+po_a400_t10_s00_b100_l1e-4: n=400 T=10 B=100 vars=8000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[   13.2s] tabu day=8 tried=1: -2360917
+[   16.7s] tabu day=5 tried=2: -2362351
+[   19.2s] tabu day=6 tried=3: -2366462
+[   21.7s] tabu day=1 tried=4: -2366524
+[   26.8s] tabu day=3 tried=6: -2369259
+[   32.1s] tabu day=7 tried=9: -2370991
+[   34.7s] tabu day=0 tried=10: -2371176
+[   40.0s] tabu day=0 tried=13: -2371268
+[   42.4s] tabu day=3 tried=14: -2371781
+[   46.1s] tabu day=6 tried=15: -2372735
+[   48.8s] tabu day=8 tried=16: -2373837
+[   90.8s] tabu day=7 tried=41: -2374090
+[   95.3s] tabu day=6 tried=42: -2374514
+[   97.8s] tabu day=2 tried=43: -2374774
+[  101.4s] tabu day=5 tried=45: -2375601
+[  248.3s] tabu day=4 tried=118: -2375999
+[  490.2s] tabu day=7 tried=258: -2376047
+[  502.0s] tabu day=7 tried=264: -2376252
+[  516.7s] tabu day=7 tried=272: -2376366
+[  557.0s] tabu day=9 tried=291: -2376756
+[  572.4s] tabu day=0 tried=297: -2376938
+[  582.1s] tabu day=1 tried=302: -2377073
+[  615.1s] tabu day=4 tried=321: -2377179
+[  629.3s] tabu day=8 tried=329: -2377628
+[  632.7s] tabu day=7 tried=330: -2377742
+FINAL po_a400_t10_s00_b100_l1e-4: -2377742  -> po_a400_t10_s00_b100_l1e-4.sol (file best -2377742)

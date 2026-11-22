@@ -1,0 +1,16 @@
+import sys, time, cProfile, pstats, numpy as np
+sys.path.insert(0, "portfolio_quantum")
+import qlns_core as qc, qlns, qaoa_solver as qs, portfolio_search as ps, windows as W
+p = ps.Problem("po_a050_t10_s01", "1e-3")
+s = qc.State(p, qc.load_v(p, qc.best_known_file(p.stem)))
+rng = np.random.default_rng(1)
+sol = qs.QAOASolver(layers=5, shots=4000, seed=1, angles_file="portfolio_quantum/angles/a050_l1e-3.json")
+print(sol.library)
+tmp, moves, hw = qlns.round_window(s, 2, rng, 16)
+t0 = time.time(); r = qlns.run_window(s, tmp, moves, sol, True, hw=hw); print("round window", time.time() - t0)
+moves2, kind = W.day_window(s, rng, 7, corr=W.corr_matrix(p))
+t0 = time.time(); r = qlns.run_window(s, s, moves2, sol, False); print("move window", len(moves2), time.time() - t0, sol.max_qubits)
+pr = cProfile.Profile(); pr.enable()
+tmp, moves, hw = qlns.round_window(s, 3, rng, 16)
+qlns.run_window(s, tmp, moves, sol, True, hw=hw)
+pr.disable(); pstats.Stats(pr).sort_stats("cumulative").print_stats(18)

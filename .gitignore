@@ -7,6 +7,7 @@ qoblib_data/
 *.sol
 !deliverables/**/*.sol
 !portfolio_QIcing/solutions/**/*.sol
+!portfolio_quantum/solutions/**/*.sol
 /deliverables/reports/build/
 /ai_context/reports/build/
 __pycache__/

@@ -1,0 +1,53 @@
+po_a050_t10_s01_b020_l5e-4: n=50 T=10 B=20 vars=1000  start=zero obj=-1000  BKV=(-183574.0, 'best known')
+[    0.0s] start: -1000
+[    0.1s] ils descent: -162589
+[    0.2s] ils it=2 k=1: -164409
+[    0.3s] ils it=3 k=5: -165346
+[    0.3s] ils it=4 k=3: -165611
+[    0.4s] ils it=5 k=4: -165760
+[    0.5s] ils it=6 k=4: -167830
+[    0.5s] ils it=7 k=5: -171372
+[    0.5s] ils it=8 k=1: -172608
+[    0.7s] ils it=13 k=4: -173028
+[    0.8s] ils it=15 k=4: -173615
+[    0.9s] ils it=17 k=5: -173752
+[    0.9s] ils it=18 k=6: -174731
+[    1.1s] ils it=20 k=4: -174990
+[    1.3s] ils it=25 k=3: -175254
+[    1.8s] ils it=32 k=5: -175264
+[    1.8s] ils it=34 k=5: -177108
+[    1.9s] ils it=35 k=3: -177331
+[    1.9s] ils it=36 k=4: -177551
+[    2.1s] ils it=39 k=6: -178026
+[    2.5s] ils it=48 k=3: -178198
+[    2.7s] ils it=50 k=3: -178805
+[    3.6s] ils it=71 k=2: -178878
+[    4.1s] ils it=82 k=1: -179021
+[    5.9s] ils it=124 k=6: -179321
+[    6.1s] ils it=129 k=4: -179405
+[    6.4s] ils it=133 k=6: -179684
+[    6.8s] tabu day=8 tried=2: -180139
+[    6.9s] tabu day=3 tried=7: -180255
+[    7.8s] tabu day=6 tried=41: -180345
+[    8.0s] tabu day=5 tried=50: -180539
+[    8.2s] tabu day=3 tried=55: -180598
+[    8.7s] tabu day=2 tried=78: -180800
+[    9.5s] tabu day=5 tried=109: -180895
+[   11.1s] tabu day=1 tried=176: -181071
+[   11.4s] tabu day=0 tried=190: -181251
+[   12.2s] tabu day=1 tried=221: -181439
+[   12.8s] tabu day=8 tried=244: -182219
+[   13.0s] tabu day=7 tried=253: -182244
+[   15.8s] tabu day=5 tried=371: -182566
+[   16.0s] tabu day=7 tried=381: -182838
+  PT temps 6.1..1820.5, 12 replicas, 500 moves/sweep
+[   26.9s] ils it=1 k=5: -182907
+[   36.4s] tabu day=4 tried=119: -182908
+[   36.6s] tabu day=4 tried=127: -183339
+[   38.5s] tabu day=8 tried=202: -183354
+  PT temps 6.3..1876.0, 12 replicas, 500 moves/sweep
+[   57.1s] ils it=77 k=5: -183440
+[   60.4s] tabu day=3 tried=5: -183556
+  PT temps 6.7..2017.8, 12 replicas, 500 moves/sweep
+  PT temps 6.5..1949.0, 12 replicas, 500 moves/sweep
+FINAL po_a050_t10_s01_b020_l5e-4: -183556  gap +0.0098% vs -183574 (best known)  -> po_a050_t10_s01_b020_l5e-4.sol (file best -183556)

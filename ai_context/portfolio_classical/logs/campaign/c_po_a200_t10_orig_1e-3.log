@@ -1,0 +1,15 @@
+po_a200_t10_orig_b050_l1e-3: n=200 T=10 B=50 vars=4000  start=warm(best) obj=-801870  BKV=None
+[    0.0s] start: -801870
+[   20.2s] tabu day=1 tried=44: -803806
+[   22.0s] tabu day=4 tried=53: -804041
+[   25.5s] tabu day=1 tried=69: -805915
+  PT temps 9.6..2891.0, 12 replicas, 2000 moves/sweep
+[   52.1s] tabu day=4 tried=5: -806618
+[   53.0s] tabu day=5 tried=7: -807114
+  PT temps 9.1..2741.0, 12 replicas, 2000 moves/sweep
+[  105.7s] tabu day=1 tried=59: -808567
+  PT temps 9.5..2844.0, 12 replicas, 2000 moves/sweep
+[  139.6s] tabu day=4 tried=27: -808867
+[  141.3s] tabu day=5 tried=34: -809239
+  PT temps 9.7..2922.2, 12 replicas, 2000 moves/sweep
+FINAL po_a200_t10_orig_b050_l1e-3: -809239  -> po_a200_t10_orig_b050_l1e-3.sol (file best -809239)

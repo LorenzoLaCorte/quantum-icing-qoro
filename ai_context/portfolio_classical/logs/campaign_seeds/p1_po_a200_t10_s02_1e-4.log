@@ -1,0 +1,22 @@
+po_a200_t10_s02_b050_l1e-4: n=200 T=10 B=50 vars=4000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[    2.1s] tabu day=8 tried=1: -982980
+[    2.5s] tabu day=5 tried=2: -985793
+[    3.3s] tabu day=6 tried=3: -987138
+[    4.4s] tabu day=2 tried=8: -987611
+[    5.3s] tabu day=5 tried=12: -987644
+[    6.2s] tabu day=6 tried=15: -987881
+[    6.5s] tabu day=8 tried=16: -987892
+[    8.1s] tabu day=4 tried=23: -988229
+[    8.5s] tabu day=5 tried=24: -988538
+[    8.9s] tabu day=6 tried=25: -988801
+[   10.8s] tabu day=4 tried=34: -988988
+[   12.7s] tabu day=2 tried=43: -989263
+[   14.0s] tabu day=4 tried=49: -989334
+[   18.0s] tabu day=2 tried=67: -989470
+[   20.9s] tabu day=6 tried=80: -990028
+[   25.8s] tabu day=8 tried=101: -990166
+[   30.8s] tabu day=5 tried=126: -990230
+[   60.1s] tabu day=6 tried=261: -990278
+[   60.8s] tabu day=1 tried=264: -990299
+FINAL po_a200_t10_s02_b050_l1e-4: -990299  -> po_a200_t10_s02_b050_l1e-4.sol (file best -990299)

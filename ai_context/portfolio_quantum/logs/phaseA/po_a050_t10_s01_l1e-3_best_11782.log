@@ -1,0 +1,3 @@
+/home/danie/quantum-icing-qoro/.venv/bin/python /home/danie/quantum-icing-qoro/portfolio_quantum/qlns.py --inst po_a050_t10_s01 --lam 1e-3 --start best --minutes 12 --solver qaoa --seed 11 --kround 16 --kmove 7 --p-round 0.7 --p-block 0 --check-oracle 0.05 --angles portfolio_quantum/angles/a050_l1e-3.json
+po_a050_t10_s01_b020_l1e-3: start -139048  BKV (-141376.0, 'best known')  solver qaoa
+it     6 round      q=16 cand=2201    -127 -> -139175

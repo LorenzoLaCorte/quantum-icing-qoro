@@ -1,0 +1,10 @@
+po_a400_t10_s00_b100_l5e-5: n=400 T=10 B=100 vars=8000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[    8.2s] tabu day=8 tried=1: -2571998
+[   10.5s] tabu day=5 tried=2: -2572060
+[   12.9s] tabu day=6 tried=3: -2572433
+[   18.0s] tabu day=3 tried=6: -2572524
+[   20.2s] tabu day=4 tried=7: -2572622
+[   29.8s] tabu day=3 tried=14: -2572876
+[   33.4s] tabu day=8 tried=16: -2573021
+FINAL po_a400_t10_s00_b100_l5e-5: -2573021  -> po_a400_t10_s00_b100_l5e-5.sol (file best -2573021)

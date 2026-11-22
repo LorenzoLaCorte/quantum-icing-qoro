@@ -1,0 +1,7 @@
+built po_a010_t10_s02.npz: n=10 T=10 in 1s
+po_a010_t10_s02_b004_l1e-2: n=10 T=10 B=4 vars=200  start=zero obj=-1000  BKV=(-1000.0, 'best known')
+[    0.0s] start: -1000
+  PT temps 393.0..117891.5, 12 replicas, 100 moves/sweep
+  PT temps 375.3..112602.2, 12 replicas, 100 moves/sweep
+  PT temps 373.5..112036.5, 12 replicas, 100 moves/sweep
+FINAL po_a010_t10_s02_b004_l1e-2: -1000  gap +0.0000% vs -1000 (best known)  -> po_a010_t10_s02_b004_l1e-2.sol (file best -1000)

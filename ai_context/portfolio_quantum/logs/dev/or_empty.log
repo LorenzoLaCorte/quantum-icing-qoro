@@ -1,0 +1,10 @@
+start -1000
+0 -1754 1s {'day:corr': 1}
+250 -101548 2s {'day:corr': 35, 'day:grad': 30, 'day:held': 17, 'block3': 6, 'block2': 8, 'day:rand': 3}
+500 -105087 3s {'day:corr': 41, 'day:grad': 40, 'day:held': 18, 'block3': 6, 'block2': 9, 'day:rand': 4}
+750 -106845 4s {'day:corr': 43, 'day:grad': 45, 'day:held': 18, 'block3': 7, 'block2': 9, 'day:rand': 6}
+1000 -108069 5s {'day:corr': 45, 'day:grad': 50, 'day:held': 18, 'block3': 7, 'block2': 9, 'day:rand': 6}
+1250 -108418 6s {'day:corr': 47, 'day:grad': 50, 'day:held': 18, 'block3': 7, 'block2': 9, 'day:rand': 6}
+1500 -113415 7s {'day:corr': 51, 'day:grad': 51, 'day:held': 19, 'block3': 7, 'block2': 9, 'day:rand': 8}
+1750 -119134 8s {'day:corr': 58, 'day:grad': 53, 'day:held': 19, 'block3': 7, 'block2': 9, 'day:rand': 9}
+final -120691 True {'day:corr': 60, 'day:grad': 55, 'day:held': 19, 'block3': 7, 'block2': 9, 'day:rand': 10}

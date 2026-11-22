@@ -1,0 +1,12 @@
+built po_a050_t10_orig.npz: n=50 T=10 in 2s
+built po_a050_t10_s00.npz: n=50 T=10 in 2s
+built po_a050_t10_s01.npz: n=50 T=10 in 2s
+built po_a050_t10_s02.npz: n=50 T=10 in 2s
+built po_a050_t15_orig.npz: n=50 T=15 in 3s
+built po_a050_t15_s00.npz: n=50 T=15 in 3s
+built po_a050_t15_s01.npz: n=50 T=15 in 3s
+built po_a050_t15_s02.npz: n=50 T=15 in 3s
+built po_a200_t10_orig.npz: n=200 T=10 in 23s
+built po_a200_t15_orig.npz: n=200 T=15 in 34s
+built po_a400_t10_orig.npz: n=400 T=10 in 84s
+built po_a400_t15_orig.npz: n=400 T=15 in 132s

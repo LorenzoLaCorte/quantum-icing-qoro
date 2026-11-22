@@ -1,0 +1,31 @@
+po_a400_t15_orig_b100_l1e-3: n=400 T=15 B=100 vars=12000  start=zero obj=-1500  BKV=None
+[    0.0s] start: -1500
+[   15.1s] ils descent: -2802014
+[   18.0s] tabu day=2 tried=1: -2813610
+[   20.9s] tabu day=12 tried=2: -2830080
+[   23.3s] tabu day=6 tried=3: -2837769
+[   25.6s] tabu day=9 tried=4: -2842963
+[   28.5s] tabu day=1 tried=5: -2850319
+[   31.2s] tabu day=8 tried=6: -2860599
+  PT temps 11.6..3474.5, 12 replicas, 6000 moves/sweep
+[   61.0s] tabu day=11 tried=1: -2880594
+[   65.0s] tabu day=9 tried=3: -2883616
+[   67.8s] tabu day=6 tried=4: -2889660
+[   70.7s] tabu day=5 tried=5: -2894646
+[   76.7s] tabu day=4 tried=7: -2919823
+  PT temps 11.9..3581.8, 12 replicas, 6000 moves/sweep
+[  106.7s] tabu day=8 tried=1: -2922824
+[  109.3s] tabu day=10 tried=2: -2928731
+[  113.1s] tabu day=6 tried=3: -2929574
+[  115.6s] tabu day=0 tried=4: -2940189
+[  119.2s] tabu day=9 tried=6: -2941845
+  PT temps 12.9..3883.0, 12 replicas, 6000 moves/sweep
+[  138.3s] pt sweeps=297 raw=-2942537: -2950027
+[  151.8s] tabu day=10 tried=1: -2952340
+[  155.6s] tabu day=7 tried=3: -2962620
+[  158.2s] tabu day=13 tried=4: -2964233
+[  161.0s] tabu day=5 tried=5: -2965191
+[  163.7s] tabu day=0 tried=6: -2969559
+[  166.1s] tabu day=3 tried=7: -2986716
+  PT temps 12.9..3868.0, 12 replicas, 6000 moves/sweep
+FINAL po_a400_t15_orig_b100_l1e-3: -2986716  -> po_a400_t15_orig_b100_l1e-3.sol (file best -2986716)

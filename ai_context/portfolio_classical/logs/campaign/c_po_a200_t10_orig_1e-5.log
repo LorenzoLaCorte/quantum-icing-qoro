@@ -1,0 +1,9 @@
+po_a200_t10_orig_b050_l1e-5: n=200 T=10 B=50 vars=4000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[    0.7s] ils descent: -1265258
+[    3.9s] ils it=20 k=16: -1265263
+  PT temps 7.2..2145.0, 12 replicas, 2000 moves/sweep
+  PT temps 6.9..2067.0, 12 replicas, 2000 moves/sweep
+  PT temps 7.0..2091.0, 12 replicas, 2000 moves/sweep
+  PT temps 7.0..2102.8, 12 replicas, 2000 moves/sweep
+FINAL po_a200_t10_orig_b050_l1e-5: -1265263  -> po_a200_t10_orig_b050_l1e-5.sol (file best -1265263)

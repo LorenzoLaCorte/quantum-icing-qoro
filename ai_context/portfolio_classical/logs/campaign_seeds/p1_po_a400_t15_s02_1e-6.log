@@ -1,0 +1,4 @@
+po_a400_t15_s02_b100_l1e-6: n=400 T=15 B=100 vars=12000  start=zero obj=-1500  BKV=None
+[    0.0s] start: -1500
+[    6.7s] tabu day=2 tried=1: -4444543
+FINAL po_a400_t15_s02_b100_l1e-6: -4444543  -> po_a400_t15_s02_b100_l1e-6.sol (file best -4444543)

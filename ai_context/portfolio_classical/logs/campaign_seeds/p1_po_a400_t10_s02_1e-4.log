@@ -1,0 +1,41 @@
+po_a400_t10_s02_b100_l1e-4: n=400 T=10 B=100 vars=8000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[   12.2s] tabu day=8 tried=1: -2075602
+[   15.5s] tabu day=5 tried=2: -2076095
+[   18.1s] tabu day=6 tried=3: -2078187
+[   26.3s] tabu day=4 tried=7: -2078363
+[   30.9s] tabu day=7 tried=9: -2078558
+[   33.8s] tabu day=0 tried=10: -2081320
+[   39.3s] tabu day=0 tried=13: -2081555
+[   44.5s] tabu day=8 tried=16: -2081746
+[   54.0s] tabu day=0 tried=22: -2081843
+[   57.3s] tabu day=4 tried=23: -2081844
+[   60.2s] tabu day=5 tried=24: -2082365
+[   64.0s] tabu day=7 tried=26: -2082644
+[   76.3s] tabu day=0 tried=33: -2082740
+[   78.7s] tabu day=4 tried=34: -2082764
+[   86.8s] tabu day=6 tried=36: -2083216
+[   93.3s] tabu day=1 tried=40: -2083256
+[  107.6s] tabu day=4 tried=49: -2083392
+[  114.2s] tabu day=0 tried=53: -2083451
+[  164.9s] tabu day=8 tried=78: -2083533
+[  167.4s] tabu day=7 tried=79: -2083727
+[  181.5s] tabu day=7 tried=86: -2083842
+[  226.7s] tabu day=6 tried=108: -2083868
+[  247.2s] tabu day=5 tried=120: -2083940
+[  273.7s] tabu day=1 tried=131: -2084266
+[  294.7s] tabu day=3 tried=142: -2084428
+[  298.4s] tabu day=6 tried=143: -2084562
+[  421.8s] tabu day=3 tried=210: -2084613
+[  433.7s] tabu day=6 tried=217: -2084621
+[  439.0s] tabu day=5 tried=220: -2085175
+[  450.5s] tabu day=5 tried=227: -2085778
+[  452.9s] tabu day=7 tried=228: -2085782
+[  545.7s] tabu day=0 tried=274: -2085868
+[  587.6s] tabu day=6 tried=292: -2086054
+[  606.9s] tabu day=5 tried=304: -2086408
+[  611.9s] tabu day=6 tried=307: -2086436
+[  623.9s] tabu day=7 tried=314: -2087301
+[  627.7s] tabu day=5 tried=316: -2087712
+[  711.0s] tabu day=2 tried=346: -2087713
+FINAL po_a400_t10_s02_b100_l1e-4: -2087713  -> po_a400_t10_s02_b100_l1e-4.sol (file best -2087713)
