@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Icing · network23</title>
+<meta name="description" content="How a simulated Grover search rewired QOBLIB network23 to 632,319, 4.10% below the best known value. Every frame is replayed from the real run.">
+<meta name="theme-color" content="#02050c">
+<meta property="og:title" content="Quantum Icing · network23 rewired by Grover's search">
+<meta property="og:description" content="632,319: 4.10% below QOBLIB's best known value. Watch the solution being built, round by round.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g'%3E%3Cstop offset='0' stop-color='%23e8fbff'/%3E%3Cstop offset='.5' stop-color='%235ef2ff'/%3E%3Cstop offset='1' stop-color='%231b8cff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Cpath d='M32 10v44M13 21l38 22M13 43l38-22' stroke='%2302050c' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+<script src="vendor/gsap/gsap.min.js" defer></script>
+<script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
+<script type="module" src="js/main.js"></script>
+</head>
+<body class="is-loading">
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="labels" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div id="flash" aria-hidden="true"></div>
+
+<!-- ============ LOADER ============ -->
+<div id="loader" role="status" aria-live="polite">
+  <div class="loader-core">
+    <div class="loader-ket">|ψ⟩</div>
+    <pre class="loader-log" id="loaderLog"></pre>
+    <div class="loader-bar"><span id="loaderBar"></span></div>
+  </div>
+</div>
+
+<!-- ============ CHROME ============ -->
+<header class="topbar">
+  <a class="brand" href="#hero" aria-label="Quantum Icing, back to top">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name">QUANTUM<b>ICING</b></span>
+  </a>
+  <nav class="topnav" aria-label="Sections">
+    <a href="#problem">Problem</a>
+    <a href="#inherit">Act I</a>
+    <a href="#console">Act II</a>
+    <a href="#final">Result</a>
+    <a href="#results">All results</a>
+  </nav>
+</header>
+
+<aside id="hud" aria-live="polite">
+  <div class="hud-label">BUSIEST LINK LOAD</div>
+  <div class="hud-value"><span id="hudValue">632,319</span></div>
+  <div class="hud-gap" id="hudGap">−4.10% vs QOBLIB best known</div>
+  <div class="hud-stage" id="hudStage">network23 · final</div>
+  <div class="hud-meter"><span id="hudMeter"></span></div>
+</aside>
+
+<div id="progress" aria-hidden="true"><span></span></div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero" data-step="hero">
+  <div class="hero-inner">
+    <div class="eyebrow reveal">QOBLIB 08 · NETWORK DESIGN · <span class="mono">network23</span></div>
+    <h1 class="hero-number" aria-label="632,319"><span id="heroNumber">632,319</span></h1>
+    <p class="hero-lede reveal">A 23-node network, rewired by a <em>simulated Grover search</em> until its busiest link carried
+      <strong>4.10% less</strong> than the best known value published on QOBLIB.</p>
+    <div class="hero-badges reveal">
+      <span class="badge"><b>659,369</b> QOBLIB best known</span>
+      <span class="badge badge-ice"><b>632,319</b> ours · checked</span>
+      <span class="badge"><b>11</b> qubits</span>
+      <span class="badge"><b>52</b> Grover rounds</span>
+    </div>
+    <a class="scroll-cue" href="#problem"><span>Watch it being built</span><i aria-hidden="true"></i></a>
+  </div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>23 nodes</span><span>506 traffic demands</span><span>506 binary variables</span><span>6.07 × 10<sup>42</sup> valid networks</span><span>1,030 states in superposition</span><span>2 Grover iterations</span><span>2,048 shots / round</span><span>exact routing LP</span><span>QOBLIB Rust checker ✓</span>
+      <span>23 nodes</span><span>506 traffic demands</span><span>506 binary variables</span><span>6.07 × 10<sup>42</sup> valid networks</span><span>1,030 states in superposition</span><span>2 Grover iterations</span><span>2,048 shots / round</span><span>exact routing LP</span><span>QOBLIB Rust checker ✓</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PROBLEM ============ -->
+<section id="problem" class="story">
+  <div class="story-head">
+    <div class="eyebrow">THE PROBLEM</div>
+    <h2 class="scramble">Wire 23 nodes so no link drowns.</h2>
+  </div>
+
+  <article class="step" data-step="nodes">
+    <div class="step-num">01</div>
+    <h3>Twenty-three nodes.</h3>
+    <p>Each one is a site that sends traffic to every other site. The bigger the glow, the more traffic it handles.</p>
+  </article>
+
+  <article class="step" data-step="demand">
+    <div class="step-num">02</div>
+    <h3>506 flows of traffic.</h3>
+    <p>Every ordered pair has a demand, from tiny to huge: <span class="mono">23 × 22 = 506</span> flows that all have to arrive.
+      Each line here is one pair, drawn brighter where the demand is larger.</p>
+  </article>
+
+  <article class="step" data-step="rules">
+    <div class="step-num">03</div>
+    <h3>Two links out. Two links in.</h3>
+    <p>Every node gets exactly two outgoing and two incoming one-way links, <span class="mono">46</span> in total.
+      Which 46 links to build is the entire problem: one binary variable per possible link, <span class="mono">506</span> of them.</p>
+  </article>
+
+  <article class="step" data-step="route">
+    <div class="step-num">04</div>
+    <h3>The score is the busiest link.</h3>
+    <p>All demand is routed optimally over the links with an exact multicommodity-flow LP. The objective is the load on the
+      <span class="hot">most congested link</span>, and lower is better. This network scores <b class="mono">639,739</b>.</p>
+  </article>
+
+  <article class="step" data-step="space">
+    <div class="step-num">05</div>
+    <h3><span class="mono">6.07 × 10<sup>42</sup></span> ways to wire it.</h3>
+    <p>We counted them exactly: <span class="mono small break">6,066,885,060,026,725,326,590,776,684,425,359,774,363,091</span> valid networks.
+      Checking a billion every second since the Big Bang would cover less than one in <span class="mono">10<sup>16</sup></span> of them.</p>
+    <div class="flicker-counter"><span id="flickerCount">0</span> random networks flashed so far</div>
+  </article>
+</section>
+
+<!-- ============ ACT I ============ -->
+<section id="inherit" class="story">
+  <div class="story-head">
+    <div class="eyebrow">ACT I · INHERIT</div>
+    <h2 class="scramble">Start from something good.</h2>
+  </div>
+
+  <article class="step" data-step="net24">
+    <div class="step-num">06</div>
+    <h3>A 24-node network we had already solved.</h3>
+    <p>Our <span class="mono">network24</span> hand-in scores <b class="mono">657,121</b>, 0.99% below its best known value.
+      Parallel tempering, then iterated local search, then parallel tempering again.</p>
+  </article>
+
+  <article class="step" data-step="delete">
+    <div class="step-num">07</div>
+    <h3>Delete node 24. Splice its wires.</h3>
+    <p>Node 24's two incoming links are joined to its two outgoing ones. The result is a valid 23-node network that scores
+      <b class="mono">642,084</b>, already <span class="ice">2.62% below</span> network23's best known value.</p>
+  </article>
+
+  <article class="step" data-step="descent">
+    <div class="step-num">08</div>
+    <h3>Two exact swaps.</h3>
+    <p>A 2-exchange swaps the heads of two links and keeps every degree intact. An exact-LP descent finds two that help:
+      <b class="mono">642,084 → 640,472 → 639,739</b>.</p>
+  </article>
+
+  <article class="step" data-step="stuck">
+    <div class="step-num">09</div>
+    <h3>Stuck, and we can prove it.</h3>
+    <p>Every network that differs from this one in two or three links was enumerated and routed, and none of them is better.
+      This is a <span class="ice">certified radius-3 local optimum</span>. To escape it, a move has to rewire more links than an exhaustive search
+      can afford to try. That is where Grover comes in.</p>
+  </article>
+</section>
+
+<!-- ============ ACT II · CONSOLE ============ -->
+<section id="console" class="console" data-step="console">
+  <div class="console-grid">
+    <div class="console-left">
+      <div class="console-head">
+        <div class="head-text">
+          <div class="eyebrow">ACT II · GROVER'S WALK</div>
+          <h2 class="scramble">52 rounds of amplitude amplification.</h2>
+          <p class="console-lede">Each round proposes about a thousand rewirings of 2 to 6 links, marks the most promising 12% with a phase oracle,
+            amplifies them with two Grover iterations, measures 2,048 shots and routes the winners exactly. Replayed from the real run.</p>
+        </div>
+        <div class="round-badge">
+          <div class="round-label">ROUND</div>
+          <div class="round-num"><span id="roundNum">01</span><small>/52</small></div>
+          <div class="round-rec">record <b id="roundRec">639,739</b> <span id="roundGap">−2.98%</span></div>
+        </div>
+      </div>
+      <div class="console-spacer">
+        <div class="legend-heat" aria-hidden="true"><span>low load</span><i></i><span>busiest</span></div>
+      </div>
+      <div class="move-card" id="moveCard">
+        <div class="move-kind" id="moveKind">READY</div>
+        <div class="move-text" id="moveText">Press play, or scroll here to start.</div>
+      </div>
+      <div class="console-bottom glass">
+        <div class="controls">
+          <button class="btn icon" id="btnPrev" aria-label="Restart the round, or go to the previous one"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M6 5h2.5v14H6zM20 5v14L9.5 12z" fill="currentColor"/></svg></button>
+          <button class="btn icon play" id="btnPlay" aria-label="Play"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></svg></button>
+          <button class="btn next" id="btnNext" aria-label="Skip to the next record">next record <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M4 5v14l10.5-7zM15.5 5H18v14h-2.5z" fill="currentColor"/></svg></button>
+          <div class="speed" role="group" aria-label="Playback speed">
+            <button class="btn chip" data-speed="1">1×</button>
+            <button class="btn chip on" data-speed="2.5">2.5×</button>
+            <button class="btn chip" data-speed="6">6×</button>
+          </div>
+          <div class="tally">
+            <span class="tally-k">Grover vs uniform</span><span class="tally-v" id="tallyU">0 · 0 · 0</span>
+            <span class="tally-k">vs greedy</span><span class="tally-v" id="tallyG">0 · 0 · 0</span>
+            <span class="tally-n">W · T · L</span>
+          </div>
+        </div>
+        <canvas id="timeline" aria-label="Score per round: record, current walk position and best measured candidate"></canvas>
+      </div>
+    </div>
+
+    <div class="console-panel glass">
+      <div class="phases" id="phases">
+        <span data-p="pool">POOL</span><span data-p="oracle">ORACLE</span><span data-p="diffuse">DIFFUSE</span><span data-p="measure">MEASURE</span><span data-p="route">ROUTE</span><span data-p="move">MOVE</span>
+      </div>
+      <div class="ring-wrap">
+        <canvas id="ring" aria-label="Grover amplitudes for each candidate rewiring"></canvas>
+        <div class="ring-center">
+          <div class="ring-k" id="ringK">P(marked)</div>
+          <div class="ring-v" id="ringV">—</div>
+          <div class="ring-s" id="ringS">&nbsp;</div>
+        </div>
+      </div>
+      <div class="caption" id="caption">Each bar is one candidate rewiring, and its length is the amplitude of its index state.</div>
+      <div class="lp-wrap">
+        <div class="lp-title"><span>EXACT ROUTING LP · MEASURED CANDIDATES</span><span class="lp-legend"><i class="lg-q"></i>Grover <i class="lg-g"></i>greedy <i class="lg-u"></i>uniform</span></div>
+        <canvas id="lpstrip" aria-label="Routing LP score of each measured candidate"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ============ -->
+<section id="final" class="final" data-step="final">
+  <div class="final-copy">
+    <div class="eyebrow">THE RESULT</div>
+    <h2 class="final-number"><span id="finalNumber">632,319</span></h2>
+    <p>Fifteen links away from where Grover started. Five records in 52 rounds. Checked by QOBLIB's own Rust checker.</p>
+    <p class="hint"><span class="pulse-dot"></span>Hover or tap a node to follow its traffic. Drag to rotate.</p>
+    <div class="ladder" id="ladder">
+      <div class="rung" data-v="663688"><span>network24 · best known</span><b>663,688</b></div>
+      <div class="rung" data-v="659369"><span>network23 · QOBLIB best known</span><b>659,369</b></div>
+      <div class="rung" data-v="642084"><span>after deleting node 24</span><b>642,084</b></div>
+      <div class="rung" data-v="639739"><span>certified radius-3 hand-in</span><b>639,739</b></div>
+      <div class="rung ice" data-v="632319"><span>after Grover's walk</span><b>632,319</b></div>
+      <div class="rung dim" data-v="490761"><span>provable lower bound</span><b>490,761</b></div>
+    </div>
+  </div>
+  <div class="node-card glass" id="nodeCard" hidden>
+    <div class="nc-title">NODE <span id="ncId">7</span></div>
+    <div class="nc-row"><span>sends</span><b id="ncOut">—</b></div>
+    <div class="nc-row"><span>receives</span><b id="ncIn">—</b></div>
+    <div class="nc-row"><span>links used by its traffic</span><b id="ncLinks">—</b></div>
+  </div>
+</section>
+
+<!-- ============ HONEST ============ -->
+<section id="honest" class="honest" data-step="honest">
+  <div class="eyebrow">THE FINE PRINT</div>
+  <h2 class="scramble">What is quantum here, and what isn't.</h2>
+  <div class="honest-grid">
+    <div class="h-card glass">
+      <div class="h-k">SIMULATED</div>
+      <p>Grover runs as an ideal statevector simulation, with a phase oracle that marks a threshold computed classically. A gate-level Qiskit simulation of the first improving round reproduced the probabilities to within <b class="mono">1.3 × 10⁻¹³</b>.</p>
+    </div>
+    <div class="h-card glass">
+      <div class="h-k">CIRCUIT COST</div>
+      <p>The 11-qubit round transpiles to <b class="mono">17,164</b> CNOTs on <span class="mono">rz · sx · x · cx</span>, before any hardware mapping. That is out of reach of today's devices, and we say so.</p>
+    </div>
+    <div class="h-card glass">
+      <div class="h-k">SAME BUDGET</div>
+      <p>Grover, greedy and uniform selection each get the same <b class="mono">120</b> exact LP evaluations per round. Only Grover's picks drive the walk. Over 364 rounds on 7 instances: <b>294 / 56 / 14</b> against uniform, <b>4 / 309 / 51</b> against greedy (wins / ties / losses).</p>
+    </div>
+    <div class="h-card glass">
+      <div class="h-k">CHECKED</div>
+      <p>Every score on this page comes from a <span class="mono">.sol</span> file with integer flows that passes QOBLIB's upstream Rust checker. The replay above runs the original code with seed 73 and lands on the same file.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ALL RESULTS ============ -->
+<section id="results" class="results" data-step="results">
+  <div class="eyebrow">EVERYTHING WE HANDED IN</div>
+  <h2 class="scramble">Every network we handed in matches or beats the best known value.</h2>
+
+  <div class="res-block">
+    <div class="res-head"><h3>Network design · QOBLIB 08</h3><span>max link load · lower is better</span></div>
+    <div class="res-table" id="resNetwork"></div>
+  </div>
+
+  <div class="res-block">
+    <div class="res-head"><h3>Portfolio optimisation · QOBLIB 06</h3><span>objective · lower is better</span></div>
+    <div class="pf-grid">
+      <div class="pf-card glass">
+        <div class="pf-big"><span class="count" data-to="36165">0</span></div>
+        <div class="pf-k">binary variables in <span class="mono">po_a400_t15_orig</span></div>
+        <p>The largest instance in the benchmark. Our quantum pipeline (QAOA windows, then Grover-simulated fusion) reaches <b class="mono">−3,169,650</b>, against <b class="mono">−2,986,716</b> from our earlier classical search. QOBLIB publishes no reference value for this instance.</p>
+      </div>
+      <div class="pf-card glass">
+        <div class="pf-big"><span class="count" data-to="61.8" data-dec="1" data-prefix="−" data-suffix="%">0</span></div>
+        <div class="pf-k">below best known on <span class="mono">a050_t15_orig</span>, λ = 10⁻²</div>
+        <p><b class="mono">−50,971</b> against the published <b class="mono">−31,504</b>. With high risk aversion, good portfolios are sparse hedges across about 20 assets, and an exact per-asset trajectory DP finds them.</p>
+      </div>
+      <div class="pf-card glass">
+        <div class="pf-big"><span class="count" data-to="7">0</span></div>
+        <div class="pf-k">configurations below QOBLIB's best known value</div>
+        <p>Six from the classical search and one from paired-transfer QAOA (<span class="mono">a050_t15_s01</span>, λ = 5·10⁻⁴: <b class="mono">−304,333</b> vs <b class="mono">−304,289</b>).</p>
+      </div>
+      <div class="pf-card glass">
+        <div class="pf-big"><span class="count" data-to="221">0</span></div>
+        <div class="pf-k">checked portfolio solutions</div>
+        <p>All 56 <span class="mono">a010</span> configurations match the best known value. The <span class="mono">a200</span> and <span class="mono">a400</span> instances have no published reference, and this set now provides the first values for them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-big scramble">QUANTUM ICING</div>
+  <div class="footer-row">
+    <span>Qoro × PushQuantum Hackathon 2026</span>
+    <a href="https://github.com/LorenzoLaCorte/quantum-icing-qoro" target="_blank" rel="noopener">Source on GitHub ↗</a>
+    <a href="https://github.com/ZIB-AOPT/QOBLIB" target="_blank" rel="noopener">QOBLIB ↗</a>
+    <a href="https://github.com/QoroQuantum/divi" target="_blank" rel="noopener">Divi ↗</a>
+  </div>
+  <div class="footer-note">Every number on this page comes from a checked solution file. The animations replay <span class="mono">network_design/quantum_congestion.py</span> (seed 73, 52 rounds) through <span class="mono">website/tools/build_story.py</span>.</div>
+</footer>
+
+</main>
+
+<div class="tooltip" id="tooltip" hidden></div>
+<noscript><div class="noscript">This page replays a solver run in WebGL and needs JavaScript.</div></noscript>
+</body>
+</html>
