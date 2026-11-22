@@ -291,29 +291,44 @@ precisely to disturb those arcs. The weights that certify the incumbent are the 
 promising candidate invalidates. Re-tightening them per candidate *is* the dual simplex, which
 is what the warm LP already does in 12 ms.
 
-### Re-deriving the chain from the improved ancestor (`node_deletion.py`)
+### Re-deriving the chain, and where the hand-ins' quality actually comes from (`node_deletion.py`)
 
 The hand-ins network18–23 were built downwards, each from the next larger topology with a node
-deleted. `network22` has since improved to 604,540 — after everything below it had been derived
-from the old 606,424 — so the levels below were grown from a worse ancestor. `node_deletion.py`
-goes back down: delete a node, repair the four broken degrees (two ways), relabel, score with
-the exact LP.
+deleted. `node_deletion.py` goes back down and enumerates the whole step: delete a node, repair
+the four broken degrees (two ways), relabel, score with the exact LP.
 
-The demand matrices are exactly nested (`load_network_demand(n)` is `load_network_demand(n+1)`
-cut to its leading block, asserted in the tests), so deleting the **last** node is the only
-deletion that keeps every survivor's demand attached to its own label. That is the deletion the
-chain used, and the measurement says it was the right one: on all 44 deletions of network22,
+The demand matrices are exactly nested — `load_network_demand(n)` is `load_network_demand(n+1)`
+cut to its leading block, asserted in the tests — so deleting the **last** node is the only
+deletion that keeps every survivor's demand attached to its own label. The measurement says that
+is also the best one, at every level and by a wide margin: on all 44 deletions of network22, the
+chain's node gives 568,429 and the next best is 587,516, +4.5%.
 
-| deletion | network21 start | vs the 562,362 hand-in |
-|---|---:|---:|
-| node 21 (the chain's choice) | 568,429 | +1.1% |
-| node 20 | 587,516 | +4.5% |
-| node 19 | 590,485 | +5.0% |
+What the full sweep shows is more interesting than the node choice. Delete one node from the
+hand-in above, repair the degrees, and stop — no search of any kind:
 
-Every other node is at least 4.5% worse, so there is no untried basin hiding in the node choice.
-What the improved ancestor does buy is a better start at the same node: **568,429 against the old
-573,625**, two topologies three arcs apart. A radius-3 descent from it is the one experiment the
-chain never got to run.
+| n | delete a node and stop | vs best known | our polished hand-in | vs best known | what polishing added |
+|---:|---:|---:|---:|---:|---:|
+| 18 | 481,400 | +1.70% | 472,112 | −0.27% | 1.97% |
+| 19 | 502,600 | +1.96% | 488,895 | −0.82% | 2.80% |
+| 20 | 529,967 | +0.27% | 519,343 | −1.74% | 2.05% |
+| 21 | 568,429 | −0.15% | 562,362 | −1.21% | 1.08% |
+| 22 | 610,880 | −1.17% | 604,540 | −2.20% | 1.05% |
+| 23 | 642,084 | −2.62% | 639,739 | −2.98% | 0.37% |
+
+**At n = 21, 22 and 23, deleting a single node from the solution one level up already beats
+QOBLIB's published best-known value for that instance** — with no search at that level at all.
+The level above is of course not free, but everything the hybrid chain then does at each level,
+over hours of ILS, parallel tempering and QAOA sampling, is worth between 0.37% and 2.80%.
+
+That is a statement about the instance family, not about the search: these demand matrices are
+nested, so a good solution at n = 24 contains a good solution at every smaller n, and the whole
+descending chain is carried by the quality of the one topology at the top. It also says where
+the remaining effort belongs. Improving network24 by one point improves the floor of all six
+instances below it; improving network18 improves network18.
+
+The improved `network22` does buy its child a better start — 568,429 against the old 573,625,
+two topologies three arcs apart — and a radius-3 descent from it is the one branch of the chain
+that was never run with this ancestor.
 
 ## 9. A bound from below: how far from optimal can the hand-ins be? (`instance_bound.py`)
 
