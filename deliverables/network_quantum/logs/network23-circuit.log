@@ -1,0 +1,9 @@
+network23 from 639,739 (-2.977% vs QOBLIB)
+  1    3.9s pool=1099 quantum=640471.6981132076 greedy=640471.6981132076 uniform=641079.5454545454 checked=639,739 current=639,739
+  2    7.4s pool=978 quantum=641888.8888888889 greedy=640906.25 uniform=642600.0 checked=639,739 current=641,889
+  3   11.2s pool=1080 quantum=639738.4615384615 greedy=638257.4257425743 uniform=639738.4615384615 checked=639,739 current=639,738
+  4   14.2s pool=939 quantum=640333.3333333334 greedy=640333.3333333334 uniform=645618.1818181819 checked=639,739 current=640,333
+circuit check 11 1030 124 2 max probability error 1.2832963858233626e-13 depth 63629 ops {'rz': 31661, 'cx': 17164, 'sx': 15115, 'x': 295}
+Checked quantum improvement 637,211 at round 5
+  5   32.0s pool=1030 quantum=637210.5263157894 greedy=637210.5263157894 uniform=645444.4444444445 checked=637,211 current=637,211
+{"start": 639739, "checked_best": 637211, "qoblib": 659369, "rounds": 5, "max_index_qubits": 11, "parameters": {"nodes": 23, "start": null, "output_dir": "runs/network-grover/circuit23", "seed": 73, "rounds": 5, "radii": [2, 3, 4, 5, 6], "subsets": 950, "shortlist": 3250, "passes": 5, "budget": 120, "shots": 2048, "mark_fraction": 0.12, "workers": 2, "restart": 19, "slack": 18000.0, "uphill": 0.35, "methods": ["quantum", "greedy", "uniform"]}}
