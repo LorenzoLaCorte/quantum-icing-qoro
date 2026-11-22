@@ -127,7 +127,7 @@ def round_seed(tmp, moves, hw, prior):
     return x, groups
 
 
-def round_window(s, t, rng, kmax, noise=0.0, drop=0):
+def round_window(s, t, rng, kmax, noise=0.0, drop=0, band=0.0):
     """Relaxation-guided rounding window on day t. Returns (temp_state, moves, hw) or None."""
     p = s.p
     tilt = None
@@ -143,7 +143,15 @@ def round_window(s, t, rng, kmax, noise=0.0, drop=0):
     vs, _ = dr.solve_day(p, s.v, t, tilt=tilt, ub_mask=mask)
     base = np.trunc(vs).astype(np.int64)
     frac = np.abs(vs - np.trunc(vs))
-    cand = [int(i) for i in np.argsort(-np.abs(vs)) if frac[i] > 1e-6]
+    if band > 0:  # near-integral slots are rounded directly; only uncertain ones get a qubit
+        up = (frac >= 1 - band)
+        base2 = base + np.where(up, np.sign(vs), 0).astype(np.int64)
+        if np.abs(base2).sum() <= p.budget:
+            base = base2
+            frac = np.where(up | (frac <= band), 0.0, frac)
+        cand = [int(i) for i in np.argsort(np.abs(frac - 0.5)) if frac[i] > 1e-6]
+    else:
+        cand = [int(i) for i in np.argsort(-np.abs(vs)) if frac[i] > 1e-6]
     win = cand[:kmax]
     v2 = s.v.copy()
     v2[t] = base

@@ -32,11 +32,32 @@ logging.disable(logging.WARNING)
 from divi.backends import JobConfig, MaestroSimulator, QoroService  # noqa: E402
 from divi.hamiltonians import xy_mixer  # noqa: E402
 from divi.qprog.algorithms import QAOA  # noqa: E402
-from divi.qprog.initial_states import CustomPerQubitState, DickeState  # noqa: E402
+from divi.qprog.initial_states import CustomPerQubitState, DickeState, InitialState  # noqa: E402
+from qiskit import QuantumCircuit  # noqa: E402
 from divi.qprog.optimizers import MonteCarloOptimizer, ScipyMethod, ScipyOptimizer  # noqa: E402
 from divi.qprog.problems import BinaryOptimizationProblem, LinearConstraint  # noqa: E402
 
 import qlns_core as qc  # noqa: E402
+
+
+class GroupedDicke(InitialState):
+    """Product of Dicke states, one per qubit group: |D^{n_1}_{k_1}> x |D^{n_2}_{k_2}> x ...
+
+    With one XY ring per group the mixer conserves every group's count, so a rounding window
+    keeps both the day budget (total count) and the capital rule (count of '+' moves) exactly.
+    """
+
+    def __init__(self, groups, counts):
+        self.groups, self.counts = [list(g) for g in groups], [int(k) for k in counts]
+
+    def build(self, wires):
+        qc = QuantumCircuit(len(wires))
+        for g, k in zip(self.groups, self.counts):
+            if not g or k == 0:
+                continue
+            sub = DickeState(k).build(list(range(len(g))))
+            qc.compose(sub, qubits=g, inplace=True)
+        return qc
 
 
 def linear_ramp(p, gmax=0.8, bmax=0.8):
@@ -94,9 +115,11 @@ class QAOASolver:
     name = "qaoa"
 
     def __init__(self, layers=5, shots=4000, cloud=False, seed=0, penalty=2.0, keep=4000,
-                 retrain_every=300, train_iters=120, angles_file=None, log=print):
+                 retrain_every=300, train_iters=120, angles_file=None, log=print, grouped_dicke=True):
         self.layers, self.shots, self.cloud = layers, shots, cloud
         self.penalty, self.keep = penalty, keep
+        self.grouped_dicke = grouped_dicke
+        self.plain_when_free = True
         self.retrain_every, self.train_iters = retrain_every, train_iters
         self.rng = np.random.default_rng(seed)
         self.angles_file = Path(angles_file) if angles_file else None
@@ -135,7 +158,12 @@ class QAOASolver:
         seed = int(self.rng.integers(1 << 30))
         if hw is not None:
             problem = BinaryOptimizationProblem(bqm)
-            init = DickeState(hw) if seed_y is None else CustomPerQubitState("".join(map(str, seed_y)))
+            if seed_y is None:
+                init = DickeState(hw)
+            elif groups is not None and self.grouped_dicke:  # uniform over the feasible counts
+                init = GroupedDicke(groups, [int(seed_y[g].sum()) for g in groups])
+            else:
+                init = CustomPerQubitState("".join(map(str, seed_y)))
             prog = QAOA(problem, initial_state=init, n_layers=self.layers, optimizer=optimizer,
                         max_iterations=iters, backend=self.backend, seed=seed)
             edges = []
@@ -195,9 +223,14 @@ class QAOASolver:
             seed_y = np.where(c == 1, 1 - np.asarray(seed), np.asarray(seed))
             if int(seed_y.sum()) != hw:
                 seed_y = None
+        if seed_y is not None and groups is None and self.grouped_dicke and self.plain_when_free:
+            seed_y = None  # capital cannot bind: plain Dicke over the whole window
         if seed_y is None:
             groups = None
-        fam = "x" if hw is None else ("xy" if seed_y is None else "xyw")
+        if seed_y is not None and groups is not None and self.grouped_dicke:
+            fam = "xy"  # grouped Dicke: same family as Dicke (transferred angles)
+        else:
+            fam = "x" if hw is None else ("xy" if seed_y is None else "xyw")
         if self.library[fam] is None or self.since_train[fam] >= self.retrain_every:
             self._train(fam, s, moves, hw, flip, seed_y, groups)
         prog = self._program(s, moves, hw, MonteCarloOptimizer(population_size=1, n_best_sets=1), 1, flip,

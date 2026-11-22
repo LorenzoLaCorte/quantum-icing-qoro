@@ -1,0 +1,6 @@
+po_a050_t15_s01 5e-4
+po_a400_t15_orig 1e-3
+po_a050_t10_orig 5e-4
+po_a050_t15_orig 5e-4
+po_a050_t10_orig 1e-3
+po_a050_t15_orig 1e-3

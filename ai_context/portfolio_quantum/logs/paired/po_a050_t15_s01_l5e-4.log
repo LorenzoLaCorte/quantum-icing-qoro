@@ -1,0 +1,4 @@
+po_a050_t15_s01_b020_l5e-4: start -304307 from portfolio_quantum/solutions/po_a050_t15_s01_b020_l5e-4/po_a050_t15_s01_b020_l5e-4__paired-transfer-qaoa__20261122-054309.sol
+step 7819 day 13: -304333 (-26), circuits 145907
+final -304333 (start -304307), 8905 steps, 166110 QAOA circuits
+saved /home/danie/quantum-icing-qoro/portfolio_quantum/solutions/po_a050_t15_s01_b020_l5e-4/po_a050_t15_s01_b020_l5e-4__paired-transfer-qaoa__20261122-061838.sol -304333
