@@ -242,10 +242,16 @@ these solutions' ancestry; only the final refinement is classical and exhaustive
 | 3 | 14,280 | 10,885 | 10,885 | 0 | 115 s |
 | 4 | 530,145 | 370,545 | 370,545 | 0 | 4,527 s |
 
-**`network18` is a certified radius-4 local optimum**: 381,920 LPs, 77 minutes on one core,
-every one abandoned by the dual simplex as soon as the incumbent bound was reached. 30% of the
+**472,112 is a certified radius-4 local optimum**: 381,920 LPs, 77 minutes on one core, every
+one abandoned by the dual simplex as soon as the incumbent bound was reached. 30% of the
 enumerated moves are not distinct valid topologies — a duplicated arc, a self-loop, or a
 permutation that rebuilds the same topology — and are rejected before the LP.
+
+That certificate was true and the hand-in is no longer that topology. §10 found **469,000** on
+network18, and it differs from 472,112 in **ten** arcs — outside every radius any certificate
+here can reach. The two results do not conflict: nothing within four arcs of 472,112 is better,
+and the thing that is better was never within four arcs. It is the cleanest statement in this
+report about what a local certificate does and does not buy.
 
 The nine derangements of a 4-subset split into six 4-cycles and **three double transpositions**,
 and a double transposition is exactly two disjoint 2-exchanges applied together — the compound
@@ -357,7 +363,7 @@ valid.
 | 8 | 170,231 | yes | 153,000 | 0.899 | — | — |
 | 9 | 196,750 | yes | 173,000 | 0.879 | — | — |
 | 10 | 210,800 | yes | 173,000 | 0.821 | — | — |
-| 18 | 473,375 | — | 362,111 | 0.765 | 472,112 | 30.4% |
+| 18 | 473,375 | — | 362,111 | 0.765 | 469,000 | 29.5% |
 | 19 | 492,924 | — | 372,184 | 0.755 | 488,895 | 31.4% |
 | 20 | 528,528 | — | 392,650 | 0.743 | 519,343 | 32.3% |
 | 21 | 569,273 | — | 428,238 | 0.752 | 562,362 | 31.3% |
@@ -411,7 +417,27 @@ the first descent step, so `kick()` measures the distance and draws again.
 Validation on network05, where the answer is known: 61 restarts, every one returning to 65,500,
 one distinct optimum, spread 0.
 
-The run on network18 is in `runs/goat/ils/` and `runs/logs/ils_n18.log`.
+### network18: 472,112 -> 469,000
+
+| restart | kick | after the kick | descended to | LPs | time |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 6 | 548,858 | 474,038 | 13,818 | 196 s |
+| 2 | 6 | 552,334 | 476,218 | 16,257 | 258 s |
+| 3 | 5 | 516,500 | 472,112 | 14,307 | 182 s |
+| 4 | 5 | 541,385 | 472,112 | 12,844 | 193 s |
+| 5 | 5 | 567,000 | **469,000** | 37,538 | 565 s |
+
+**469,000, gap −0.92% against QOBLIB's 473,375** — from −0.27%, in five restarts and
+twenty-four minutes on one core. Checked by QOBLIB's own checker and installed as the hand-in.
+
+Three of the five restarts landed on a *different* certified radius-3 optimum than the one they
+left, which is the measurement the design was for: 472,112, 474,038, 476,218 and 469,000 are all
+proven radius-3 local optima of the same instance, spread over 1.5%.
+
+And the headline: **469,000 differs from 472,112 in ten of thirty-six arcs.** The radius-4
+certificate on 472,112 enumerated 530,145 moves and was right about every one of them. The
+better solution was simply never inside it. A certificate bounds a neighbourhood; it says
+nothing about the instance, and the only way past it is to leave.
 
 ## What did not work, and why
 
