@@ -1,14 +1,15 @@
 # Portfolio optimisation (QOBLIB 06): classical hand-in
 
-This folder holds 125 checked `.sol` files for QOBLIB 06, multi-period portfolio optimisation (notebook 01). They cover 125 (instance, budget, λ) configurations, from `po_a010_t10` (710 binary variables) to `po_a400_t15` (36,165 binary variables). All of them come from a **classical** search: no quantum program was used, so the qubit count is 0. The search code is [portfolio_search.py](../../portfolio_search.py). The logs, the run history and a reading guide are in [ai_context/portfolio_classical/](../../ai_context/portfolio_classical/READ_ME_FIRST.txt).
+This folder holds 221 checked `.sol` files for QOBLIB 06, multi-period portfolio optimisation (notebook 01). They cover 221 (instance, budget, λ) configurations, from `po_a010_t10` (710 binary variables) to `po_a400_t15` (36,165 binary variables). All of them come from a **classical** search: no quantum program was used, so the qubit count is 0. The search code is [portfolio_search.py](../../portfolio_search.py). The logs, the run history and a reading guide are in [ai_context/portfolio_classical/](../../ai_context/portfolio_classical/READ_ME_FIRST.txt).
 
 | Group | Configurations | Below the QOBLIB best-known value | Equal | Above |
 | --- | ---: | ---: | ---: | ---: |
 | `po_a010_*` (8 instances × 7 λ) | 56 | 0 | 56 | 0 |
 | `po_a050_*` (8 instances × 7 λ) | 56 | **6** | 34 | 16 |
 | `po_a200_*_orig`, `po_a400_*_orig` | 13 | no value published | | |
+| `po_a200_*_s0x`, `po_a400_*_s0x` (12 instances × 8 λ) | 96 | no value published | | |
 
-The budget B is 4, 20, 50 and 100 open units for 10, 50, 200 and 400 assets. λ = 0 and the tiny `a003`–`a005` instances were not run. "Binary variables" is the size of the notebook's official QUBO (`qoblib_tools.PortfolioQUBO`): 6 position bits per asset and day plus 11 slack bits per day.
+The budget B is 4, 20, 50 and 100 open units for 10, 50, 200 and 400 assets. λ = 0 was run only for the 12 `po_a200`/`po_a400` seed instances (`s00`–`s02`), and the tiny `a003`–`a005` instances were not run. "Binary variables" is the size of the notebook's official QUBO (`qoblib_tools.PortfolioQUBO`): 6 position bits per asset and day plus 11 slack bits per day.
 
 ## Verify
 
@@ -16,11 +17,11 @@ Every file is re-scored with `qoblib_tools.PortfolioModel.score`, the notebook's
 
 ```bash
 source .venv/bin/activate
-PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py verify   # about 4 min, 1.2 GB peak (a400)
+PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py verify   # about 15 min, 1.2 GB peak (a400)
 PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py status   # objective vs best-known value
 ```
 
-The run of 2026-11-22 printed `OK` for all 125 files: [verify_official_scorer.txt](../../ai_context/portfolio_classical/logs/verify_official_scorer.txt).
+The run of 2026-11-22 printed `OK` for the first 125 files ([verify_official_scorer.txt](../../ai_context/portfolio_classical/logs/verify_official_scorer.txt)) and for the 96 seed-instance files ([verify log of the seed campaign](../../ai_context/portfolio_classical/logs/campaign_seeds/verify_official_scorer.txt)).
 
 ## Method and settings
 
@@ -32,6 +33,8 @@ The model is rewritten on one integer per asset and day, v = long − short in �
 4. **Parallel tempering.** 12 replicas run Metropolis block moves at geometric temperatures, which are calibrated automatically from the median |Δ| of random moves. Every 10 s the best state is polished with the DP descent and injected into the coldest replica.
 
 `--method hybrid` (the default) repeats ILS → day tabu → PT phases. The campaign used seed 11 and 0.75, 2 and 3 minutes per configuration for a010, a050 and a200/a400, with 6 processes in parallel ([campaign.sh](../../ai_context/portfolio_classical/scripts/campaign.sh), [job list](../../ai_context/portfolio_classical/scripts/campaign_jobs.txt)). A run warm-starts from the best `.sol` already present and overwrites it only on improvement, so some files are the end of a short chain of runs. [log.csv](../../ai_context/portfolio_classical/logs/log.csv) records every run in order, with its objective, gap and method string.
+
+The 96 seed-instance files (`po_a200`/`po_a400`, `t10`/`t15`, `s00`–`s02`, all 8 λ) come from a second campaign, one run per configuration from the empty portfolio with `--method tabu` (day tabu + DP polish + ILS kicks) and seed 11. Times: 12 min (a400) and 10 min (a200) for λ = 1e-2 and 1e-3; 12 min (a400) and 3 min (a200) for 5e-4; 12 min (a400) and 2 min (a200) for 1e-4; 1 min (a400) and 0.5 min (a200) for λ ≤ 5e-5. The planned warm-started second pass was dropped to finish sooner; on λ = 1e-2 the search was still improving (1–5.6% in the last 6 of 12 minutes on a400), so those files are the least converged. Scripts and logs: [campaign_seeds_resume.sh](../../ai_context/portfolio_classical/scripts/campaign_seeds_resume.sh), [logs/campaign_seeds/](../../ai_context/portfolio_classical/logs/campaign_seeds/log.csv).
 
 To continue from this hand-in set (improvements overwrite the files here):
 
@@ -163,13 +166,109 @@ Objectives are minimised, so a negative gap means below the QOBLIB best-known va
 | `po_a200_t10_orig` | 50 | 1e-2 | [po_a200_t10_orig_b050_l1e-2.sol](po_a200_t10_orig_b050_l1e-2.sol) | 12,110 | 0 | -390,040 | *none published* | — |
 | `po_a200_t10_orig` | 50 | 1e-3 | [po_a200_t10_orig_b050_l1e-3.sol](po_a200_t10_orig_b050_l1e-3.sol) | 12,110 | 0 | -809,239 | *none published* | — |
 | `po_a200_t10_orig` | 50 | 1e-5 | [po_a200_t10_orig_b050_l1e-5.sol](po_a200_t10_orig_b050_l1e-5.sol) | 12,110 | 0 | -1,265,263 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 0 | [po_a200_t10_s00_b050_l0.sol](po_a200_t10_s00_b050_l0.sol) | 12,110 | 0 | -1,553,406 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 1e-2 | [po_a200_t10_s00_b050_l1e-2.sol](po_a200_t10_s00_b050_l1e-2.sol) | 12,110 | 0 | -327,113 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 1e-3 | [po_a200_t10_s00_b050_l1e-3.sol](po_a200_t10_s00_b050_l1e-3.sol) | 12,110 | 0 | -780,510 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 1e-4 | [po_a200_t10_s00_b050_l1e-4.sol](po_a200_t10_s00_b050_l1e-4.sol) | 12,110 | 0 | -1,079,878 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 1e-5 | [po_a200_t10_s00_b050_l1e-5.sol](po_a200_t10_s00_b050_l1e-5.sol) | 12,110 | 0 | -1,413,981 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 1e-6 | [po_a200_t10_s00_b050_l1e-6.sol](po_a200_t10_s00_b050_l1e-6.sol) | 12,110 | 0 | -1,536,118 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 5e-4 | [po_a200_t10_s00_b050_l5e-4.sol](po_a200_t10_s00_b050_l5e-4.sol) | 12,110 | 0 | -869,371 | *none published* | — |
+| `po_a200_t10_s00` | 50 | 5e-5 | [po_a200_t10_s00_b050_l5e-5.sol](po_a200_t10_s00_b050_l5e-5.sol) | 12,110 | 0 | -1,187,046 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 0 | [po_a200_t10_s01_b050_l0.sol](po_a200_t10_s01_b050_l0.sol) | 12,110 | 0 | -1,485,242 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 1e-2 | [po_a200_t10_s01_b050_l1e-2.sol](po_a200_t10_s01_b050_l1e-2.sol) | 12,110 | 0 | -246,594 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 1e-3 | [po_a200_t10_s01_b050_l1e-3.sol](po_a200_t10_s01_b050_l1e-3.sol) | 12,110 | 0 | -685,206 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 1e-4 | [po_a200_t10_s01_b050_l1e-4.sol](po_a200_t10_s01_b050_l1e-4.sol) | 12,110 | 0 | -984,384 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 1e-5 | [po_a200_t10_s01_b050_l1e-5.sol](po_a200_t10_s01_b050_l1e-5.sol) | 12,110 | 0 | -1,342,586 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 1e-6 | [po_a200_t10_s01_b050_l1e-6.sol](po_a200_t10_s01_b050_l1e-6.sol) | 12,110 | 0 | -1,468,396 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 5e-4 | [po_a200_t10_s01_b050_l5e-4.sol](po_a200_t10_s01_b050_l5e-4.sol) | 12,110 | 0 | -761,096 | *none published* | — |
+| `po_a200_t10_s01` | 50 | 5e-5 | [po_a200_t10_s01_b050_l5e-5.sol](po_a200_t10_s01_b050_l5e-5.sol) | 12,110 | 0 | -1,103,844 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 0 | [po_a200_t10_s02_b050_l0.sol](po_a200_t10_s02_b050_l0.sol) | 12,110 | 0 | -1,448,554 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 1e-2 | [po_a200_t10_s02_b050_l1e-2.sol](po_a200_t10_s02_b050_l1e-2.sol) | 12,110 | 0 | -250,054 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 1e-3 | [po_a200_t10_s02_b050_l1e-3.sol](po_a200_t10_s02_b050_l1e-3.sol) | 12,110 | 0 | -673,271 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 1e-4 | [po_a200_t10_s02_b050_l1e-4.sol](po_a200_t10_s02_b050_l1e-4.sol) | 12,110 | 0 | -990,299 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 1e-5 | [po_a200_t10_s02_b050_l1e-5.sol](po_a200_t10_s02_b050_l1e-5.sol) | 12,110 | 0 | -1,308,780 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 1e-6 | [po_a200_t10_s02_b050_l1e-6.sol](po_a200_t10_s02_b050_l1e-6.sol) | 12,110 | 0 | -1,430,338 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 5e-4 | [po_a200_t10_s02_b050_l5e-4.sol](po_a200_t10_s02_b050_l5e-4.sol) | 12,110 | 0 | -768,267 | *none published* | — |
+| `po_a200_t10_s02` | 50 | 5e-5 | [po_a200_t10_s02_b050_l5e-5.sol](po_a200_t10_s02_b050_l5e-5.sol) | 12,110 | 0 | -1,095,892 | *none published* | — |
 | `po_a200_t15_orig` | 50 | 1e-2 | [po_a200_t15_orig_b050_l1e-2.sol](po_a200_t15_orig_b050_l1e-2.sol) | 18,165 | 0 | -668,807 | *none published* | — |
 | `po_a200_t15_orig` | 50 | 1e-3 | [po_a200_t15_orig_b050_l1e-3.sol](po_a200_t15_orig_b050_l1e-3.sol) | 18,165 | 0 | -1,293,125 | *none published* | — |
 | `po_a200_t15_orig` | 50 | 1e-5 | [po_a200_t15_orig_b050_l1e-5.sol](po_a200_t15_orig_b050_l1e-5.sol) | 18,165 | 0 | -1,953,068 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 0 | [po_a200_t15_s00_b050_l0.sol](po_a200_t15_s00_b050_l0.sol) | 18,165 | 0 | -2,376,513 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 1e-2 | [po_a200_t15_s00_b050_l1e-2.sol](po_a200_t15_s00_b050_l1e-2.sol) | 18,165 | 0 | -446,636 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 1e-3 | [po_a200_t15_s00_b050_l1e-3.sol](po_a200_t15_s00_b050_l1e-3.sol) | 18,165 | 0 | -1,215,275 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 1e-4 | [po_a200_t15_s00_b050_l1e-4.sol](po_a200_t15_s00_b050_l1e-4.sol) | 18,165 | 0 | -1,686,778 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 1e-5 | [po_a200_t15_s00_b050_l1e-5.sol](po_a200_t15_s00_b050_l1e-5.sol) | 18,165 | 0 | -2,177,890 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 1e-6 | [po_a200_t15_s00_b050_l1e-6.sol](po_a200_t15_s00_b050_l1e-6.sol) | 18,165 | 0 | -2,352,147 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 5e-4 | [po_a200_t15_s00_b050_l5e-4.sol](po_a200_t15_s00_b050_l5e-4.sol) | 18,165 | 0 | -1,349,824 | *none published* | — |
+| `po_a200_t15_s00` | 50 | 5e-5 | [po_a200_t15_s00_b050_l5e-5.sol](po_a200_t15_s00_b050_l5e-5.sol) | 18,165 | 0 | -1,847,824 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 0 | [po_a200_t15_s01_b050_l0.sol](po_a200_t15_s01_b050_l0.sol) | 18,165 | 0 | -2,207,397 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 1e-2 | [po_a200_t15_s01_b050_l1e-2.sol](po_a200_t15_s01_b050_l1e-2.sol) | 18,165 | 0 | -358,993 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 1e-3 | [po_a200_t15_s01_b050_l1e-3.sol](po_a200_t15_s01_b050_l1e-3.sol) | 18,165 | 0 | -1,034,466 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 1e-4 | [po_a200_t15_s01_b050_l1e-4.sol](po_a200_t15_s01_b050_l1e-4.sol) | 18,165 | 0 | -1,510,191 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 1e-5 | [po_a200_t15_s01_b050_l1e-5.sol](po_a200_t15_s01_b050_l1e-5.sol) | 18,165 | 0 | -2,011,505 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 1e-6 | [po_a200_t15_s01_b050_l1e-6.sol](po_a200_t15_s01_b050_l1e-6.sol) | 18,165 | 0 | -2,183,345 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 5e-4 | [po_a200_t15_s01_b050_l5e-4.sol](po_a200_t15_s01_b050_l5e-4.sol) | 18,165 | 0 | -1,160,913 | *none published* | — |
+| `po_a200_t15_s01` | 50 | 5e-5 | [po_a200_t15_s01_b050_l5e-5.sol](po_a200_t15_s01_b050_l5e-5.sol) | 18,165 | 0 | -1,682,004 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 0 | [po_a200_t15_s02_b050_l0.sol](po_a200_t15_s02_b050_l0.sol) | 18,165 | 0 | -2,200,702 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 1e-2 | [po_a200_t15_s02_b050_l1e-2.sol](po_a200_t15_s02_b050_l1e-2.sol) | 18,165 | 0 | -392,401 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 1e-3 | [po_a200_t15_s02_b050_l1e-3.sol](po_a200_t15_s02_b050_l1e-3.sol) | 18,165 | 0 | -1,016,015 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 1e-4 | [po_a200_t15_s02_b050_l1e-4.sol](po_a200_t15_s02_b050_l1e-4.sol) | 18,165 | 0 | -1,500,032 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 1e-5 | [po_a200_t15_s02_b050_l1e-5.sol](po_a200_t15_s02_b050_l1e-5.sol) | 18,165 | 0 | -1,997,466 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 1e-6 | [po_a200_t15_s02_b050_l1e-6.sol](po_a200_t15_s02_b050_l1e-6.sol) | 18,165 | 0 | -2,174,688 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 5e-4 | [po_a200_t15_s02_b050_l5e-4.sol](po_a200_t15_s02_b050_l5e-4.sol) | 18,165 | 0 | -1,148,116 | *none published* | — |
+| `po_a200_t15_s02` | 50 | 5e-5 | [po_a200_t15_s02_b050_l5e-5.sol](po_a200_t15_s02_b050_l5e-5.sol) | 18,165 | 0 | -1,666,607 | *none published* | — |
 | `po_a400_t10_orig` | 100 | 1e-2 | [po_a400_t10_orig_b100_l1e-2.sol](po_a400_t10_orig_b100_l1e-2.sol) | 24,110 | 0 | -955,715 | *none published* | — |
 | `po_a400_t10_orig` | 100 | 1e-3 | [po_a400_t10_orig_b100_l1e-3.sol](po_a400_t10_orig_b100_l1e-3.sol) | 24,110 | 0 | -1,889,243 | *none published* | — |
 | `po_a400_t10_orig` | 100 | 1e-5 | [po_a400_t10_orig_b100_l1e-5.sol](po_a400_t10_orig_b100_l1e-5.sol) | 24,110 | 0 | -2,501,662 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 0 | [po_a400_t10_s00_b100_l0.sol](po_a400_t10_s00_b100_l0.sol) | 24,110 | 0 | -3,502,750 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 1e-2 | [po_a400_t10_s00_b100_l1e-2.sol](po_a400_t10_s00_b100_l1e-2.sol) | 24,110 | 0 | -853,634 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 1e-3 | [po_a400_t10_s00_b100_l1e-3.sol](po_a400_t10_s00_b100_l1e-3.sol) | 24,110 | 0 | -1,800,345 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 1e-4 | [po_a400_t10_s00_b100_l1e-4.sol](po_a400_t10_s00_b100_l1e-4.sol) | 24,110 | 0 | -2,377,742 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 1e-5 | [po_a400_t10_s00_b100_l1e-5.sol](po_a400_t10_s00_b100_l1e-5.sol) | 24,110 | 0 | -3,050,040 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 1e-6 | [po_a400_t10_s00_b100_l1e-6.sol](po_a400_t10_s00_b100_l1e-6.sol) | 24,110 | 0 | -3,436,562 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 5e-4 | [po_a400_t10_s00_b100_l5e-4.sol](po_a400_t10_s00_b100_l5e-4.sol) | 24,110 | 0 | -1,979,339 | *none published* | — |
+| `po_a400_t10_s00` | 100 | 5e-5 | [po_a400_t10_s00_b100_l5e-5.sol](po_a400_t10_s00_b100_l5e-5.sol) | 24,110 | 0 | -2,573,021 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 0 | [po_a400_t10_s01_b100_l0.sol](po_a400_t10_s01_b100_l0.sol) | 24,110 | 0 | -3,248,351 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 1e-2 | [po_a400_t10_s01_b100_l1e-2.sol](po_a400_t10_s01_b100_l1e-2.sol) | 24,110 | 0 | -934,098 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 1e-3 | [po_a400_t10_s01_b100_l1e-3.sol](po_a400_t10_s01_b100_l1e-3.sol) | 24,110 | 0 | -1,852,721 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 1e-4 | [po_a400_t10_s01_b100_l1e-4.sol](po_a400_t10_s01_b100_l1e-4.sol) | 24,110 | 0 | -2,382,070 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 1e-5 | [po_a400_t10_s01_b100_l1e-5.sol](po_a400_t10_s01_b100_l1e-5.sol) | 24,110 | 0 | -2,955,294 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 1e-6 | [po_a400_t10_s01_b100_l1e-6.sol](po_a400_t10_s01_b100_l1e-6.sol) | 24,110 | 0 | -3,202,287 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 5e-4 | [po_a400_t10_s01_b100_l5e-4.sol](po_a400_t10_s01_b100_l5e-4.sol) | 24,110 | 0 | -2,019,182 | *none published* | — |
+| `po_a400_t10_s01` | 100 | 5e-5 | [po_a400_t10_s01_b100_l5e-5.sol](po_a400_t10_s01_b100_l5e-5.sol) | 24,110 | 0 | -2,557,185 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 0 | [po_a400_t10_s02_b100_l0.sol](po_a400_t10_s02_b100_l0.sol) | 24,110 | 0 | -2,970,949 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 1e-2 | [po_a400_t10_s02_b100_l1e-2.sol](po_a400_t10_s02_b100_l1e-2.sol) | 24,110 | 0 | -792,884 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 1e-3 | [po_a400_t10_s02_b100_l1e-3.sol](po_a400_t10_s02_b100_l1e-3.sol) | 24,110 | 0 | -1,677,385 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 1e-4 | [po_a400_t10_s02_b100_l1e-4.sol](po_a400_t10_s02_b100_l1e-4.sol) | 24,110 | 0 | -2,087,713 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 1e-5 | [po_a400_t10_s02_b100_l1e-5.sol](po_a400_t10_s02_b100_l1e-5.sol) | 24,110 | 0 | -2,656,267 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 1e-6 | [po_a400_t10_s02_b100_l1e-6.sol](po_a400_t10_s02_b100_l1e-6.sol) | 24,110 | 0 | -2,925,462 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 5e-4 | [po_a400_t10_s02_b100_l5e-4.sol](po_a400_t10_s02_b100_l5e-4.sol) | 24,110 | 0 | -1,801,116 | *none published* | — |
+| `po_a400_t10_s02` | 100 | 5e-5 | [po_a400_t10_s02_b100_l5e-5.sol](po_a400_t10_s02_b100_l5e-5.sol) | 24,110 | 0 | -2,242,190 | *none published* | — |
 | `po_a400_t15_orig` | 100 | 1e-2 | [po_a400_t15_orig_b100_l1e-2.sol](po_a400_t15_orig_b100_l1e-2.sol) | 36,165 | 0 | -1,513,140 | *none published* | — |
 | `po_a400_t15_orig` | 100 | 1e-3 | [po_a400_t15_orig_b100_l1e-3.sol](po_a400_t15_orig_b100_l1e-3.sol) | 36,165 | 0 | -2,986,716 | *none published* | — |
 | `po_a400_t15_orig` | 100 | 1e-4 | [po_a400_t15_orig_b100_l1e-4.sol](po_a400_t15_orig_b100_l1e-4.sol) | 36,165 | 0 | -3,408,082 | *none published* | — |
 | `po_a400_t15_orig` | 100 | 1e-5 | [po_a400_t15_orig_b100_l1e-5.sol](po_a400_t15_orig_b100_l1e-5.sol) | 36,165 | 0 | -3,898,640 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 0 | [po_a400_t15_s00_b100_l0.sol](po_a400_t15_s00_b100_l0.sol) | 36,165 | 0 | -4,780,649 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 1e-2 | [po_a400_t15_s00_b100_l1e-2.sol](po_a400_t15_s00_b100_l1e-2.sol) | 36,165 | 0 | -1,237,003 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 1e-3 | [po_a400_t15_s00_b100_l1e-3.sol](po_a400_t15_s00_b100_l1e-3.sol) | 36,165 | 0 | -2,596,045 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 1e-4 | [po_a400_t15_s00_b100_l1e-4.sol](po_a400_t15_s00_b100_l1e-4.sol) | 36,165 | 0 | -3,357,218 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 1e-5 | [po_a400_t15_s00_b100_l1e-5.sol](po_a400_t15_s00_b100_l1e-5.sol) | 36,165 | 0 | -4,227,688 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 1e-6 | [po_a400_t15_s00_b100_l1e-6.sol](po_a400_t15_s00_b100_l1e-6.sol) | 36,165 | 0 | -4,699,472 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 5e-4 | [po_a400_t15_s00_b100_l5e-4.sol](po_a400_t15_s00_b100_l5e-4.sol) | 36,165 | 0 | -2,858,419 | *none published* | — |
+| `po_a400_t15_s00` | 100 | 5e-5 | [po_a400_t15_s00_b100_l5e-5.sol](po_a400_t15_s00_b100_l5e-5.sol) | 36,165 | 0 | -3,617,360 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 0 | [po_a400_t15_s01_b100_l0.sol](po_a400_t15_s01_b100_l0.sol) | 36,165 | 0 | -4,912,455 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 1e-2 | [po_a400_t15_s01_b100_l1e-2.sol](po_a400_t15_s01_b100_l1e-2.sol) | 36,165 | 0 | -1,364,046 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 1e-3 | [po_a400_t15_s01_b100_l1e-3.sol](po_a400_t15_s01_b100_l1e-3.sol) | 36,165 | 0 | -2,793,398 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 1e-4 | [po_a400_t15_s01_b100_l1e-4.sol](po_a400_t15_s01_b100_l1e-4.sol) | 36,165 | 0 | -3,574,738 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 1e-5 | [po_a400_t15_s01_b100_l1e-5.sol](po_a400_t15_s01_b100_l1e-5.sol) | 36,165 | 0 | -4,440,742 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 1e-6 | [po_a400_t15_s01_b100_l1e-6.sol](po_a400_t15_s01_b100_l1e-6.sol) | 36,165 | 0 | -4,840,384 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 5e-4 | [po_a400_t15_s01_b100_l5e-4.sol](po_a400_t15_s01_b100_l5e-4.sol) | 36,165 | 0 | -3,042,201 | *none published* | — |
+| `po_a400_t15_s01` | 100 | 5e-5 | [po_a400_t15_s01_b100_l5e-5.sol](po_a400_t15_s01_b100_l5e-5.sol) | 36,165 | 0 | -3,840,929 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 0 | [po_a400_t15_s02_b100_l0.sol](po_a400_t15_s02_b100_l0.sol) | 36,165 | 0 | -4,506,741 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 1e-2 | [po_a400_t15_s02_b100_l1e-2.sol](po_a400_t15_s02_b100_l1e-2.sol) | 36,165 | 0 | -1,258,649 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 1e-3 | [po_a400_t15_s02_b100_l1e-3.sol](po_a400_t15_s02_b100_l1e-3.sol) | 36,165 | 0 | -2,605,774 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 1e-4 | [po_a400_t15_s02_b100_l1e-4.sol](po_a400_t15_s02_b100_l1e-4.sol) | 36,165 | 0 | -3,261,956 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 1e-5 | [po_a400_t15_s02_b100_l1e-5.sol](po_a400_t15_s02_b100_l1e-5.sol) | 36,165 | 0 | -4,078,252 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 1e-6 | [po_a400_t15_s02_b100_l1e-6.sol](po_a400_t15_s02_b100_l1e-6.sol) | 36,165 | 0 | -4,444,543 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 5e-4 | [po_a400_t15_s02_b100_l5e-4.sol](po_a400_t15_s02_b100_l5e-4.sol) | 36,165 | 0 | -2,820,435 | *none published* | — |
+| `po_a400_t15_s02` | 100 | 5e-5 | [po_a400_t15_s02_b100_l5e-5.sol](po_a400_t15_s02_b100_l5e-5.sol) | 36,165 | 0 | -3,501,065 | *none published* | — |

@@ -1,0 +1,4 @@
+po_a200_t10_s01_b050_l1e-6: n=200 T=10 B=50 vars=4000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[    1.2s] tabu day=8 tried=1: -1468396
+FINAL po_a200_t10_s01_b050_l1e-6: -1468396  -> po_a200_t10_s01_b050_l1e-6.sol (file best -1468396)

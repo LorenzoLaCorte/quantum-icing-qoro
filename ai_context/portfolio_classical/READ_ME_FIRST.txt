@@ -1,5 +1,6 @@
 CLASSICAL PORTFOLIO RESULTS (QOBLIB 06, notebook 01_portfolio_optimisation.ipynb)
-Reading guide for an AI assistant. Snapshot: 2026-11-22, about 01:20 CET.
+Reading guide for an AI assistant. Snapshot: 2026-11-22, about 01:20 CET;
+section 1b (a200/a400 seed instances) added at about 03:50 CET.
 All paths are relative to the repository root.
 
 ======================================================================
@@ -64,6 +65,54 @@ HONEST SUMMARY (read before writing any claim):
 - a200/a400: only the *_orig instances, with lambda in {1e-2, 1e-3, 1e-5},
   plus a400_t15 with 1e-4. They have no reference values, so these are just
   the first checked numbers at that scale (up to 36,165 QUBO variables).
+
+======================================================================
+1b. SECOND CAMPAIGN: a200/a400 SEED INSTANCES (96 configurations)
+======================================================================
+
+12 instances (po_a200 / po_a400, t10 / t15, s00 / s01 / s02) x all 8 lambdas,
+including lambda = 0. QOBLIB publishes no reference value for them, so there
+is no gap; these are the first checked numbers. All 96 files pass the
+official scorer (logs/campaign_seeds/verify_official_scorer.txt, 96 x OK)
+and are now in deliverables/portfolio/ (221 files in total).
+
+Settings: one run per configuration from the empty portfolio,
+--method tabu (day tabu + DP polish + ILS kicks), seed 11, 6 in parallel.
+  lambda 1e-2, 1e-3   12 min (a400), 10 min (a200)
+  lambda 5e-4         12 min (a400),  3 min (a200)
+  lambda 1e-4         12 min (a400),  2 min (a200)
+  lambda <= 5e-5       1 min (a400), 0.5 min (a200)
+The plan was longer (scripts/campaign_seeds.sh + campaign_seeds_pass1/2.txt:
+a warm-started second pass with seed 21 on lambda >= 5e-4). The user asked to
+finish sooner, so at 03:15 the first driver was stopped after 36 jobs (the
+running jobs were left to finish, because a run writes its .sol only at the
+end), pass 2 was dropped, and the remaining 60 jobs ran with the shorter
+times above (scripts/campaign_seeds_resume.sh + campaign_seeds_resume.txt).
+Evidence used for the cuts, from the 24 finished 12-minute a400 logs: gain in
+the last 6 minutes was 1-5.6% for lambda 1e-2, ~0.7% for 1e-3, ~0.3% for 5e-4,
+~0.07% for 1e-4. So lambda 1e-2 is the least converged: a second pass there
+would most likely still help.
+
+  objective (lower is better)
+  instance         l=0         1e-6        1e-5        5e-5        1e-4        5e-4        1e-3        1e-2
+  a200_t10_s00  -1553406    -1536118    -1413981    -1187046    -1079878     -869371     -780510     -327113
+  a200_t10_s01  -1485242    -1468396    -1342586    -1103844     -984384     -761096     -685206     -246594
+  a200_t10_s02  -1448554    -1430338    -1308780    -1095892     -990299     -768267     -673271     -250054
+  a200_t15_s00  -2376513    -2352147    -2177890    -1847824    -1686778    -1349824    -1215275     -446636
+  a200_t15_s01  -2207397    -2183345    -2011505    -1682004    -1510191    -1160913    -1034466     -358993
+  a200_t15_s02  -2200702    -2174688    -1997466    -1666607    -1500032    -1148116    -1016015     -392401
+  a400_t10_s00  -3502750    -3436562    -3050040    -2573021    -2377742    -1979339    -1800345     -853634
+  a400_t10_s01  -3248351    -3202287    -2955294    -2557185    -2382070    -2019182    -1852721     -934098
+  a400_t10_s02  -2970949    -2925462    -2656267    -2242190    -2087713    -1801116    -1677385     -792884
+  a400_t15_s00  -4780649    -4699472    -4227688    -3617360    -3357218    -2858419    -2596045    -1237003
+  a400_t15_s01  -4912455    -4840384    -4440742    -3840929    -3574738    -3042201    -2793398    -1364046
+  a400_t15_s02  -4506741    -4444543    -4078252    -3501065    -3261956    -2820435    -2605774    -1258649
+
+Files: logs/campaign_seeds/p1_<inst>_<lam>.log (stdout of each run; "new best"
+lines name the phase and time), log.csv (one row per run), build.log (cache
+build), driver_first.out / driver_resume.out (driver output with start
+times), verify_official_scorer.txt, status.txt. The verify ran one process per
+instance, 3 at once.
 
 ======================================================================
 2. THE PROBLEM IN ONE PARAGRAPH
@@ -139,7 +188,7 @@ tabu from there gave -203,878.
 4. FILES
 ======================================================================
 
-deliverables/portfolio/*.sol         the 125 checked solutions (canonical QOBLIB format)
+deliverables/portfolio/*.sol         the 221 checked solutions (canonical QOBLIB format)
 deliverables/portfolio/README.md     hand-in table and method
 portfolio_search.py                  all code (build / selftest / run / verify / status)
 ai_context/portfolio_classical/
@@ -159,6 +208,9 @@ ai_context/portfolio_classical/
   scripts/campaign.sh                the campaign driver (6 parallel, xargs)
   scripts/campaign_jobs.txt          the 124 jobs: "<instance> <lambda> <minutes>"
   scripts/lll_test.py                the LLL experiment on the day-8 risk form (negative result)
+  scripts/campaign_seeds*.sh/.txt    the second campaign (section 1b): planned driver and job lists,
+                                     and the shortened resume driver and job list that actually ran
+  logs/campaign_seeds/               logs of the second campaign (section 1b)
   transcripts/portfolio_main_session.jsonl
                                      full Claude Code transcript of this session (JSONL, one
                                      event per line; mostly in Italian). The user's email

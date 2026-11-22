@@ -5,7 +5,7 @@ that reached 657,121 on `network24`. The [original English overview](reports/net
 covers the broader experiment history and the Divi comparison. The [hand-in folder](../deliverables/)
 contains the final checked solutions.
 
-**Portfolio, QOBLIB 06 (classical, 125 configurations, 6 below BKV):** start from
+**Portfolio, QOBLIB 06 (classical, 221 configurations, 6 below BKV):** start from
 [portfolio_classical/READ_ME_FIRST.txt](portfolio_classical/READ_ME_FIRST.txt). It covers the method
 (asset DP, day tabu, ILS, PT), every run log, the campaign script, a provenance note on
 `po_a050_t10_orig` λ=1e-2, and the redacted session transcript. The checked files are in

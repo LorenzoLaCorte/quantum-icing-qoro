@@ -19,7 +19,7 @@ The `network05` and `network24` solutions were found by classical searches. `net
 
 That sweep improved two hand-ins over the hybrid chain's results: **`network18` 473,000 → 472,112** (−0.08% → −0.27%) and **`network22` 606,424 → 604,540** (−1.90% → −2.20%), both re-validated by the checker. Each improving move is a 3-rotation — a move type the chain's ILS already samples — which is the point: sampling a neighbourhood is not exhausting it, and two minutes of enumeration found what hours of heuristic search had missed. Both start from the chain's own topologies, so the 18-qubit QAOA step stays in their ancestry and only the last refinement is classical and exhaustive.
 
-The portfolio hand-in (QOBLIB 06, 125 configurations, 6 below the best-known value) is summarised in [Portfolio optimisation](#portfolio-optimisation-qoblib-06) at the end of this file.
+The portfolio hand-in (QOBLIB 06, 221 configurations, 6 below the best-known value) is summarised in [Portfolio optimisation](#portfolio-optimisation-qoblib-06) at the end of this file.
 
 ## Method and settings
 
@@ -67,7 +67,7 @@ For optional code sharing, the solver implementations live in [network_design/](
 
 ## Portfolio optimisation (QOBLIB 06)
 
-[portfolio/](portfolio/README.md) holds 125 checked `.sol` files, one per (instance, budget, λ). A **classical** search produced all of them (0 qubits): exact asset-trajectory DP, a day-level tabu search, ILS and parallel tempering, implemented in [portfolio_search.py](../portfolio_search.py). All 56 `po_a010` configurations and 34 of the 56 `po_a050` ones match QOBLIB's best-known value. Six `po_a050` configurations go below it, and 16 stay above it, mostly with λ = 1e-3 (gaps of 0.3–2.8%) and three with λ = 1e-2. The 13 `po_a200`/`po_a400` files have no published value to compare against.
+[portfolio/](portfolio/README.md) holds 221 checked `.sol` files, one per (instance, budget, λ). A **classical** search produced all of them (0 qubits): exact asset-trajectory DP, a day-level tabu search, ILS and parallel tempering, implemented in [portfolio_search.py](../portfolio_search.py). All 56 `po_a010` configurations and 34 of the 56 `po_a050` ones match QOBLIB's best-known value. Six `po_a050` configurations go below it, and 16 stay above it, mostly with λ = 1e-3 (gaps of 0.3–2.8%) and three with λ = 1e-2. The 109 `po_a200`/`po_a400` files (13 on the `_orig` instances, 96 on the 12 seed instances `s00`–`s02` with all 8 λ) have no published value to compare against.
 
 | Instance | B | λ | Solution | Binary variables | Qubits | Checked objective | QOBLIB reference | Gap |
 | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |
@@ -81,7 +81,7 @@ For optional code sharing, the solver implementations live in [network_design/](
 
 ¹ This run started from QOBLIB's published reference solution and improved it, so it is not an independent result. See the [provenance note](portfolio/README.md#method-and-settings).
 
-Verify all 125 files from the repo root with `PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py verify`. The method, the settings and the full table are in [portfolio/README.md](portfolio/README.md). The run logs and the reading guide are in [ai_context/portfolio_classical/](../ai_context/portfolio_classical/READ_ME_FIRST.txt).
+Verify all 221 files from the repo root with `PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py verify`. The method, the settings and the full table are in [portfolio/README.md](portfolio/README.md). The run logs and the reading guide are in [ai_context/portfolio_classical/](../ai_context/portfolio_classical/READ_ME_FIRST.txt).
 
 ## Portfolio optimisation, quantum pipeline (QOBLIB 06)
 
