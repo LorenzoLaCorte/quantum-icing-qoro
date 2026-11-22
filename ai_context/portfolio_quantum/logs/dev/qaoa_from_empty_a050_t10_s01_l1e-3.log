@@ -1,0 +1,56 @@
+po_a050_t10_s01_b020_l1e-3: start -1000  BKV (-141376.0, 'best known')  solver qaoa
+it     1 round      q=16 cand=2439  -17843 -> -18843
+it     2 round      q=16 cand=1870  -18581 -> -37424
+it     4 day:held   q=14 cand=2513    -606 -> -38030
+it     5 round      q=16 cand=2818  -13822 -> -51852
+it     8 round      q=16 cand=1886   -7590 -> -59442
+it    10 day:grad   q=14 cand=2553    -712 -> -60154
+it    14 round      q=16 cand=1622  -12323 -> -72477
+it    16 round      q=16 cand= 480   -1111 -> -73588
+it    19 round      q=16 cand=1791  -10439 -> -84027
+it    21 round      q=16 cand= 119    -318 -> -84345
+it    24 round      q=16 cand=2326  -10625 -> -94970
+it    27 round      q=16 cand=2261   -1100 -> -96070
+it    28 round      q=16 cand=1638   -1102 -> -97172
+it    31 round      q=16 cand=1872   -1039 -> -98211
+it    32 round      q=16 cand=2819     -38 -> -98249
+it    34 round      q=16 cand=2518  -21112 -> -119361
+it    38 day:grad   q=14 cand=1057   -1531 -> -120892
+it    45 round      q=16 cand=2656    -172 -> -121064
+it    48 round      q=16 cand=2236    -823 -> -121887
+it    56 round      q=16 cand=2558    -763 -> -122650
+it    63 round      q=16 cand=2622     -99 -> -122749
+it    64 round      q=16 cand= 664  -10180 -> -132929
+it    69 round      q=16 cand=2067    -109 -> -133038
+it    79 day:grad   q=13 cand= 253    -521 -> -133559
+it    86 round      q=16 cand=1891    -660 -> -134219
+it    91 round      q=16 cand=1283    -445 -> -134664
+it    93 round      q=16 cand=2652    -475 -> -135139
+it    95 round      q=16 cand=2486    -263 -> -135402
+it   112 day:rand   q=14 cand= 325     -99 -> -135501
+it   113 round      q=16 cand=2353    -313 -> -135814
+it   120 round      q=16 cand=2272    -581 -> -136395
+it   123 round      q=16 cand=2648    -499 -> -136894
+it   141 round      q=16 cand=2028    -418 -> -137312
+it   165 day:grad   q=14 cand=1072    -212 -> -137524
+it   240 round      q=16 cand=2742     -42 -> -137566
+it   283 round      q=16 cand=2607    -162 -> -137728
+it   300 day:grad   q=14 cand= 664    -468 -> -138196
+  [qaoa] trained xy p=5 on 16 qubits: loss 0.413, 152 circuits, 17s
+it   327 day:grad   q=14 cand= 708     -91 -> -138287
+it   403 day:grad   q=14 cand= 316      -2 -> -138289
+it   418 day:grad   q=13 cand= 566    -152 -> -138441
+it   512 round      q=16 cand=1125    -134 -> -138575
+  [qaoa] trained xy p=5 on 16 qubits: loss 0.117, 154 circuits, 14s
+it   737 day:corr   q=14 cand= 324     -41 -> -138616
+it   739 day:grad   q=14 cand= 779    -624 -> -139240
+it   759 day:grad   q=14 cand= 337    -254 -> -139494
+it   816 round      q=16 cand=2343     -90 -> -139584
+it   834 round      q=16 cand=2720     -11 -> -139595
+  [qaoa] trained xy p=5 on 16 qubits: loss 0.422, 162 circuits, 16s
+it  1004 day:rand   q=14 cand= 756     -39 -> -139634
+  [qaoa] trained xy p=5 on 16 qubits: loss 0.105, 158 circuits, 15s
+QAOA: 1229 windows, 3084 circuits (626 for angle training), largest program 18 qubits
+final -139634 (start -1000, BKV (-141376.0, 'best known')) its=1229 accepted={'round': 33, 'day:held': 1, 'day:grad': 10, 'day:rand': 2, 'day:corr': 1}
+window-optimum hit rate: 64/128 = 50.0%
+saved /tmp/claude-1000/-home-danie-quantum-icing-qoro/84c51c9c-e8ad-4cf8-ba68-4001117c9239/scratchpad/sol/po_a050_t10_s01_b020_l1e-3/po_a050_t10_s01_b020_l1e-3__qlns-qaoa__20261122-023917.sol -139634

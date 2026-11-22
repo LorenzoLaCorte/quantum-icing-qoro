@@ -1,0 +1,32 @@
+po_a050_t10_s01_b020_l1e-3: start -1000  BKV (-141376.0, 'best known')  solver qaoa
+  [qaoa] trained xy p=5 on 16 qubits: loss 0.179, 169 circuits, 16s
+it     1 round      q=16 cand=2466  -17549 -> -18549
+it     2 round      q=16 cand=1912  -18680 -> -37229
+  [qaoa] trained x p=5 on 6 qubits: loss -0.516, 160 circuits, 1s
+it     3 block2     q= 6 cand=  57   -1168 -> -38397
+it     5 block2     q= 6 cand=  35    -155 -> -38552
+it     6 round      q=16 cand=2198  -11367 -> -49919
+it     9 round      q=16 cand=1951  -21611 -> -71530
+it    10 round      q=16 cand=1784   -9918 -> -81448
+it    12 round      q=16 cand=2634  -13475 -> -94923
+it    13 round      q=16 cand=1121   -8788 -> -103711
+it    15 round      q=16 cand=2670    -675 -> -104386
+it    16 round      q=16 cand=1462    -808 -> -105194
+it    21 day:corr   q=14 cand=  14    -152 -> -105346
+it    23 round      q=16 cand=1886  -12655 -> -118001
+it    24 round      q=16 cand=2630  -13070 -> -131071
+it    40 round      q=16 cand=2605    -333 -> -131404
+it    46 round      q=16 cand=2689    -159 -> -131563
+it    47 round      q=16 cand=1975    -962 -> -132525
+it    51 round      q=16 cand=2776    -397 -> -132922
+it    53 day:grad   q=14 cand= 368    -767 -> -133689
+it    68 round      q=16 cand=2580     -11 -> -133700
+it    74 round      q=16 cand=2124    -832 -> -134532
+it    83 day:corr   q=14 cand= 188     -12 -> -134544
+it   111 day:corr   q=14 cand= 234    -154 -> -134698
+it   127 round      q=16 cand=2647    -312 -> -135010
+it   137 round      q=16 cand=2262    -226 -> -135236
+it   142 round      q=16 cand=2674    -545 -> -135781
+it   155 round      q=16 cand=1821    -491 -> -136272
+it   160 round      q=16 cand=2860     -52 -> -136324
+it   166 round      q=16 cand=2654    -263 -> -136587

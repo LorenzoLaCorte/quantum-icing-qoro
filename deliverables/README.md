@@ -82,3 +82,11 @@ For optional code sharing, the solver implementations live in [network_design/](
 ¹ This run started from QOBLIB's published reference solution and improved it, so it is not an independent result. See the [provenance note](portfolio/README.md#method-and-settings).
 
 Verify all 125 files from the repo root with `PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py verify`. The method, the settings and the full table are in [portfolio/README.md](portfolio/README.md). The run logs and the reading guide are in [ai_context/portfolio_classical/](../ai_context/portfolio_classical/READ_ME_FIRST.txt).
+
+## Portfolio optimisation, quantum pipeline (QOBLIB 06)
+
+[portfolio_quantum/](portfolio_quantum/README.md) holds 5 checked `.sol` files from a **quantum** large-neighbourhood
+search: Divi QAOA, p = 5, Dicke state + XY mixer that conserves the budget, transferred angles. The programs have up to
+18 qubits on the local Maestro simulator and 26 qubits on Qoro's cloud. Every file improves on the earlier classical
+file for the same configuration, up to `po_a400_t15_orig` (36,165 binary variables): −3,015,526 against −2,986,716.
+Method: [portfolio_quantum/README.md](../portfolio_quantum/README.md). Logs: [ai_context/portfolio_quantum/](../ai_context/portfolio_quantum/READ_ME_FIRST.txt).

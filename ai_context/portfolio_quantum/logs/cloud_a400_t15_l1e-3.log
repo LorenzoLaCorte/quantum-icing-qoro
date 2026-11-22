@@ -1,0 +1,13 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /home/danie/quantum-icing-qoro/.venv, got /home/danie/quantum-icing-qoro/portfolio_quantum/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /home/danie/quantum-icing-qoro/.venv, got /home/danie/quantum-icing-qoro/portfolio_quantum/../.venv
+po_a400_t15_orig_b100_l1e-3: start -2986716, 36165 QUBO variables, cloud=True
+round 0 parity 0: 7 programs (<= 26 qubits) in 235s, 0 improved, -2986716 -> -2986716
+round 1 parity 1: 7 programs (<= 26 qubits) in 242s, 2 improved, -2986716 -> -2995593
+round 2 parity 0: 7 programs (<= 26 qubits) in 250s, 1 improved, -2995593 -> -2998880
+round 3 parity 1: 7 programs (<= 26 qubits) in 243s, 2 improved, -2998880 -> -3012472
+round 4 parity 0: 7 programs (<= 26 qubits) in 210s, 0 improved, -3012472 -> -3012472
+round 5 parity 1: 7 programs (<= 26 qubits) in 244s, 1 improved, -3012472 -> -3014614
+round 6 parity 0: 7 programs (<= 26 qubits) in 230s, 0 improved, -3014614 -> -3014614
+round 7 parity 1: 7 programs (<= 26 qubits) in 236s, 1 improved, -3014614 -> -3015526
+final -3015526 (start -2986716); 112 circuits, largest program 26 qubits, credits used 84.67000000000007
+saved /home/danie/quantum-icing-qoro/portfolio_quantum/solutions/po_a400_t15_orig_b100_l1e-3/po_a400_t15_orig_b100_l1e-3__qlns-qaoa-cloudbatch__20261122-032808.sol -3015526
