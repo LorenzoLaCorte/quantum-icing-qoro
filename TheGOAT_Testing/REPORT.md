@@ -195,6 +195,32 @@ venv/bin/python TheGOAT_Testing/certify_radius.py --n 24 --r 3 --workers 2   # 6
 venv/bin/python TheGOAT_Testing/certify_radius.py --n 24 --r 4 --workers 2   # ~2.5 h
 ```
 
+## 7. The certificate turned into a search: network18 improved (`certify_descent.py`)
+
+A radius scan that answers "is anything within r arcs better?" becomes a search when you take
+the best move it finds and run it again. Each pass enumerates every radius-2 and radius-3 move,
+takes the single best improving one, banks it through the official checker and restarts. When a
+pass finds nothing the run stops **with a proof**: a verified radius-3 local optimum, not a
+point a heuristic got stuck in.
+
+On `network18`, the weakest hand-in at −0.079%:
+
+| pass | radius | LPs | time | result |
+|---|---|---:|---:|---|
+| 1 | 2 | 490 | 4 s | none better |
+| 1 | 3 | 10,887 | 126 s | **473,000 → 472,112** |
+| 2 | 2 | 490 | 4 s | none better |
+| 2 | 3 | 10,885 | 112 s | none better → certified |
+
+**473,000 → 472,112 in 247 s, gap to best known from −0.08% to −0.27%**, checked by QOBLIB's
+own checker and installed as the hand-in. The move that did it is a 3-rotation — a move type
+the team's ILS already samples. It was missed because the ILS samples the neighbourhood and
+this exhausts it, which is the whole point: on an instance that several hours of heuristic
+search had polished, enumerating 14,280 moves found something in two minutes.
+
+The starting topology came from the team's hybrid chain, so the 18-qubit QAOA step stays in
+this solution's ancestry; the final refinement is classical and exhaustive.
+
 ## What did not work, and why
 
 | attempt | measured | reason |

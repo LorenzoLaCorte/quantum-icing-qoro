@@ -5,7 +5,7 @@ Notebook 00 asks for each checked `.sol` file, the instance and binary variable 
 | Instance | Solution | Binary variables | Qubits used to produce solution | Checked objective | QOBLIB reference | Gap |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | `network05` | [network05.sol](network05/network05.sol) | 20 | 0 | 65,500 | 65,500 (proven optimum) | 0.00% |
-| `network18` | [network18.sol](network18/network18.sol) | 306 | 18 | 473,000 | 473,375 (best known) | −0.08% |
+| `network18` | [network18.sol](network18/network18.sol) | 306 | 18 | 472,112 | 473,375 (best known) | −0.27% |
 | `network19` | [network19.sol](network19/network19.sol) | 342 | 18 | 488,895 | 492,924 (best known) | −0.82% |
 | `network20` | [network20.sol](network20/network20.sol) | 380 | 18 | 519,343 | 528,528 (best known) | −1.74% |
 | `network21` | [network21.sol](network21/network21.sol) | 420 | 18 | 562,362 | 569,273 (best known) | −1.21% |
@@ -14,6 +14,8 @@ Notebook 00 asks for each checked `.sol` file, the instance and binary variable 
 | `network24` | [network24.sol](network24/network24.sol) | 552 | 0 | 657,121 | 663,688 (best known) | −0.99% |
 
 The `network05` and `network24` solutions were found by classical searches. `network18`–`network23` come from a hybrid chain, network23 → network18. Each instance starts from the polished topology of the next larger one with its last node deleted. Exact-LP 2-exchange descent refines it, and a QAOA step (Divi, local Maestro simulator, 18 qubits, p=2) samples combinations of 2-exchange moves to escape local optima. QAOA samples gave direct improvements on network22 and network19 and kicks before later descents on network20, while most of the gain came from the classical descent and the exact pair scan. The search code is [solutions/agent_qcompound/small/qls.py](../solutions/agent_qcompound/small/qls.py). The logs, transcripts and a reading guide are in [ai_context/quantum_networks/](../ai_context/quantum_networks/READ_ME_FIRST.txt). The [network24 report](reports/network24_report_eng.tex) describes how parallel tempering and iterated local search were combined to produce the checked result.
+
+`network18` was then improved from 473,000 to **472,112** by a *certified radius-3 descent* ([TheGOAT_Testing/certify_descent.py](../TheGOAT_Testing/certify_descent.py)), starting from the hybrid chain's own topology, so the 18-qubit QAOA step stays in its ancestry while the last refinement is classical and exhaustive. Degrees force any move between two valid topologies differing in k arcs to be a derangement of the heads of those k arcs, so each radius is finite: 630 moves at radius 2 and 14,280 at radius 3 on 18 nodes. Each pass enumerates them all against a warm dual simplex bounded at the incumbent, takes the single best improving move and repeats. The team's ILS samples the same move types but does not exhaust them, which is why an improvement was still there. When such a descent stops it stops with a proof: the solution it leaves is a verified radius-3 local optimum, not a point a heuristic got stuck in.
 
 The portfolio hand-in (QOBLIB 06, 125 configurations, 6 below the best-known value) is summarised in [Portfolio optimisation](#portfolio-optimisation-qoblib-06) at the end of this file.
 
