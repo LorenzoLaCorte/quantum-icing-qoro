@@ -4,7 +4,7 @@ services:
     name: quantum-icing
     runtime: static
     buildCommand: echo "static site, nothing to build"
-    staticPublishPath: ./website
+    staticPublishPath: ./code/website
     headers:
       - path: /vendor/*
         name: Cache-Control

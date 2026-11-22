@@ -7,17 +7,23 @@ using problem partitioning with [Divi](https://github.com/QoroQuantum/divi) on Q
 **Step one: [sign up at dash.qoroquantum.net](https://dash.qoroquantum.net)** for your API key and
 hackathon credits.
 
-For our network design results, see the [hand-in folder](deliverables/README.md) and the
-[methodology and run evidence](ai_context/README.md). Solver implementations are in
-[`network_design/`](network_design/).
+## Repository layout
+
+| Folder | What's in it |
+|---|---|
+| [`best_results/`](best_results/README.md) | **Final hand-in.** Best `.sol` per instance for network design and portfolio, plus the reports |
+| [`all_results/`](all_results/README.md) | Every intermediate, superseded, and submitted result |
+| [`code/`](code/README.md) | Notebooks, solvers, scripts, logs, website |
+
+Methodology and run evidence: [`code/ai_context/README.md`](code/ai_context/README.md).
 
 ## The notebooks
 
 | Notebook | What it is |
 |---|---|
-| [`00_main_qubo_101.ipynb`](00_main_qubo_101.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QoroQuantum/pushquantum-hackathon-2026/blob/main/00_main_qubo_101.ipynb) | **Start here.** Part 0: API key, install, backend. Part 1, QUBO 101 with Divi: build a QUBO, characterize and validate it, QAOA blind and warm-started, PCE, partitioning. Part 2: choose your problem, run it in Colab, hand in. |
-| [`01_portfolio_optimisation.ipynb`](01_portfolio_optimisation.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QoroQuantum/pushquantum-hackathon-2026/blob/main/01_portfolio_optimisation.ipynb) | QOBLIB 06, multi-period portfolio optimisation: official model → QUBO → classical baseline → PCE and partitioned QAOA → solution file. 58 to about 36 000 binary variables. |
-| [`02_network_design.ipynb`](02_network_design.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QoroQuantum/pushquantum-hackathon-2026/blob/main/02_network_design.ipynb) | QOBLIB 08, network design: topology QUBO with Divi `LinearConstraint`s + exact routing LP → sample, score, write a solution file. 20 to 552 binary variables. |
+| [`00_main_qubo_101.ipynb`](code/00_main_qubo_101.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QoroQuantum/pushquantum-hackathon-2026/blob/main/00_main_qubo_101.ipynb) | **Start here.** Part 0: API key, install, backend. Part 1, QUBO 101 with Divi: build a QUBO, characterize and validate it, QAOA blind and warm-started, PCE, partitioning. Part 2: choose your problem, run it in Colab, hand in. |
+| [`01_portfolio_optimisation.ipynb`](code/01_portfolio_optimisation.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QoroQuantum/pushquantum-hackathon-2026/blob/main/01_portfolio_optimisation.ipynb) | QOBLIB 06, multi-period portfolio optimisation: official model → QUBO → classical baseline → PCE and partitioned QAOA → solution file. 58 to about 36 000 binary variables. |
+| [`02_network_design.ipynb`](code/02_network_design.ipynb)<br>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QoroQuantum/pushquantum-hackathon-2026/blob/main/02_network_design.ipynb) | QOBLIB 08, network design: topology QUBO with Divi `LinearConstraint`s + exact routing LP → sample, score, write a solution file. 20 to 552 binary variables. |
 
 **Run order:** 00 first, then **one** of 01 or 02. Setup is explained only in notebook 00 and in this
 README; the problem notebooks repeat the setup code without the explanations.

@@ -3,14 +3,15 @@
 .venv/
 
 # Created when you run the notebooks
-qoblib_data/
+code/qoblib_data/
 *.sol
-!deliverables/**/*.sol
-!pushquantum-submission/**/*.sol
-!portfolio_QIcing/solutions/**/*.sol
-!portfolio_quantum/solutions/**/*.sol
-/deliverables/reports/build/
-/ai_context/reports/build/
+!best_results/**/*.sol
+!all_results/**/*.sol
+!code/portfolio_QIcing/solutions/**/*.sol
+!code/portfolio_quantum/solutions/**/*.sol
+/all_results/solutions/*.sol
+/best_results/reports/build/
+/code/ai_context/reports/build/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
