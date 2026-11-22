@@ -21,6 +21,8 @@ The `network05` and `network24` solutions were found by classical searches. `net
 
 That sweep improved two hand-ins over the hybrid chain's results: **`network18` 473,000 → 472,112** (−0.08% → −0.27%) and **`network22` 606,424 → 604,540** (−1.90% → −2.20%), both re-validated by the checker. Each improving move is a 3-rotation — a move type the chain's ILS already samples — which is the point: sampling a neighbourhood is not exhausting it, and two minutes of enumeration found what hours of heuristic search had missed. Both start from the chain's own topologies, so the 18-qubit QAOA step stays in their ancestry and only the last refinement is classical and exhaustive.
 
+A bound from the other side: no 2-in/2-out topology on n nodes can score below the demand-weighted hop bound that out-degree 2 forces (every unit of demand crosses at least its shortest-path distance, at most 2 nodes sit at distance 1 and 4 at distance 2, and the maximum arc load is at least the average). It costs microseconds, it holds on all twenty published instances, and it puts **every network hand-in above within 28.5% to 32.3% of the true optimum** — a limit no better search can improve, only a better bound. Where QOBLIB proves the optimum (n = 5–10) the same bound lands 1.5% to 17.9% below it, so most of that 30% is the bound's own slack: `network05` sits 4.0% above the bound and is optimal. [TheGOAT_Testing/instance_bound.py](../TheGOAT_Testing/instance_bound.py)
+
 The portfolio hand-in (QOBLIB 06, 221 configurations, 6 below the best-known value) is summarised in [Portfolio optimisation](#portfolio-optimisation-qoblib-06) at the end of this file.
 
 ## Method and settings

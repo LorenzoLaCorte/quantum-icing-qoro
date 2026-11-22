@@ -315,6 +315,59 @@ What the improved ancestor does buy is a better start at the same node: **568,42
 573,625**, two topologies three arcs apart. A radius-3 descent from it is the one experiment the
 chain never got to run.
 
+## 9. A bound from below: how far from optimal can the hand-ins be? (`instance_bound.py`)
+
+Everything above bounds the optimum from *above* -- a solution is an upper bound, and a
+certificate says no nearby solution is better. Nothing so far says the optimum is not far
+below. This does, for every 2-in/2-out topology at once, in microseconds.
+
+1. Each unit of demand from i to j crosses at least `dist(i,j)` arcs, so the total load over all
+   arcs is at least `sum_ij d_ij dist(i,j)`.
+2. Out-degree 2 caps proximity: at most 2 nodes at distance 1 from i, 4 more at distance 2, 8 at
+   distance 3 (the directed Moore bound). For a fixed multiset of distances the sum in (1) is
+   smallest when the largest demands take the shortest distances, so sorting row i downwards and
+   assigning it to 1, 1, 2, 2, 2, 2, 3, ... lower-bounds `sum_j d_ij dist(i,j)` for *every*
+   topology. In-degree 2 gives the same argument on the columns; both hold, so take the larger.
+3. The objective is the maximum arc load, which is at least the average, total / 2n.
+
+Independently, all demand leaving node i must go out on its 2 arcs, so the busiest arc carries
+at least `sum_j d_ij / 2`. On these instances that is weaker, but the maximum of valid bounds is
+valid.
+
+| n | QOBLIB reference | proven? | bound | bound / reference | our hand-in | provable gap |
+|---:|---:|---|---:|---:|---:|---:|
+| 5 | 65,500 | yes | 63,000 | 0.962 | 65,500 | 4.0% |
+| 6 | 101,000 | yes | 99,500 | 0.985 | — | — |
+| 7 | 142,400 | yes | 133,000 | 0.934 | — | — |
+| 8 | 170,231 | yes | 153,000 | 0.899 | — | — |
+| 9 | 196,750 | yes | 173,000 | 0.879 | — | — |
+| 10 | 210,800 | yes | 173,000 | 0.821 | — | — |
+| 18 | 473,375 | — | 362,111 | 0.765 | 472,112 | 30.4% |
+| 19 | 492,924 | — | 372,184 | 0.755 | 488,895 | 31.4% |
+| 20 | 528,528 | — | 392,650 | 0.743 | 519,343 | 32.3% |
+| 21 | 569,273 | — | 428,238 | 0.752 | 562,362 | 31.3% |
+| 22 | 618,135 | — | 459,704 | 0.744 | 604,540 | 31.5% |
+| 23 | 659,369 | — | 490,760 | 0.744 | 639,739 | 30.4% |
+| 24 | 663,688 | — | 511,229 | 0.770 | 657,121 | 28.5% |
+
+The bound holds on all twenty instances with a published value, which the tests assert, and
+QOBLIB proves the optimum for n = 5..10, so its looseness is measurable where the truth is
+known: **1.5% below the optimum at n = 6, 3.8% at n = 5, then 6.6%, 10.1%, 12.1%, 17.9%** as n
+grows and both the Moore step and the max-versus-average step weaken. From n = 11 it flattens
+at 0.74-0.77 of the best-known value and stays flat to n = 24.
+
+Two readings, and only one of them is a proof.
+
+The proof: **every network hand-in is within 28.5% to 32.3% of the true optimum**, and that is
+the first statement in this repo that cannot be improved by a better search -- only by a better
+bound. `network05` shows the scale: it sits 4.0% above the bound and is nevertheless optimal.
+
+The inference, which is not a proof: the ratio is flat across fourteen instances where the
+optimum is unknown, and decaying where it is known. A family of best-known values that drifted
+away from optimal as n grew would show the ratio falling, not flattening. So the large instances
+are not a different regime from the small ones -- but a uniformly good family and a uniformly
+bad one look the same from here, and this bound cannot separate them.
+
 ## What did not work, and why
 
 | attempt | measured | reason |
