@@ -1,6 +1,4 @@
-# QIcing portfolio attack | method: pool-DP + LNS-exactDP (classical)
-# settings: QP-relax+round+pair-descent+ILS pool (916), chain DP, LNS k<=4 150s seed 0
-# quantum: False | qubo vars:  | max qubits: 
+# opus_lab exact MILP (lambda=0 is linear; HiGHS) proven optimal
 instance po_a050_t10_orig
 budget 20
 lambda 0

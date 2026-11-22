@@ -1,6 +1,4 @@
-# QIcing portfolio attack | method: exact-DP (classical)
-# settings: reduced-state DP over periods, v=L-S
-# quantum: False | qubo vars:  | max qubits: 
+# opus_lab exact MILP (lambda=0 is linear; HiGHS) proven optimal
 instance po_a010_t15_s02
 budget 4
 lambda 0

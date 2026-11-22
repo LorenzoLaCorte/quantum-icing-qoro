@@ -1,4 +1,4 @@
-# opus_lab campaign: pool chain-DP + ILS-tabu
+# opus_lab exact MILP (lambda=0 is linear; HiGHS, zero gap): PROVEN OPTIMAL
 instance po_a400_t10_s00
 budget 100
 lambda 0

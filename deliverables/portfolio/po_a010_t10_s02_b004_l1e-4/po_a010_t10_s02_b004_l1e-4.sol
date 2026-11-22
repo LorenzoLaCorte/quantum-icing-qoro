@@ -1,10 +1,10 @@
-# QIcing portfolio attack | method: QLNS-pce (quantum sub-solver, Maestro)
-# settings: routine=pce n_layers=3 window_assets=6 p_time=0.6 p_corr=0.3 p_hedge=0.0 hedge_assets=2 penalty_weight=5000 mc_pop=40 mc_iter=8 shots=4000 iters=1859 seed=16 start=/mnt/d/Repos/Quantum_Munich_Challenges_TUM_Hackathon_PushQuantum_2026/quantum-icing-qoro/portfolio_QIcing/solutions/po_a010_t10_s02_b004_l1e-4/po_a010_t10_s02_b004_l1e-4__qlns-pce__20261121-222342.sol warm_start=none char_job= circuits=596739
-# quantum: True | qubo vars: 630 | max qubits: 9
+# QIcing portfolio attack | method: exact-DP (classical)
+# settings: reduced-state DP over periods, v=L-S
+# quantum: False | qubo vars:  | max qubits: 
 instance po_a010_t10_s02
 budget 4
 lambda 0.0001
-objective -53220
+objective -53255
 # period symbol long short
 0 AAPL 0 1
 0 AVGO 1 0
@@ -24,9 +24,8 @@ objective -53220
 5 GOOG 1 0
 5 NVDA 1 0
 5 TSLA 0 1
-6 AAPL 0 2
-6 AMZN 0 1
-6 AVGO 1 0
+6 AAPL 0 3
+6 GOOG 0 1
 7 AAPL 0 3
 7 TSLA 1 0
 8 AVGO 0 2

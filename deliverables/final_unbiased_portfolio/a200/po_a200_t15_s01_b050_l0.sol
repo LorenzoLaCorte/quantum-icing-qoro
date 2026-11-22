@@ -1,8 +1,8 @@
-# Qoro x QOBLIB hackathon: portfolio_search.py tabu seed=11 0.5min init=zero
+# opus_lab exact MILP (lambda=0 is linear; HiGHS) proven optimal
 instance po_a200_t15_s01
 budget 50
 lambda 0
-objective -2207397
+objective -2207575
 # period symbol long short
 0 ACN 3 0
 0 ADBE 0 3
@@ -80,9 +80,8 @@ objective -2207397
 4 DELL 0 3
 4 FDX 3 0
 4 LRCX 3 0
-4 META 0 1
 4 MU 0 3
-4 NFLX 0 2
+4 NFLX 0 3
 4 NOW 0 3
 4 PLTR 0 3
 4 SNPS 0 3
@@ -98,10 +97,9 @@ objective -2207397
 5 FCX 3 0
 5 GE 0 3
 5 GM 3 0
-5 ISRG 0 1
-5 LLY 0 3
+5 ISRG 0 3
+5 LLY 0 2
 5 LOW 3 0
-5 META 0 1
 5 MMM 3 0
 5 NOW 0 3
 5 RCL 3 0
@@ -110,11 +108,10 @@ objective -2207397
 5 VST 3 0
 6 ADBE 0 3
 6 AEP 3 0
-6 CDNS 0 2
 6 CEG 3 0
 6 CMG 0 3
 6 CRWD 0 3
-6 ISRG 0 1
+6 ISRG 0 3
 6 LLY 0 3
 6 NEE 3 0
 6 NOW 0 3

@@ -1,4 +1,4 @@
-# opus_lab missing: pool chain-DP + context ILS-tabu
+# opus_lab exact MILP (lambda=0 is linear; HiGHS, zero gap): PROVEN OPTIMAL
 instance po_a200_t10_orig
 budget 50
 lambda 0

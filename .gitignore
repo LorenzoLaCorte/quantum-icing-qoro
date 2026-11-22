@@ -6,6 +6,7 @@
 qoblib_data/
 *.sol
 !deliverables/**/*.sol
+!pushquantum-submission/**/*.sol
 !portfolio_QIcing/solutions/**/*.sol
 !portfolio_quantum/solutions/**/*.sol
 /deliverables/reports/build/
