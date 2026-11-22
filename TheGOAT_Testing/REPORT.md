@@ -383,6 +383,36 @@ away from optimal as n grew would show the ratio falling, not flattening. So the
 are not a different regime from the small ones -- but a uniformly good family and a uniformly
 bad one look the same from here, and this bound cannot separate them.
 
+## 10. Certified local optima are plural (`certified_ils.py`)
+
+The re-derived chain start for network21 gave a negative result and a better idea. Descending
+from it -- 568,429, the deletion of the improved network22 -- lands on **565,343, a certified
+radius-3 local optimum that is worse than the 562,362 already handed in**. The experiment fails:
+the improved ancestor does not buy a better child.
+
+What it shows is that network21 has at least two proven radius-3 local optima, 3,086 apart, and
+that the one we hold was reached by luck of trajectory rather than by any property of the
+landscape. network05 makes the same point at a scale where everything is checkable: 10 arcs, 216
+valid topologies, the optimum proven at 65,500 -- and a radius-3 descent from a kicked start
+still stalls at 70,000, because radius 3 on 10 arcs cannot see the whole space either.
+
+So the certificate is worth turning into an iterated local search. The team's ILS samples
+2-exchanges, 3-rotations and cycle reversals and stops when it stops improving, which is a
+statement about the sampler. Here the local search *exhausts* radius 2..3, so each stop is a
+proven local optimum, and the certified radius tells the kick exactly how far it must reach to
+escape: kicks of 5, 6 and 7 arcs on an incumbent certified to 4.
+
+One detail the tests caught. A radius-k move does not always land k arcs away: every node has
+in-degree 2, so two arcs in the chosen subset can share a head, and swapping those two heads
+rebuilds the same pair. Inside the certificate that is harmless -- such a move was already
+enumerated at a smaller radius -- but a kick that lands inside the exhausted radius is undone by
+the first descent step, so `kick()` measures the distance and draws again.
+
+Validation on network05, where the answer is known: 61 restarts, every one returning to 65,500,
+one distinct optimum, spread 0.
+
+The run on network18 is in `runs/goat/ils/` and `runs/logs/ils_n18.log`.
+
 ## What did not work, and why
 
 | attempt | measured | reason |
