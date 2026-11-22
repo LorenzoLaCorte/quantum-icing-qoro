@@ -13,6 +13,8 @@ Notebook 00 asks for each checked `.sol` file, the instance and binary variable 
 | `network23` | [network23.sol](network23/network23.sol) | 506 | 18 | 639,739 | 659,369 (best known) | −2.98% |
 | `network24` | [network24.sol](network24/network24.sol) | 552 | 0 | 657,121 | 663,688 (best known) | −0.99% |
 
+**Portfolio optimisation:** 13 checked solutions are in [portfolio/](portfolio/README.md). They are 5 improved best-known values on 50-asset instances (classical, up to −43%), first values for `a200` and `a400`, and the best quantum results. PCE quantum LNS reaches the proven optimum on 3 `a010` instances and +4.3% on `a050_t10_s00` at λ=1e-4, starting from an empty portfolio with at most 9 qubits.
+
 The `network05` and `network24` solutions were found by classical searches. `network18`–`network23` come from a hybrid chain, network23 → network18. Each instance starts from the polished topology of the next larger one with its last node deleted. Exact-LP 2-exchange descent refines it, and a QAOA step (Divi, local Maestro simulator, 18 qubits, p=2) samples combinations of 2-exchange moves to escape local optima. QAOA samples gave direct improvements on network22 and network19 and kicks before later descents on network20, while most of the gain came from the classical descent and the exact pair scan. The search code is [solutions/agent_qcompound/small/qls.py](../solutions/agent_qcompound/small/qls.py). The logs, transcripts and a reading guide are in [ai_context/quantum_networks/](../ai_context/quantum_networks/READ_ME_FIRST.txt). The [network24 report](reports/network24_report_eng.tex) describes how parallel tempering and iterated local search were combined to produce the checked result.
 
 ## Method and settings

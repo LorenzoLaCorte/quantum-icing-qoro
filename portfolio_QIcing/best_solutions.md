@@ -1,6 +1,6 @@
 # Best solutions per instance (re-scored by the official referee)
 
-144 .sol files checked, 0 infeasible or with a wrong objective line.
+160 .sol files checked, 0 infeasible or with a wrong objective line.
 
 | instance | B | λ | BKV (status) | best quantum-pipeline | gap | file | best overall | gap |
 |---|---:|---:|---:|---:|---:|---|---:|---:|
@@ -69,22 +69,22 @@
 | po_a010_t15_s02 | 4 | 5e-4 | -37224 (best known) | — | — |  | -37224 | +0.000% |
 | po_a010_t15_s02 | 4 | 5e-5 | -121102 (best known) | — | — |  | -121102 | +0.000% |
 | po_a050_t10_orig | 20 | 0 | -501737 (optimal) | — | — |  | -501737 | +0.000% |
-| po_a050_t10_orig | 20 | 1e-2 | -37107 (best known) | — | — |  | -35445 | +4.479% |
-| po_a050_t10_orig | 20 | 1e-3 | -206239 (best known) | — | — |  | -205278 | +0.466% |
+| po_a050_t10_orig | 20 | 1e-2 | -37107 (best known) | -44514 | -19.961% | `solutions/po_a050_t10_orig_b020_l1e-2/po_a050_t10_orig_b020_l1e-2__slotqlns-pce__20261122-040419.sol` | -47967 | -29.267% |
+| po_a050_t10_orig | 20 | 1e-3 | -206239 (best known) | — | — |  | -206153 | +0.042% |
 | po_a050_t10_orig | 20 | 1e-4 | -370869 (best known) | — | — |  | -370843 | +0.007% |
 | po_a050_t10_orig | 20 | 1e-5 | -478956 (best known) | — | — |  | -478956 | +0.000% |
 | po_a050_t10_orig | 20 | 1e-6 | -499339 (best known) | — | — |  | -499339 | +0.000% |
-| po_a050_t10_orig | 20 | 5e-4 | -254972 (best known) | — | — |  | -254640 | +0.130% |
+| po_a050_t10_orig | 20 | 5e-4 | -254972 (best known) | — | — |  | -254958 | +0.005% |
 | po_a050_t10_orig | 20 | 5e-5 | -417218 (best known) | — | — |  | -417142 | +0.018% |
-| po_a050_t10_s00 | 20 | 1e-2 | -12340 (best known) | 37234 | +401.734% | `solutions/po_a050_t10_s00_b020_l1e-2/po_a050_t10_s00_b020_l1e-2__qlns-pce__20261121-235941.sol` | -17675 | -43.233% |
-| po_a050_t10_s00 | 20 | 1e-3 | -191879 (best known) | -157229 | +18.058% | `solutions/po_a050_t10_s00_b020_l1e-3/po_a050_t10_s00_b020_l1e-3__qlns-pce__20261121-235627.sol` | -190685 | +0.622% |
-| po_a050_t10_s00 | 20 | 1e-4 | -355530 (best known) | -340222 | +4.306% | `solutions/po_a050_t10_s00_b020_l1e-4/po_a050_t10_s00_b020_l1e-4__qlns-pce__20261121-235627.sol` | -355530 | +0.000% |
+| po_a050_t10_s00 | 20 | 1e-2 | -12340 (best known) | -2441 | +80.219% | `solutions/po_a050_t10_s00_b020_l1e-2/po_a050_t10_s00_b020_l1e-2__slotpce-ls__20261122-031709.sol` | -17675 | -43.233% |
+| po_a050_t10_s00 | 20 | 1e-3 | -191879 (best known) | -191446 | +0.226% | `solutions/po_a050_t10_s00_b020_l1e-3/po_a050_t10_s00_b020_l1e-3__slotqlns-pce__20261122-030059.sol` | -191991 | -0.058% |
+| po_a050_t10_s00 | 20 | 1e-4 | -355530 (best known) | -355530 | +0.000% | `solutions/po_a050_t10_s00_b020_l1e-4/po_a050_t10_s00_b020_l1e-4__slotpce-ls__20261122-031732.sol` | -355530 | +0.000% |
 | po_a050_t10_s00 | 20 | 1e-5 | -484396 (best known) | — | — |  | -484396 | +0.000% |
 | po_a050_t10_s00 | 20 | 1e-6 | -513409 (best known) | — | — |  | -513409 | +0.000% |
 | po_a050_t10_s00 | 20 | 5e-4 | -234259 (best known) | — | — |  | -234587 | -0.140% |
 | po_a050_t10_s00 | 20 | 5e-5 | -408937 (best known) | — | — |  | -408936 | +0.000% |
-| po_a050_t10_s01 | 20 | 1e-2 | -2248 (best known) | — | — |  | -1000 | +55.516% |
-| po_a050_t10_s01 | 20 | 1e-3 | -141376 (best known) | — | — |  | -139048 | +1.647% |
+| po_a050_t10_s01 | 20 | 1e-2 | -2248 (best known) | — | — |  | -4267 | -89.813% |
+| po_a050_t10_s01 | 20 | 1e-3 | -141376 (best known) | — | — |  | -141431 | -0.039% |
 | po_a050_t10_s01 | 20 | 1e-4 | -301400 (best known) | — | — |  | -301297 | +0.034% |
 | po_a050_t10_s01 | 20 | 1e-5 | -402742 (best known) | — | — |  | -402742 | +0.000% |
 | po_a050_t10_s01 | 20 | 1e-6 | -428609 (best known) | — | — |  | -428609 | +0.000% |
@@ -109,5 +109,7 @@
 | po_a050_t15_s02 | 20 | 1e-2 | -40622 (best known) | — | — |  | -41517 | -2.203% |
 | po_a050_t15_s02 | 20 | 1e-3 | -316799 (best known) | — | — |  | -315176 | +0.512% |
 | po_a050_t15_s02 | 20 | 5e-4 | -392668 (best known) | — | — |  | -391667 | +0.255% |
-| po_a200_t10_orig | 50 | 1e-3 | — (none) | — | — |  | -818362 | no BKV |
+| po_a200_t10_orig | 50 | 1e-3 | — (none) | -469837 | no BKV | `solutions/po_a200_t10_orig_b050_l1e-3/po_a200_t10_orig_b050_l1e-3__qlns-pce-sparse__20261122-015250.sol` | -818362 | no BKV |
+| po_a200_t10_orig | 50 | 1e-4 | — (none) | -794168 | no BKV | `solutions/po_a200_t10_orig_b050_l1e-4/po_a200_t10_orig_b050_l1e-4__qlns-pce-sparse__20261122-015251.sol` | -794168 | no BKV |
 | po_a400_t10_orig | 100 | 1e-3 | — (none) | — | — |  | -1896257 | no BKV |
+| po_a400_t10_orig | 100 | 1e-4 | — (none) | -1397396 | no BKV | `solutions/po_a400_t10_orig_b100_l1e-4/po_a400_t10_orig_b100_l1e-4__qlns-pce-sparse__20261122-015307.sol` | -1397396 | no BKV |
