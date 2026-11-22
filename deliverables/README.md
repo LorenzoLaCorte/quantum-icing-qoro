@@ -7,7 +7,7 @@ Notebook 00 asks for each checked `.sol` file, the instance and binary variable 
 | `network05` | [network05.sol](network05/network05.sol) | 20 | 0 | 65,500 | 65,500 (proven optimum) | 0.00% | optimal (all 216 topologies) |
 | `network18` | [network18.sol](network18/network18.sol) | 306 | 18 | **469,000** | 473,375 (best known) | **−0.92%** | radius 3 |
 | `network19` | [network19.sol](network19/network19.sol) | 342 | 18 | 488,895 | 492,924 (best known) | −0.82% | radius 3 |
-| `network20` | [network20.sol](network20/network20.sol) | 380 | 18 | 519,343 | 528,528 (best known) | −1.74% | radius 3 |
+| `network20` | [network20.sol](network20/network20.sol) | 380 | 18 | **519,207** | 528,528 (best known) | **−1.76%** | radius 3 |
 | `network21` | [network21.sol](network21/network21.sol) | 420 | 18 | 562,362 | 569,273 (best known) | −1.21% | radius 3 |
 | `network22` | [network22.sol](network22/network22.sol) | 462 | 18 | 604,540 | 618,135 (best known) | −2.20% | radius 3 |
 | `network23` | [network23.sol](network23/network23.sol) | 506 | 18 | 639,739 | 659,369 (best known) | −2.98% | radius 3 |
@@ -21,7 +21,7 @@ The `network05` and `network24` solutions were found by classical searches. `net
 
 That sweep improved two hand-ins over the hybrid chain's results: **`network18` 473,000 → 472,112** and **`network22` 606,424 → 604,540** (−1.90% → −2.20%), both re-validated by the checker. Each improving move is a 3-rotation — a move type the chain's ILS already samples — which is the point: sampling a neighbourhood is not exhausting it, and two minutes of enumeration found what hours of heuristic search had missed.
 
-The certificate then becomes a search in a second way. Once a local optimum is *proven*, the kick that leaves it can be sized: kick the incumbent by five to seven arcs, exhaust radius 2–3 again, keep the result if it is better, repeat. On `network18` that took **472,112 → 469,000**, −0.27% → **−0.92%**, in five restarts — a topology ten arcs away from the one it started from. [TheGOAT_Testing/certified_ils.py](../TheGOAT_Testing/certified_ils.py)
+The certificate then becomes a search in a second way. Once a local optimum is *proven*, the kick that leaves it can be sized: kick the incumbent by five to seven arcs, exhaust radius 2–3 again, keep the result if it is better, repeat. On `network18` that took **472,112 → 469,000**, −0.27% → **−0.92%**, in five restarts — a topology ten arcs away from the one it started from — and on `network20` **519,343 → 519,207**, seven arcs away. Neither was reachable by any certificate here, which is the point of sizing the kick by the certified radius. [TheGOAT_Testing/certified_ils.py](../TheGOAT_Testing/certified_ils.py)
 
 All of these start from the chain's own topologies, so the 18-qubit QAOA step stays in their ancestry and only the last refinement is classical and exhaustive.
 

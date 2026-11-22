@@ -365,7 +365,7 @@ valid.
 | 10 | 210,800 | yes | 173,000 | 0.821 | — | — |
 | 18 | 473,375 | — | 362,111 | 0.765 | 469,000 | 29.5% |
 | 19 | 492,924 | — | 372,184 | 0.755 | 488,895 | 31.4% |
-| 20 | 528,528 | — | 392,650 | 0.743 | 519,343 | 32.3% |
+| 20 | 528,528 | — | 392,650 | 0.743 | 519,207 | 32.2% |
 | 21 | 569,273 | — | 428,238 | 0.752 | 562,362 | 31.3% |
 | 22 | 618,135 | — | 459,704 | 0.744 | 604,540 | 31.5% |
 | 23 | 659,369 | — | 490,760 | 0.744 | 639,739 | 30.4% |
@@ -434,7 +434,16 @@ Three of the five restarts landed on a *different* certified radius-3 optimum th
 left, which is the measurement the design was for: 472,112, 474,038, 476,218 and 469,000 are all
 proven radius-3 local optima of the same instance, spread over 1.5%.
 
-And the headline: **469,000 differs from 472,112 in ten of thirty-six arcs.** The radius-4
+### network20: 519,343 -> 519,207
+
+The same search on network20, seed 20, kicks of 4 to 6 arcs: **519,207 after 18 minutes**,
+−1.738% → −1.764% against best known, seven arcs from the topology it left. Small in value and
+the same lesson in kind — seven arcs is outside radius 3, and outside the radius-4 sweep that
+was running on this instance when the kick found it.
+
+### And the headline
+
+**469,000 differs from 472,112 in ten of thirty-six arcs.** The radius-4
 certificate on 472,112 enumerated 530,145 moves and was right about every one of them. The
 better solution was simply never inside it. A certificate bounds a neighbourhood; it says
 nothing about the instance, and the only way past it is to leave.
