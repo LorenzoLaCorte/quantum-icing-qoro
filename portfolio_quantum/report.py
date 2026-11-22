@@ -57,6 +57,8 @@ def main():
         settings = meta.get("settings", "")
         qubits = next((int(t.split("=")[1]) for t in settings.split() if t.startswith("max_qubits=")), None)
         start = next((t.split("=")[1] for t in settings.split() if t.startswith("start=")), "?")
+        if "paired-transfer" in settings:  # paired_transfer_run.py: <= 16 transfer qubits, start = a repo file
+            qubits, start = 16, "best"
         rows.append(dict(stem=stem, inst=inst, B=p.budget, lam=header["lambda"], vars=p.qubo_vars, obj=obj,
                          bkv=ref[0] if ref else None, status=ref[1] if ref else "none", prev=prev, file=f,
                          qubits=qubits, start=start))

@@ -1,0 +1,5 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /home/danie/quantum-icing-qoro/.venv, got /home/danie/quantum-icing-qoro/portfolio_quantum/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /home/danie/quantum-icing-qoro/.venv, got /home/danie/quantum-icing-qoro/portfolio_quantum/../.venv
+po_a400_t15_orig_b100_l1e-3: start -3015526, 36165 QUBO variables, cloud=True
+round 0 parity 0: 21 programs (<= 28 qubits) in 245s, 7 improved, -3015526 -> -3061607
+  saved po_a400_t15_orig_b100_l1e-3__qlns-qaoa-cloudbatch__20261122-043612.sol -3061607

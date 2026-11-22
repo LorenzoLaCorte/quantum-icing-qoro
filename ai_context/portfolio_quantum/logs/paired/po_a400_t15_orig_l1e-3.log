@@ -1,0 +1,9 @@
+po_a400_t15_orig_b100_l1e-3: start -3163545 from deliverables/portfolio_quantum/po_a400_t15_orig_b100_l1e-3__paired-trajectory-qaoa.sol
+step 0 day 3: -3163665 (-120), circuits 1
+step 4 day 3: -3163794 (-129), circuits 130
+step 5 day 3: -3164194 (-400), circuits 141
+step 47 day 6: -3164356 (-162), circuits 1100
+step 422 day 12: -3164634 (-278), circuits 10086
+step 659 day 12: -3164781 (-147), circuits 15834
+final -3164781 (start -3163545), 1333 steps, 31864 QAOA circuits
+saved /home/danie/quantum-icing-qoro/portfolio_quantum/solutions/po_a400_t15_orig_b100_l1e-3/po_a400_t15_orig_b100_l1e-3__paired-transfer-qaoa__20261122-061914.sol -3164781

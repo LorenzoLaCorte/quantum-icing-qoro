@@ -1,0 +1,6 @@
+start -3015526 po_a400_t15_orig_b100_l1e-3__qlns-qaoa-cloudbatch__20261122-032808.sol
+day 1: M=28 hw=14 qubits=7 | oracle -58534 (4s) | seed -31508 | PCE samples -20680 | PCE top-k -10584 | incumbent level -55313 | PCE 4s, 474 circ
+day 6: M=28 hw=13 qubits=7 | oracle -46956 (5s) | seed -25081 | PCE samples None | PCE top-k -16556 | incumbent level -47150 | PCE 3s, 455 circ
+day 11: M=28 hw=16 qubits=7 | oracle -57191 (4s) | seed -54127 | PCE samples -43929 | PCE top-k -43929 | incumbent level -53102 | PCE 3s, 412 circ
+day 10: M=28 hw=14 qubits=7 | oracle None (5s) | seed None | PCE samples None | PCE top-k None | incumbent level -101681 | PCE 4s, 456 circ
+sum of day improvements vs incumbent: {'oracle': -7310, 'seed': -1025, 'pce_samples': 0, 'pce_topk': 0}

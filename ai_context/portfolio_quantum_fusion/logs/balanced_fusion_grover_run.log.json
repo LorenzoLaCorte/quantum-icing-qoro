@@ -1,0 +1,129 @@
+{
+  "baseline": -3163545,
+  "final": -3167105,
+  "backend": "local ideal simulation",
+  "referee": "objective=-3167105 (feasible; risk=60398, return=-3464925, transaction=237450, cash_interest=-1660, short_cost=1632, liquidation=0)",
+  "tested_scores": {
+    "categorical_qaoa_one_day": -3163943,
+    "categorical_qaoa_mixed_days": -3163665,
+    "xy_fixed_weight": -3163665,
+    "xy_with_volume_sectors_from_categorical": -3163943,
+    "single_day_fusion_qaoa": -3165216,
+    "single_day_fusion_grover": -3165616,
+    "mixed_day_fusion_qaoa": -3166315
+  },
+  "matched_windows": {
+    "improving_windows": 350,
+    "shots_per_window": 480,
+    "exact_hits": {
+      "qaoa": 321,
+      "grover": 350,
+      "uniform": 12
+    }
+  },
+  "replay": {
+    "input": "ai_context/portfolio_quantum/experiments/a400_balanced_fusion_replay.npz",
+    "population": {
+      "start": -3166199,
+      "final": -3166667,
+      "seed": 817,
+      "shots": 480,
+      "sampler": "grover",
+      "mode": "population",
+      "rounds": 5,
+      "stats": {
+        "windows": 276,
+        "sampled": 9,
+        "max_qubits": 17,
+        "strict_fusion_gains": 2,
+        "best_alternate_score": -3166548
+      },
+      "accepted": [
+        {
+          "round": 0,
+          "days": [
+            2,
+            3
+          ],
+          "score": -3166364,
+          "gain": 165
+        },
+        {
+          "round": 0,
+          "days": [
+            10,
+            11
+          ],
+          "score": -3166535,
+          "gain": 171
+        },
+        {
+          "round": 0,
+          "days": [
+            3,
+            4
+          ],
+          "score": -3166667,
+          "gain": 132
+        }
+      ]
+    },
+    "followup": {
+      "start": -3166667,
+      "final": -3167105,
+      "seed": 413,
+      "shots": 480,
+      "sampler": "grover",
+      "span": "mixed",
+      "rounds": 12,
+      "steps": 220,
+      "stats": {
+        "windows": 548,
+        "sampled": 15,
+        "max_qubits": 17,
+        "strict_fusion_gains": 2,
+        "best_alternate_score": -3166989
+      },
+      "accepted": [
+        {
+          "round": 0,
+          "days": [
+            3,
+            4
+          ],
+          "score": -3166693,
+          "gain": 26
+        },
+        {
+          "round": 3,
+          "days": [
+            3
+          ],
+          "score": -3166710,
+          "gain": 17
+        },
+        {
+          "round": 5,
+          "days": [
+            9
+          ],
+          "score": -3166989,
+          "gain": 279
+        },
+        {
+          "round": 9,
+          "days": [
+            4,
+            5
+          ],
+          "score": -3167105,
+          "gain": 116
+        }
+      ]
+    },
+    "commands": [
+      "python portfolio_quantum/fusion_qaoa.py --start ai_context/portfolio_quantum/experiments/a400_balanced_fusion_replay.npz --population-only --seed 817 --rounds 5 --sampler grover --output runs/a400_population.sol",
+      "python portfolio_quantum/fusion_qaoa.py --start runs/a400_population.sol --parents ai_context/portfolio_quantum/experiments/a400_balanced_fusion_replay.npz --rounds 12 --steps 220 --seed 413 --span mixed --sampler grover --output runs/a400_fusion.sol"
+    ]
+  }
+}

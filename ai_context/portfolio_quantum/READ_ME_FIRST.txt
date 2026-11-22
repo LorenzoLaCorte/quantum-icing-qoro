@@ -48,3 +48,18 @@ QAOA found the exact window optimum in 120/244 checked windows (49%).
     --start best --kround 26 --rounds 8 --seed 5
   .venv/bin/python portfolio_quantum/report.py      # re-score and print the table
 Max 2 QAOA processes in parallel (about 700 MB each; machine has 7.4 GB).
+
+6. UPDATE 2026-11-22 06:20: PAIRED-TRANSFER QAOA (portfolio_quantum/paired_transfer_run.py)
+One qubit = one transfer of <= 3 units between two same-side assets of one day (keeps budget and
+net exactly). QAOA p=3, <=16 qubits, 448 shots, local numba statevector (not Divi). 35-minute runs
+from the best repo file, 6 in parallel. Logs: logs/paired/.
+  a050_t15_s01 5e-4  -304,307 -> -304,333  (QOBLIB BKV -304,289: BELOW BKV by 44)
+  a050_t15_orig 5e-4 -397,236 -> -397,384  (BKV -397,497, +0.03%)
+  a050_t15_orig 1e-3 -321,070 -> -321,183  (BKV -321,907, +0.22%)
+  a050_t10_orig 1e-3 -205,672 -> -205,699  (BKV -206,239, +0.26%)
+  a050_t10_orig 5e-4 -254,857 unchanged
+  a400_t15_orig 1e-3 -3,163,545 -> -3,164,781 (start = the other session's paired-trajectory file)
+Earlier cloud runs on a400: logs/cloud_a400_t15_l1e-3_k28.log (28 qubits, stopped; the gain of its first
+round was not saved) and logs/cloud_a400_t15_l1e-3_grouped.log (grouped Dicke + uncertain slots +
+3 variants per day + capital rule in the relaxation: -3,015,526 -> -3,061,607 in round 0, saved).
+PCE on whole-day a400 windows did not work (logs/dev/pce_test_a400.log).

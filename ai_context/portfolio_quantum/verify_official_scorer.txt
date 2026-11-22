@@ -18,3 +18,15 @@ Start (warm-start) file of each kept run:
   po_a050_t15_s00_b020_l1e-3__qlns-qaoa__20261122-031921: start=best objective=-312312 -> -312668  from portfolio_QIcing/solutions/po_a050_t15_s00_b020_l1e-3/po_a050_t15_s00_b020_l1e-3__lns__20261121-222625.sol
   po_a050_t15_s01_b020_l5e-4__qlns-qaoa__20261122-030711: start=qbest objective=-303567 -> -304271  from deliverables/portfolio/po_a050_t15_s01_b020_l5e-4.sol
   po_a400_t15_orig_b100_l1e-3__qlns-qaoa-cloudbatch__20261122-032808: start=best objective=-2986716 -> -3015526  from deliverables/portfolio/po_a400_t15_orig_b100_l1e-3.sol
+
+Re-check 2026-11-22 06:21 of the hand-in folder after the paired-transfer runs:
+OK   deliverables/portfolio_quantum/po_a050_t10_orig_b020_l1e-3.sol  objective=-205699
+OK   deliverables/portfolio_quantum/po_a050_t10_s00_b020_l1e-3.sol  objective=-191256
+OK   deliverables/portfolio_quantum/po_a050_t10_s01_b020_l1e-3.sol  objective=-140407
+OK   deliverables/portfolio_quantum/po_a050_t15_orig_b020_l1e-3.sol  objective=-321183
+OK   deliverables/portfolio_quantum/po_a050_t15_orig_b020_l5e-4.sol  objective=-397384
+OK   deliverables/portfolio_quantum/po_a050_t15_s00_b020_l1e-3.sol  objective=-312668
+OK   deliverables/portfolio_quantum/po_a050_t15_s01_b020_l5e-4.sol  objective=-304333
+OK   deliverables/portfolio_quantum/po_a400_t15_orig_b100_l1e-3.sol  objective=-3164781
+OK   deliverables/portfolio_quantum/po_a400_t15_orig_b100_l1e-3__balanced-fusion-grover.sol  objective=-3167105
+OK   deliverables/portfolio_quantum/po_a400_t15_orig_b100_l1e-3__paired-trajectory-qaoa.sol  objective=-3163545

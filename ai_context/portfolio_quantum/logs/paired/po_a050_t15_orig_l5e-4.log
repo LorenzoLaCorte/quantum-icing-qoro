@@ -1,0 +1,6 @@
+po_a050_t15_orig_b020_l5e-4: start -397236 from portfolio_QIcing/solutions/po_a050_t15_orig_b020_l5e-4/po_a050_t15_orig_b020_l5e-4__lns__20261121-222309.sol
+step 28 day 6: -397248 (-12), circuits 550
+step 35 day 5: -397285 (-37), circuits 672
+step 43 day 7: -397384 (-99), circuits 800
+final -397384 (start -397236), 9084 steps, 173143 QAOA circuits
+saved /home/danie/quantum-icing-qoro/portfolio_quantum/solutions/po_a050_t15_orig_b020_l5e-4/po_a050_t15_orig_b020_l5e-4__paired-transfer-qaoa__20261122-061838.sol -397384

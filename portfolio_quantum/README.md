@@ -5,6 +5,31 @@ sampled by a **Divi QAOA program** on a sub-QUBO of the official model. The clas
 windows, scores each sample with the exact objective and keeps the improvements. It never runs a
 classical optimiser on the QUBO: no local search, no repair, no simulated annealing.
 
+## Update 2026-11-22 06:20: paired-transfer QAOA
+
+A second quantum sub-solver, `paired_trajectory_qaoa.py`, is run on any configuration by
+`paired_transfer_run.py`. Here one qubit is one transfer of up to 3 units between two assets on the
+same side of one day, so every bitstring keeps the budget and the net position. The QAOA has p = 3,
+≤ 16 qubits and 448 shots. It is simulated with the module's own statevector (numba), **not Divi**.
+Each run started from the best `.sol` already in the repo and ran 35 minutes. The table lists the best
+file per configuration, all re-scored by the referee:
+
+| Instance | B | λ | Binary variables | Largest QAOA (qubits) | Start | Quantum LNS | QOBLIB best known | Gap | Earlier classical (repo) | vs classical |
+|---|---:|---:|---:|---:|---|---:|---:|---:|---:|---:|
+| `po_a050_t10_orig` | 20 | 0.001 | 3,110 | 16 | best | -205,699 | -206,239 | +0.26% | -205,672 | -27 |
+| `po_a050_t10_s00` | 20 | 0.001 | 3,110 | 18 | best | -191,256 | -191,879 | +0.32% | -190,685 | -571 |
+| `po_a050_t10_s01` | 20 | 0.001 | 3,110 | 18 | best | -140,407 | -141,376 | +0.69% | -139,048 | -1,359 |
+| `po_a050_t15_orig` | 20 | 0.001 | 4,665 | 16 | best | -321,183 | -321,907 | +0.22% | -321,070 | -113 |
+| `po_a050_t15_orig` | 20 | 0.0005 | 4,665 | 16 | best | -397,384 | -397,497 | +0.03% | -397,236 | -148 |
+| `po_a050_t15_s00` | 20 | 0.001 | 4,665 | 18 | best | -312,668 | -314,736 | +0.66% | -312,312 | -356 |
+| `po_a050_t15_s01` | 20 | 0.0005 | 4,665 | 16 | best | -304,333 | -304,289 | -0.01% | -303,567 | -766 |
+| `po_a400_t15_orig` | 100 | 0.001 | 36,165 | 16 | best | -3,164,781 | — | — | -2,986,716 | -178,065 |
+
+`po_a050_t15_s01` at λ = 5e-4 reaches **−304,333**, below QOBLIB's best-known value (−304,289), a gap
+of −0.01 %. `po_a400_t15_orig` starts from the −3,163,545 file in `deliverables/portfolio_quantum`
+(`*__paired-trajectory-qaoa.sol`). That file was built by the same module from a 15-day relaxation
+guide. `po_a050_t10_orig` at λ = 5e-4 did not change. Logs: `ai_context/portfolio_quantum/logs/paired/`.
+
 ## Results (22 Nov 2026, every file re-scored by the official referee)
 
 The pipeline improved every configuration it was run on long enough: four `po_a050` configurations, and
