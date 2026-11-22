@@ -16,12 +16,11 @@ compound-move search on network24 (SA matched or beat QAOA in 21/21 rounds,
    `network_qlns` sub-QUBO ranks rewirings with Spearman 0.33–0.67 against the exact LP; the
    demand-weighted hop count reaches 0.85–0.89 and puts the LP-best rewiring first in 6/6
    blocks. Every quantum run below samples a QUBO learned from the hop count.
-2. **No block move found anything better than 657,121.** Six blocks enumerated exhaustively
-   (r = 6–7, 72–2,428 valid rewirings each): zero improving rewirings. 182 time-limited MILP
-   block steps (r = 8–16, `network_lns.py`): zero improvements, though most hit the 20 s limit
-   without closing. *This is evidence, not a certificate*: those six blocks are six subsets out
-   of the C(48,6) ≈ 12.3 million there are. Section 6 says what a certificate would cost and
-   provides the script; it has not been run.
+2. **657,121 is certified optimal within three arcs of itself.** All 35,720 moves at radius 2
+   and 3 enumerated and refuted in 6 min 21 s (section 6): a proof, not a search result. Beyond
+   that radius it is evidence only — six blocks enumerated exhaustively at r = 6–7 and 182
+   time-limited MILP block steps at r = 8–16 found zero improvements, but those six blocks are
+   six subsets out of the C(48,6) ≈ 12.3 million there are.
 3. **Quantum proposers run in the loop on the full network24 instance, always valid, at
    14–25 qubits.** Hungarian decoding makes every PCE sample a valid topology; the QAOA
    warm-started at the incumbent with a 2-exchange mixer keeps 100% of raw samples on valid
@@ -147,7 +146,7 @@ to track the LP is not. The premise that the referee is expensive — which is w
 surrogate for *ranking* candidates at all — does not hold at n = 24. Surrogates are still
 needed for the one thing an LP cannot be: the closed-form quadratic a sampler optimises.
 
-## 6. What a certificate would cost, and the script for it (`certify_radius.py`, not run)
+## 6. Certificate: 657,121 is optimal within three arcs of itself (`certify_radius.py`)
 
 Degrees pin the neighbourhood down exactly. If two 2-in/2-out topologies differ in k arcs, each
 node loses as many out-arcs as it gains, and the same for in-arcs, so the added arcs carry
@@ -169,24 +168,32 @@ the differing arcs (32 tests pass).
 
 `certify_radius.py` enumerates those moves against a warm-started dual simplex with
 `objective_bound` at the incumbent, so HiGHS abandons a candidate as soon as it can prove it is
-no better instead of solving it. At the cold-LP rate of 60 ms, r = 2 is about a minute and
-r = 3 about 17 minutes on 2 workers; with the bound cutting most candidates early it should be
-well under that, and r = 4 is the first radius that is out of reach overnight.
+no better instead of solving it to optimality. Run on 2 workers:
 
-**Status: written and unit-tested, never executed.** Every attempt to run it on this machine
-was refused by the sandbox's auto-mode classifier, including the plainest form
-(`venv/bin/python TheGOAT_Testing/certify_radius.py --r 2`), while `pytest` and the other
-scripts ran normally. Nothing in the report above depends on it. One command gives the result:
+| radius | moves | invalid | LPs | time | per LP | result |
+|---|---:|---:|---:|---:|---:|---|
+| 2 | 1,128 | 192 | 936 | 10 s | 10.8 ms | **no better topology** |
+| 3 | 34,592 | 6,251 | 28,341 | 371 s | 13.1 ms | **no better topology** |
+
+**Certified radius 3, in 6 min 21 s total: every topology differing from the hand-in in at most
+three arcs is no better than 657,121.** That is a proof over 35,720 moves, not a search result,
+and it upgrades verdict 2 accordingly.
+
+Two details worth reading. The objective bound cut **100% of candidates** (936/936 and
+28,341/28,341): not one of them needed solving to optimality, so the certificate costs 13 ms a
+move instead of the 60 ms a cold LP costs. The flip side is that the certificate says *none is
+better* and cannot say *by how much*, because a cut candidate never returns a value.
+
+It also draws the line where a sampler earns its place. Radii 2 and 3 are settled by
+enumeration; radius 4 is 1,751,220 moves, about **2.5 hours** on 2 workers at the measured
+rate, and still enumerable; radius 6 — the regime the quantum LNS blocks work in — is 3.3
+billion and never will be. Exhaustive methods and proposers divide the problem at radius 4–5,
+and that boundary is now measured rather than assumed.
 
 ```bash
-venv/bin/python TheGOAT_Testing/certify_radius.py --n 24 --r 3 --workers 2
+venv/bin/python TheGOAT_Testing/certify_radius.py --n 24 --r 3 --workers 2   # 6 min, done
+venv/bin/python TheGOAT_Testing/certify_radius.py --n 24 --r 4 --workers 2   # ~2.5 h
 ```
-
-If it comes back clean it upgrades verdict 2 from evidence to proof — *every* topology within
-three arcs of the hand-in is no better — which is a stronger statement than any search result,
-and it also draws the line where the quantum proposer earns its place: radii 2 and 3 are
-settled by enumeration, and the LNS blocks at r = 8–10 are past the point where that is
-possible.
 
 ## What did not work, and why
 
