@@ -227,6 +227,26 @@ def propose_sa(block, h, J, k, rng, sweeps=400, restarts=8):
     return block.unique_valid(ranked)[:k]
 
 
+OPTIMIZERS = ("mc", "cobyla", "lbfgs", "qng", "qnspsa", "spsa")
+
+
+def make_optimizer(name, pop=20):
+    """Classical optimizer of the circuit parameters (all from divi 0.16.2)."""
+    from divi.qprog import optimizers as o
+
+    if name == "mc":
+        return o.MonteCarloOptimizer(population_size=pop)
+    if name in ("cobyla", "lbfgs"):
+        return o.ScipyOptimizer(method={"cobyla": o.ScipyMethod.COBYLA, "lbfgs": o.ScipyMethod.L_BFGS_B}[name])
+    if name == "qng":
+        return o.QNGOptimizer()               # quantum natural gradient (Fubini-Study metric)
+    if name == "qnspsa":
+        return o.QNSPSAOptimizer()            # natural-gradient SPSA (Gacon et al.)
+    if name == "spsa":
+        return o.SPSAOptimizer()
+    raise ValueError(f"unknown optimizer {name!r}")
+
+
 def perturbed_assignments(block, scores, k, rng, temp=0.5):
     """The max-score permutation (Hungarian), then near-max ones from Gumbel-perturbed scores."""
     scores = np.asarray(scores, float).ravel()
@@ -234,6 +254,25 @@ def perturbed_assignments(block, scores, k, rng, temp=0.5):
     perms = [block.decode(scores)]
     perms += [block.decode(scores + scale * rng.gumbel(size=scores.size)) for _ in range(4 * k)]
     return block.unique_valid(perms)[:k]
+
+
+_WARM: dict = {}
+"""Best circuit parameters of the previous block, per (solver, r, layers, optimizer)."""
+
+
+def warm_params(prog, args, rng, r):
+    """Angle warm start: the previous block's best parameters (blocks of the same size give
+    circuits of the same shape), tiled over the optimizer's parameter sets, with small noise on
+    every set but the first. None (a fresh random start) when disabled or on the first block."""
+    prev = _WARM.get((args.solver, r, args.layers, args.optimizer))
+    if not getattr(args, "warm_angles", 0) or prev is None:
+        return None
+    shape = prog.get_expected_param_shape()
+    if prev.size != shape[-1]:
+        return None
+    init = np.tile(prev, (shape[0], 1))
+    init[1:] += 0.1 * rng.standard_normal(init[1:].shape)
+    return init
 
 
 def propose_quantum(block, Q, h, k, args, seed, rng):
@@ -253,12 +292,8 @@ def propose_quantum(block, Q, h, k, args, seed, rng):
     r = block.r
     backend = (QoroService(job_config=JobConfig(shots=args.shots, simulator_cluster=args.cloud, tag="goat-lns"))
                if args.cloud else MaestroSimulator(shots=args.shots))
-    if args.optimizer == "mc":
-        optimizer = MonteCarloOptimizer(population_size=args.pop)
-    else:
-        from divi.qprog.optimizers import ScipyMethod, ScipyOptimizer
-        optimizer = ScipyOptimizer(method={"cobyla": ScipyMethod.COBYLA, "lbfgs": ScipyMethod.L_BFGS_B}[args.optimizer])
-    common = dict(n_layers=args.layers, optimizer=optimizer, max_iterations=args.iters, backend=backend, seed=seed)
+    common = dict(n_layers=args.layers, optimizer=make_optimizer(args.optimizer, args.pop),
+                  max_iterations=args.iters, backend=backend, seed=seed)
     prob = BinaryOptimizationProblem(Q)
     if args.solver == "qaoa":
         from divi.hamiltonians import xy_mixer
@@ -280,7 +315,8 @@ def propose_quantum(block, Q, h, k, args, seed, rng):
         sols = prog.get_top_solutions(n=args.top)
     else:
         prog = PCE(prob, encoding=PolyEncoding(), objective=SoftObjective(alpha=args.alpha), **common)
-        prog.run()
+        prog.run(initial_params=warm_params(prog, args, rng, r))
+        _WARM[(args.solver, r, args.layers, args.optimizer)] = np.array(prog.best_params, float)
         sols = prog.get_top_solutions(n=args.top, sort_by="energy")
     prior = -h.reshape(r, r)
     prior = 1e-3 * prior / (np.abs(prior).max() + 1e-12)       # breaks ties toward the model
@@ -406,13 +442,17 @@ def main():
     p.add_argument("--ls", type=int, default=1, help="also log quantum+ls and random+ls (1/0)")
     p.add_argument("--shots", type=int, default=5000)
     p.add_argument("--layers", type=int, default=2)
-    p.add_argument("--optimizer", default="mc", choices=["mc", "cobyla", "lbfgs"],
-                   help="mc: Monte Carlo (pop x iters circuits); cobyla / lbfgs: scipy, iters = max iterations")
+    p.add_argument("--optimizer", default="mc", choices=OPTIMIZERS,
+                   help="mc: Monte Carlo (pop x iters circuits); cobyla / lbfgs: scipy; qng: quantum natural "
+                        "gradient; qnspsa / spsa: stochastic. iters = max iterations")
     p.add_argument("--pop", type=int, default=20)
     p.add_argument("--iters", type=int, default=6)
     p.add_argument("--top", type=int, default=200, help="samples read back from the quantum program")
     p.add_argument("--alpha", type=float, default=4.0, help="PCE SoftObjective sharpness")
     p.add_argument("--soft", type=int, default=1, help="PCE: also decode the per-cell expectation values (1/0)")
+    p.add_argument("--warm-angles", type=int, default=0,
+                   help="PCE: start each block from the previous block's best parameters (1/0)")
+    p.add_argument("--start-file", default=None, help="start from this .sol instead of --start")
     p.add_argument("--cloud", default=None, help="Qoro cluster (qoro_maestro | qoro_cpu | qoro_gpu); default local")
     p.add_argument("--seed", type=int, default=0)
     a = p.parse_args()
@@ -425,6 +465,9 @@ def main():
         st = json.loads(state_path.read_text())
         cur, done, best_z = [tuple(x) for x in st["arcs"]], st["step"], st["best_z"]
         print(f"resuming {a.tag} at step {done}", flush=True)
+    elif a.start_file:
+        _, arcs, _ = qt.read_network_solution(Path(a.start_file))
+        cur, done, best_z = [tuple(x) for x in arcs], 0, None
     else:
         cur, done = load_start(a.n, a.start, 0), 0
         best_z = None

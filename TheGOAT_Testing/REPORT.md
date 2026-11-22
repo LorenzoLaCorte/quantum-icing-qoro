@@ -1,0 +1,148 @@
+# TheGOAT_Testing: what one night of measurements says (network24)
+
+Snapshot 2026-11-22. All numbers are measured; scripts and commands are at the end.
+
+## Verdict
+
+**network24 stays at 657,121 (−0.99% vs 663,688).** Nothing tonight beat it: not block moves
+(exhaustive, MILP, quantum or classical), not regrowing it from the team's network23, not
+recombining the two elite topologies. The quantum proposers are valid by construction and run on
+the full instance at 14–25 qubits, but on these block subproblems classical SA on the same QUBO
+is the better optimizer. That matches what the team found independently with its own QAOA
+compound-move search on network24 (SA matched or beat QAOA in 21/21 rounds,
+`ai_context/quantum_networks/READ_ME_FIRST.txt`): two groups, three encodings, same answer.
+
+1. **The surrogate decides, not the sampler.** On network24 blocks the existing
+   `network_qlns` sub-QUBO ranks rewirings with Spearman 0.33–0.67 against the exact LP; the
+   demand-weighted hop count reaches 0.85–0.89 and puts the LP-best rewiring first in 6/6
+   blocks. Every quantum run below samples a QUBO learned from the hop count.
+2. **The 657,121 hand-in is a strict local optimum for block moves.** Six blocks enumerated
+   exhaustively (r = 6–7, 72–2,428 valid rewirings each): zero improving rewirings, the
+   incumbent is the unique best. 182 time-limited MILP block steps (r = 8–16, `network_lns.py`):
+   zero improvements.
+3. **Quantum proposers run in the loop on the full network24 instance, always valid, at
+   14–25 qubits.** Hungarian decoding makes every PCE sample a valid topology; the QAOA
+   warm-started at the incumbent with a 2-exchange mixer keeps 100% of raw samples on valid
+   permutations, also at 25 qubits on Qoro's GPU cluster.
+4. **As optimizers of the block QUBO they lose to classical SA on the same QUBO.** PCE
+   (14 qubits) beats random rewirings in 60/60 blocks and the strongest sampling control in
+   51/60, but loses to SA in 55/60 (ties 5). Seeding a local search with quantum candidates
+   gives the same result as seeding it with random ones (6 wins, 31 ties, 7 losses in 44 blocks).
+5. **Changing the classical optimizer does not close the gap.** Five optimizers on the same five
+   blocks reach 0.17–0.23 of the way from SA's optimum to a random permutation; quantum natural
+   gradient costs 6,782 circuits per block for no gain; QN-SPSA matches Monte Carlo with a third
+   of the circuits.
+6. **Angle warm start halves the optimizer's distance to the QUBO optimum, and the LP does not
+   follow.** Starting each block from the previous block's best angles: gap 0.100 vs 0.202 cold
+   (4 blocks, same 412 circuits), but the LP value of the resulting candidates was better in 1
+   block and worse in 3. A better-optimized surrogate is not a better topology: the bottleneck is
+   back to the model.
+
+## 1. Which surrogate ranks like the referee
+
+Every valid rewiring of each block scored with the exact LP; Spearman of each surrogate against
+it (`block_fidelity.py`). `fit_*` are fitted on half the block and scored on the other half.
+
+| block | r | valid rewirings | improving | team sub-QUBO | dual bound | hop count | fit linear | fit quadratic |
+|---|---|---|---|---|---|---|---|---|
+| 0 | 6 | 362 | 0 | +0.44 | +0.40 | +0.88 | +0.83 | +0.94 |
+| 1 | 6 | 72 | 0 | +0.67 | +0.19 | +0.89 | +0.82 | +0.78 |
+| 2 | 6 | 102 | 0 | +0.43 | +0.55 | +0.85 | +0.78 | +0.86 |
+| 3 | 6 | 93 | 0 | +0.33 | +0.57 | +0.88 | +0.72 | +0.78 |
+| 0 | 7 | 2,428 | 0 | +0.39 | +0.41 | +0.87 | +0.83 | +0.96 |
+| 1 | 7 | 249 | 0 | +0.60 | +0.19 | +0.87 | +0.76 | +0.85 |
+| **range** | | | **0** | **0.33–0.67** | **0.19–0.57** | **0.85–0.89** | **0.72–0.83** | **0.78–0.96** |
+
+At the incumbent 23 of 48 links carry the maximum load: a wide plateau, which is why no small
+block can lower the maximum.
+
+## 2. Exact checks on the 657,121 hand-in
+
+| check | what was searched | better than 657,121 |
+|---|---|---|
+| exhaustive blocks (`block_fidelity.py`) | 6 blocks, r = 6–7, every valid rewiring (72–2,428 each) | 0 |
+| exact LNS (`network_lns.py`, MILP with joint routing) | 182 block steps, r = 8–16, 20 s each, 2 workers × 30 min | 0 (most MILPs stopped at the time limit) |
+| regrow from network23 (`node_insertion.py`) | all 989 degree-preserving insertions of node 24 into the 639,739 network23 topology; best 670,942; then team ILS 12 min + PT 10 min | 0 (stuck at 666,036, +0.35%) |
+| recombination | the 6 arcs where 666,036 and 657,121 differ, tails kept, heads permuted: 330 valid recombinations | 0 (the best is the hand-in itself) |
+
+The regrown topology differs from the hand-in in only 6 of 48 arcs: the team derived network23
+from this network24 topology, so regrowing returns to the same basin, slightly worse.
+
+## 3. Classical optimizer of the circuit parameters (`optimizer_bench.py`)
+
+PCE, 14 qubits, block QUBO with r = 10 learned from the hop count, five network24 blocks, 60
+iterations each. `gap` = (best QUBO energy among decoded candidates − SA's best) / (median random
+permutation − SA's best): 0 = SA's optimum, 1 = a typical random permutation.
+
+| optimizer | mean gap | median gap | circuits per block | seconds per block |
+|---|---|---|---|---|
+| Monte Carlo (divi default) | 0.172 | 0.175 | 1,202 | 10.6 |
+| QN-SPSA (natural-gradient SPSA) | 0.182 | 0.168 | 412 | 4.0 |
+| quantum natural gradient | 0.204 | 0.194 | 6,782 | 50.9 |
+| COBYLA | 0.219 | 0.253 | 169 | 4.9 |
+| L-BFGS-B | 0.227 | 0.254 | 136 | 5.7 |
+| QN-SPSA + angle warm start (blocks 1–4) | **0.100** | | 412 | 4–23 |
+| QN-SPSA cold, same blocks 1–4 | 0.202 | | 412 | 3–7 |
+
+## 4. Quantum LNS walks on network24
+
+Each walk starts from the greedy topology (768,375, +15.77%) so that there is room to descend,
+and follows the quantum proposer only. On every block the controls get the same number of exact
+LP solves (K = 10 each). W / T / L = blocks where the quantum proposer's best LP value was lower /
+equal / higher.
+
+| run | proposer | qubits | blocks | reached | vs SA on same QUBO | vs sampled (best of 1,500 by hops) | vs random | quantum+LS vs random+LS |
+|---|---|---|---|---|---|---|---|---|
+| `pce_r10_greedy` | PCE, cell variables, Monte Carlo | 14 | 60 | 701,615 (+5.71%) | 0 / 5 / 55 | 51 / 1 / 8 | 60 / 0 / 0 | – |
+| `pce_r10_greedy_ls` | PCE, cells, COBYLA + soft read-out | 14 | 44 | 700,934 (+5.61%) | 1 / 1 / 42 | 33 / 0 / 11 | 43 / 0 / 1 | 6 / 31 / 7 |
+| `pce_r10_greedy_qnspsa_warm` | PCE, cells, QN-SPSA + angle warm start | 14 | 20 | 705,228 (+6.26%) | 0 / 1 / 19 | 13 / 1 / 6 | 20 / 0 / 0 | 2 / 16 / 2 |
+| `sw_r16_greedy` | PCE, swap variables, trust region | 14 | 30 | 723,657 (+9.04%) | 0 / 0 / 30 | 1 / 0 / 29 | 1 / 0 / 29 | – |
+| `swap_r4_greedy_local` | QAOA, incumbent start + 2-exchange mixer | 16 | 6 | 725,134 (+9.26%) | 0 / 6 / 0 | 0 / 6 / 0 | 0 / 6 / 0 | 2 / 4 / 0 |
+| `swap_r5_greedy_gpu` | same, Qoro `qoro_gpu` | 25 | 10 | 731,000 (+10.14%) | 0 / 5 / 5 | 0 / 5 / 5 | 0 / 5 / 5 | – |
+
+Raw samples that already are valid permutations: 0% for PCE (repaired by Hungarian decoding),
+**100% for the 2-exchange-mixer QAOA** at 16 and 25 qubits. The 25-qubit cloud run is still
+going (about 6–16 min and 30–50 credits per step, 380 credits for the first 10 steps); `summarize.py`
+regenerates this table from `runs/goat/`.
+
+Reading: the quantum proposer carries real information (it beats random rewirings almost always,
+and the best of 1,500 hop-ranked samples in most blocks with cell variables), but SA on the same
+learned QUBO finds better candidates, and a local search started from quantum candidates ends
+where one started from random candidates ends. On blocks of 4–5 arcs every proposer finds the
+block optimum, so the 16- and 25-qubit runs show validity and scale, not an edge.
+
+## What did not work, and why
+
+| attempt | measured | reason |
+|---|---|---|
+| PCE on cell variables (arc f takes slot s) | loses to SA 55/60 | the poly encoding makes the r² cells rigid parities of ~√2·r qubits that ignore rows and columns: 2^14 reachable assignments for 3.6 M permutations |
+| soft read-out of PCE (per-cell expectations → Hungarian) | no better than bitstrings | the expectations are far from the QUBO optimum: the optimizer, not the read-out, limits |
+| swap variables (y = 1 if two arcs swap heads), exact second-order QUBO | without a trust region SA and PCE score worse than random | the QUBO optimum stacks many swaps, where third-order terms dominate; a cost per swap fixes SA, not PCE |
+| quantum natural gradient | gap 0.204 at 6,782 circuits per block | no gain over Monte Carlo (0.172) or QN-SPSA (0.182 at 412 circuits) |
+| QAOA at 25 qubits on qoro_gpu | 16 min and ~34 credits per step | each batch of 20 circuits is 84 s of GPU time with the 800-string exchange mixer; blocks of 5 arcs are small enough that every proposer finds the block optimum |
+
+## Reproduce
+
+From the repo root, with `venv/` from the README:
+
+```bash
+venv/bin/python TheGOAT_Testing/block_fidelity.py --n 24 --r 6 --blocks 4 --workers 2
+venv/bin/python TheGOAT_Testing/block_fidelity.py --n 24 --r 7 --blocks 2 --workers 2
+venv/bin/python TheGOAT_Testing/goat_lns.py --tag pce_r10_greedy --start greedy --solver pce --r 10 --steps 60
+venv/bin/python TheGOAT_Testing/goat_lns.py --tag pce_r10_greedy_ls --start greedy --solver pce --r 10 --steps 60 --optimizer cobyla --iters 100
+venv/bin/python TheGOAT_Testing/goat_swaps.py --tag sw_r16_greedy --start greedy --r 16 --iters 80 --trust 1.0 --steps 30
+venv/bin/python TheGOAT_Testing/goat_lns.py --tag swap_r5_greedy_gpu --start greedy --solver qaoa_swap --r 5 --steps 30 --cloud qoro_gpu
+venv/bin/python TheGOAT_Testing/optimizer_bench.py --blocks 5 --optimizers mc cobyla qng qnspsa lbfgs
+venv/bin/python TheGOAT_Testing/optimizer_bench.py --blocks 5 --optimizers qnspsa_warm qnspsa
+venv/bin/python TheGOAT_Testing/goat_lns.py --tag pce_r10_greedy_qnspsa_warm --start greedy --solver pce --r 10 --steps 20 --optimizer qnspsa --iters 60 --warm-angles 1
+venv/bin/python TheGOAT_Testing/summarize.py
+
+# regrow network24 from the team's network23, then descend with the team's ILS and PT
+venv/bin/python TheGOAT_Testing/node_insertion.py --n 24 --from deliverables/network23/network23.sol
+# bank the best insertion into a scratch folder (npl.bank), then, with NETWORK_SOL_DIR set to it:
+python network_ils.py run --n 24 --minutes 12 --chains 2 --starts banked,banked --sync
+python network_pt.py 24 --minutes 10 --workers 2 --replicas 10 --banked 10 --tag grow24
+```
+
+Runs that start from the greedy topology bank into a scratch folder
+(`NETWORK_SOL_DIR=runs/goat/sol_greedy`) so they never touch `solutions/`.
