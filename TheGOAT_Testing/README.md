@@ -11,6 +11,7 @@ the rest of the repo.
 | `goat_swaps.py` | Same LNS with swap variables: y_e = 1 if two freed arcs swap heads (a 2-exchange). Any set of disjoint swaps keeps every degree, and the QUBO is the exact second-order expansion of the hop count around the current topology, with a trust region (cost per swap) that keeps the optimum where that expansion holds. PCE poly encoding: r(r-1)/2 swaps on about r qubits. Controls: SA, greedy on single swaps, sampled, random. Output: `runs/goat/swaps/<tag>/`. |
 | `optimizer_bench.py` | Same blocks, same learned QUBO, one PCE run per classical optimizer (Monte Carlo, COBYLA, L-BFGS-B, quantum natural gradient, QN-SPSA, QN-SPSA with angles inherited from the previous block): distance to SA's optimum of the QUBO and LP value of the candidates. Output: `runs/goat/optbench/`. |
 | `node_insertion.py` | Regrows network(n) from a network(n−1) topology: every degree-preserving insertion of the missing node, scored with the exact LP and the hop count. Output: `runs/goat/insertion/`. |
+| `hop_search.py` | Global simulated annealing on the demand-weighted hop count (0.5 ms per evaluation) from random topologies, then the exact LP on the best of the pool: looks for basins far from the hand-in. Output: `runs/goat/hopsearch/`. |
 | `summarize.py` | Markdown tables from `runs/goat/`: block fidelity, LNS runs, head-to-head per block. |
 | `REPORT.md` | **Start here.** What the measurements say, verdict first. |
 | `tests/` | Unit tests on synthetic data. |

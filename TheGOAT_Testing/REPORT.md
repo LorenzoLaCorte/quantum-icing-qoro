@@ -6,7 +6,7 @@ Snapshot 2026-11-22. All numbers are measured; scripts and commands are at the e
 
 **network24 stays at 657,121 (−0.99% vs 663,688).** Nothing tonight beat it: not block moves
 (exhaustive, MILP, quantum or classical), not regrowing it from the team's network23, not
-recombining the two elite topologies. The quantum proposers are valid by construction and run on
+recombining the two elite topologies, not a global search on the hop count from random starts. The quantum proposers are valid by construction and run on
 the full instance at 14–25 qubits, but on these block subproblems classical SA on the same QUBO
 is the better optimizer. That matches what the team found independently with its own QAOA
 compound-move search on network24 (SA matched or beat QAOA in 21/21 rounds,
@@ -64,9 +64,17 @@ block can lower the maximum.
 | exact LNS (`network_lns.py`, MILP with joint routing) | 182 block steps, r = 8–16, 20 s each, 2 workers × 30 min | 0 (most MILPs stopped at the time limit) |
 | regrow from network23 (`node_insertion.py`) | all 989 degree-preserving insertions of node 24 into the 639,739 network23 topology; best 670,942; then team ILS 12 min + PT 10 min | 0 (stuck at 666,036, +0.35%) |
 | recombination | the 6 arcs where 666,036 and 657,121 differ, tails kept, heads permuted: 330 valid recombinations | 0 (the best is the hand-in itself) |
+| block LNS from the stall point (`goat_lns.py --start-file`, r = 8, 30 steps) | from 666,036, where the team's ILS and PT stalled for 22 min: a quantum-led and an SA-led walk | 0 (both reach 665,351 on the same block, step 28; the quantum proposer found that move in the quantum-led run, not in the SA-led one) |
+| global hop-count search (`hop_search.py`) | 87 SA restarts from random topologies on Σ d·hops, 2 workers × 6 min, then the exact LP on the best 150 | 0 (best hop count 29,834 is 0.96% *above* the hand-in's 29,549; best new basin 686,875, 32–37 arcs away) |
 
 The regrown topology differs from the hand-in in only 6 of 48 arcs: the team derived network23
 from this network24 topology, so regrowing returns to the same basin, slightly worse.
+
+The hand-in is also excellent on the surrogate: no random restart of the hop-count search got
+below its hop count. Its LP value is 6.74% above its own hop bound (615,604 = Σ d·hops / 48),
+and among topologies that already have a low hop count the hop count no longer predicts the LP
+(Spearman 0.17 inside the search pool): what is left is load balance, which the hop count does
+not see. A surrogate that models balance is the next step, not a better sampler.
 
 ## 3. Classical optimizer of the circuit parameters (`optimizer_bench.py`)
 
@@ -142,6 +150,11 @@ venv/bin/python TheGOAT_Testing/node_insertion.py --n 24 --from deliverables/net
 # bank the best insertion into a scratch folder (npl.bank), then, with NETWORK_SOL_DIR set to it:
 python network_ils.py run --n 24 --minutes 12 --chains 2 --starts banked,banked --sync
 python network_pt.py 24 --minutes 10 --workers 2 --replicas 10 --banked 10 --tag grow24
+
+# block LNS from the stall point (copy runs/goat/sol_ins/network24.sol first), and the global hop search
+venv/bin/python TheGOAT_Testing/goat_lns.py --tag A_quantum_r8_from666 --start-file runs/goat/sol_ins/network24.sol --solver pce --r 8 --steps 30 --optimizer qnspsa --iters 60 --warm-angles 1 --follow quantum
+venv/bin/python TheGOAT_Testing/goat_lns.py --tag A_sa_r8_from666 --start-file runs/goat/sol_ins/network24.sol --solver pce --r 8 --steps 30 --optimizer qnspsa --iters 60 --warm-angles 1 --follow sa
+venv/bin/python TheGOAT_Testing/hop_search.py --n 24 --minutes 6 --workers 2 --lp 150
 ```
 
 Runs that start from the greedy topology bank into a scratch folder
