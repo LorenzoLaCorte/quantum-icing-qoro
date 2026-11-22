@@ -234,11 +234,24 @@ had polished, enumerating fourteen to twenty-one thousand moves found something 
 The starting topologies came from the team's hybrid chain, so the 18-qubit QAOA step stays in
 these solutions' ancestry; only the final refinement is classical and exhaustive.
 
-One detail for the radius-4 scan still running on network24. The nine derangements of a
-4-subset split into six 4-cycles and **three double transpositions**, and a double transposition
-is exactly two disjoint 2-exchanges applied together — the compound move the team's QAOA step
-was built to find. Radius 4 on network24 therefore enumerates all C(48,4) × 3 = 583,740 pairs
-of disjoint 2-exchanges, exhaustively rather than by sampling.
+### Radius 4 on network18: 472,112 holds
+
+| radius | moves | distinct valid | LPs cut by the bound | improving | time |
+|---:|---:|---:|---:|---:|---:|
+| 2 | 630 | 490 | 490 | 0 | 5 s |
+| 3 | 14,280 | 10,885 | 10,885 | 0 | 115 s |
+| 4 | 530,145 | 370,545 | 370,545 | 0 | 4,527 s |
+
+**`network18` is a certified radius-4 local optimum**: 381,920 LPs, 77 minutes on one core,
+every one abandoned by the dual simplex as soon as the incumbent bound was reached. 30% of the
+enumerated moves are not distinct valid topologies — a duplicated arc, a self-loop, or a
+permutation that rebuilds the same topology — and are rejected before the LP.
+
+The nine derangements of a 4-subset split into six 4-cycles and **three double transpositions**,
+and a double transposition is exactly two disjoint 2-exchanges applied together — the compound
+move the team's QAOA step was built to find. Radius 4 therefore contains all C(36,4) × 3 =
+176,715 pairs of disjoint 2-exchanges on network18, and all C(48,4) × 3 = 583,740 of them on
+network24, enumerated rather than sampled.
 
 ## What did not work, and why
 
