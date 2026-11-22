@@ -73,6 +73,10 @@ latexmk -cd -xelatex -synctex=1 -interaction=nonstopmode -file-line-error \
 
 For optional code sharing, the solver implementations live in [network_design/](../network_design/), the referee is [qoblib_tools.py](../qoblib_tools.py), and the Python dependencies are in [requirements.txt](../requirements.txt). Submitting a benchmark to QOBLIB is a separate process with its own checker and submission metadata. [QOBLIB contribution guide](https://github.com/ZIB-AOPT/QOBLIB/blob/main/CONTRIBUTING.md)
 
+## Network follow-up with simulated Grover search
+
+A 52-round campaign on each instance from `network18` to `network24` yielded four checked scores below the current hand-in. The campaign archive includes the five solutions that improved on its starting files, the per-round logs, and reproduction commands. [Grover experiment](network_quantum/README.md)
+
 ## Portfolio optimisation (QOBLIB 06)
 
 [portfolio/](portfolio/README.md) holds 221 checked `.sol` files, one per (instance, budget, λ). A **classical** search produced all of them (0 qubits): exact asset-trajectory DP, a day-level tabu search, ILS and parallel tempering, implemented in [portfolio_search.py](../portfolio_search.py). All 56 `po_a010` configurations and 34 of the 56 `po_a050` ones match QOBLIB's best-known value. Six `po_a050` configurations go below it, and 16 stay above it, mostly with λ = 1e-3 (gaps of 0.3–2.8%) and three with λ = 1e-2. The 109 `po_a200`/`po_a400` files (13 on the `_orig` instances, 96 on the 12 seed instances `s00`–`s02` with all 8 λ) have no published value to compare against.

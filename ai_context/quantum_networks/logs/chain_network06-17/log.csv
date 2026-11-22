@@ -1,0 +1,31 @@
+2026-11-21T22:27:57,network22,615308,618135,-0.457%,qcompound-smoke:descent
+2026-11-21T22:29:47,network23,642084,659369,-2.621%,qcompound-p1:derived
+2026-11-21T22:32:02,network23,639739,659369,-2.977%,qcompound-p1:descent
+2026-11-21T22:32:03,network22,610880,618135,-1.174%,qcompound-p1:derived
+2026-11-21T22:35:34,network21,573180,569273,+0.686%,qcompound-p2:descent-after-qaoa-improve
+2026-11-21T22:36:33,network22,606424,618135,-1.895%,qcompound-p1:descent-after-qaoa-improve
+2026-11-21T22:37:38,network21,562362,569273,-1.214%,qcompound-p1:pair-scan(classical part of QUBO build)
+2026-11-21T22:39:52,network20,528630,528528,+0.019%,qcompound-p2:descent-after-qaoa-kick
+2026-11-21T22:41:17,network20,527445,528528,-0.205%,qcompound-p1:descent
+2026-11-21T22:44:14,network19,497000,492924,+0.827%,qcompound-p2:descent-after-qaoa-kick
+2026-11-21T22:45:22,network20,519343,528528,-1.738%,qcompound-p1:descent-after-qaoa-kick
+2026-11-21T22:46:33,network19,488895,492924,-0.817%,qcompound-p1:descent-after-pair-improve
+2026-11-21T22:48:33,network18,479955,473375,+1.390%,qcompound-p2:descent-after-qaoa-kick
+2026-11-21T22:49:54,network18,473000,473375,-0.079%,qcompound-p1:descent
+2026-11-21T22:54:22,network17,445682,437000,+1.987%,qcompound-p2:pair-scan(classical part of QUBO build)
+2026-11-22T08:27:34,network07,142400,142400,+0.000%,qcompound-smoke_small:pair-scan(classical part of QUBO build)
+2026-11-22T08:27:34,network06,101000,101000,+0.000%,qcompound-smoke_small:qaoa-compound
+2026-11-22T08:32:12,network17,442158,437000,+1.180%,qcompound-q1:descent-after-qaoa-kick
+2026-11-22T08:34:38,network13,310667,300620,+3.342%,qcompound-q3:descent-after-qaoa-kick
+2026-11-22T08:36:30,network16,403637,397908,+1.440%,qcompound-q1:descent-after-qaoa-kick
+2026-11-22T08:40:53,network15,376305,370870,+1.465%,qcompound-q1:descent-after-qaoa-improve
+2026-11-22T08:41:24,network12,280143,276474,+1.327%,qcompound-q3:descent-after-qaoa-improve
+2026-11-22T08:45:10,network14,348125,343091,+1.467%,qcompound-q1:descent
+2026-11-22T08:48:09,network11,240889,238334,+1.072%,qcompound-q3:descent-after-qaoa-improve
+2026-11-22T08:49:26,network13,304273,300620,+1.215%,qcompound-q1:qaoa-compound
+2026-11-22T08:50:55,network10,215572,210800,+2.264%,qcompound-q3:descent-after-pair-improve
+2026-11-22T08:51:58,network09,196750,196750,+0.000%,qcompound-q3:descent-after-random-kick
+2026-11-22T08:52:53,network12,276474,276474,+0.000%,qcompound-q1:descent-after-qaoa-kick
+2026-11-22T08:54:14,network08,170231,170231,+0.000%,qcompound-q3:descent-after-random-kick
+2026-11-22T08:56:59,network14,344910,343091,+0.530%,qcompound-q2:descent-after-qaoa-improve
+2026-11-22T09:04:50,network10,215077,210800,+2.029%,qcompound-q5:qaoa-compound

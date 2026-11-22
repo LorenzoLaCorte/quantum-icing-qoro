@@ -1,0 +1,8 @@
+instance,seed,rounds,start_checked,final_checked,qoblib_best_known,last_improvement_round,max_index_qubits,lp_budget_per_method_per_round,grover_vs_greedy_wins,grover_vs_greedy_ties,grover_vs_greedy_losses,grover_vs_uniform_wins,grover_vs_uniform_ties,grover_vs_uniform_losses
+network18,73,52,472112,471395,473375,29,11,120,1,46,5,39,10,3
+network19,73,52,488895,486579,492924,23,11,120,1,50,1,45,7,0
+network20,73,52,519343,516397,528528,37,11,120,0,41,11,41,10,1
+network21,73,52,562362,562362,569273,,11,120,1,41,10,42,6,4
+network22,73,52,604540,604229,618135,26,11,120,0,43,9,45,6,1
+network23,73,52,639739,632319,659369,36,11,120,1,41,10,38,10,4
+network24,73,52,657121,657121,663688,,11,120,0,47,5,44,7,1
