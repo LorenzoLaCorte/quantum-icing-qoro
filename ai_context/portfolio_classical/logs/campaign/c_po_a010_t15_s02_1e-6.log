@@ -1,0 +1,7 @@
+po_a010_t15_s02_b004_l1e-6: n=10 T=15 B=4 vars=300  start=zero obj=-1500  BKV=(-189531.0, 'optimal')
+[    0.0s] start: -1500
+[    0.0s] ils descent: -189531
+  PT temps 7.1..2143.0, 12 replicas, 150 moves/sweep
+  PT temps 7.0..2090.5, 12 replicas, 150 moves/sweep
+  PT temps 7.2..2152.0, 12 replicas, 150 moves/sweep
+FINAL po_a010_t15_s02_b004_l1e-6: -189531  gap +0.0000% vs -189531 (optimal)  -> po_a010_t15_s02_b004_l1e-6.sol (file best -189531)

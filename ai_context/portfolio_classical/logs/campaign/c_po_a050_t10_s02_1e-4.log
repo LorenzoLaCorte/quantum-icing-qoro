@@ -1,0 +1,13 @@
+po_a050_t10_s02_b020_l1e-4: n=50 T=10 B=20 vars=1000  start=zero obj=-1000  BKV=(-443357.0, 'best known')
+[    0.0s] start: -1000
+[    0.1s] ils descent: -442676
+[    0.2s] ils it=2 k=1: -442865
+[    0.7s] ils it=11 k=3: -442876
+[    1.0s] ils it=20 k=4: -443224
+[    1.1s] ils it=24 k=4: -443304
+[    1.9s] ils it=41 k=6: -443357
+  PT temps 5.7..1697.8, 12 replicas, 500 moves/sweep
+  PT temps 5.5..1649.0, 12 replicas, 500 moves/sweep
+  PT temps 5.4..1622.2, 12 replicas, 500 moves/sweep
+  PT temps 5.4..1626.0, 12 replicas, 500 moves/sweep
+FINAL po_a050_t10_s02_b020_l1e-4: -443357  gap +0.0000% vs -443357 (best known)  -> po_a050_t10_s02_b020_l1e-4.sol (file best -443357)

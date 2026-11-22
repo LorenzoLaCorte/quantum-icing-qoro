@@ -1,0 +1,14 @@
+po_a050_t10_orig_b020_l1e-3: n=50 T=10 B=20 vars=1000  start=warm(best) obj=-203878  BKV=(-206239.0, 'best known')
+[    0.0s] start: -203878
+[    9.0s] tabu day=4 tried=90: -203895
+[   11.0s] tabu day=2 tried=168: -204160
+[   11.7s] tabu day=4 tried=197: -204368
+[   12.3s] tabu day=5 tried=216: -204823
+  PT temps 8.8..2643.8, 12 replicas, 500 moves/sweep
+[   39.1s] tabu day=4 tried=229: -205450
+  PT temps 8.7..2602.0, 12 replicas, 500 moves/sweep
+[   67.4s] tabu day=6 tried=288: -205509
+  PT temps 9.0..2709.2, 12 replicas, 500 moves/sweep
+  PT temps 8.4..2509.2, 12 replicas, 500 moves/sweep
+[  116.0s] tabu day=2 tried=89: -205672
+FINAL po_a050_t10_orig_b020_l1e-3: -205672  gap +0.2749% vs -206239 (best known)  -> po_a050_t10_orig_b020_l1e-3.sol (file best -205672)

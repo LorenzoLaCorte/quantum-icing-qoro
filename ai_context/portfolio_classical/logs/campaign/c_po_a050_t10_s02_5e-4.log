@@ -1,0 +1,39 @@
+po_a050_t10_s02_b020_l5e-4: n=50 T=10 B=20 vars=1000  start=zero obj=-1000  BKV=(-287872.0, 'best known')
+[    0.0s] start: -1000
+[    0.1s] ils descent: -274581
+[    0.2s] ils it=3 k=5: -275544
+[    0.3s] ils it=4 k=3: -275626
+[    0.4s] ils it=7 k=5: -276528
+[    0.6s] ils it=12 k=6: -279049
+[    0.8s] ils it=17 k=5: -279698
+[    1.1s] ils it=24 k=4: -279732
+[    1.1s] ils it=25 k=3: -279785
+[    1.5s] ils it=34 k=5: -279861
+[    1.6s] ils it=36 k=4: -280159
+[    1.7s] ils it=39 k=6: -280209
+[    2.0s] ils it=46 k=4: -280369
+[    2.6s] ils it=57 k=6: -280523
+[    2.8s] ils it=63 k=5: -280693
+[    3.1s] ils it=68 k=6: -280847
+[    3.1s] ils it=69 k=2: -281669
+[    3.2s] ils it=70 k=3: -283206
+[    3.3s] ils it=71 k=2: -283345
+[    3.5s] ils it=76 k=2: -283593
+[    3.8s] ils it=81 k=4: -284208
+[    4.3s] ils it=91 k=4: -284256
+[    4.6s] ils it=99 k=1: -284523
+[    5.5s] ils it=116 k=2: -284531
+[    6.3s] ils it=135 k=1: -284632
+[    6.8s] tabu day=1 tried=4: -285395
+[    7.0s] tabu day=1 tried=13: -285635
+[    7.3s] tabu day=3 tried=26: -285971
+[    8.1s] tabu day=3 tried=60: -286829
+[    8.3s] tabu day=2 tried=68: -286854
+[    9.2s] tabu day=1 tried=108: -287516
+[   10.0s] tabu day=0 tried=141: -287684
+  PT temps 8.3..2495.0, 12 replicas, 500 moves/sweep
+[   35.6s] tabu day=7 tried=87: -287872
+  PT temps 8.1..2418.8, 12 replicas, 500 moves/sweep
+  PT temps 8.1..2428.0, 12 replicas, 500 moves/sweep
+  PT temps 8.3..2486.0, 12 replicas, 500 moves/sweep
+FINAL po_a050_t10_s02_b020_l5e-4: -287872  gap +0.0000% vs -287872 (best known)  -> po_a050_t10_s02_b020_l5e-4.sol (file best -287872)

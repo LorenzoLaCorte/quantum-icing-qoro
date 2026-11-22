@@ -1,0 +1,7 @@
+built po_a010_t15_s02.npz: n=10 T=15 in 1s
+po_a010_t15_s02_b004_l1e-2: n=10 T=15 B=4 vars=300  start=zero obj=-1500  BKV=(-1500.0, 'best known')
+[    0.0s] start: -1500
+  PT temps 424.5..127355.0, 12 replicas, 150 moves/sweep
+  PT temps 420.9..126283.8, 12 replicas, 150 moves/sweep
+  PT temps 428.8..128630.8, 12 replicas, 150 moves/sweep
+FINAL po_a010_t15_s02_b004_l1e-2: -1500  gap +0.0000% vs -1500 (best known)  -> po_a010_t15_s02_b004_l1e-2.sol (file best -1500)

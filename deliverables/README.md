@@ -15,6 +15,8 @@ Notebook 00 asks for each checked `.sol` file, the instance and binary variable 
 
 The `network05` and `network24` solutions were found by classical searches. `network18`–`network23` come from a hybrid chain, network23 → network18. Each instance starts from the polished topology of the next larger one with its last node deleted. Exact-LP 2-exchange descent refines it, and a QAOA step (Divi, local Maestro simulator, 18 qubits, p=2) samples combinations of 2-exchange moves to escape local optima. QAOA samples gave direct improvements on network22 and network19 and kicks before later descents on network20, while most of the gain came from the classical descent and the exact pair scan. The search code is [solutions/agent_qcompound/small/qls.py](../solutions/agent_qcompound/small/qls.py). The logs, transcripts and a reading guide are in [ai_context/quantum_networks/](../ai_context/quantum_networks/READ_ME_FIRST.txt). The [network24 report](reports/network24_report_eng.tex) describes how parallel tempering and iterated local search were combined to produce the checked result.
 
+The portfolio hand-in (QOBLIB 06, 125 configurations, 6 below the best-known value) is summarised in [Portfolio optimisation](#portfolio-optimisation-qoblib-06) at the end of this file.
+
 ## Method and settings
 
 - `network05` used seed `0`, a random starting topology, degree-preserving link swaps, and exact LP routing. The verification command uses a batch of 8 moves, 2 LP workers, and a 0.2-minute budget. The banked sequence was 83,000 → 81,500 → 74,000 → 71,500 → 65,500. [Banking log](../solutions/log.csv) · [Methodology and reproduction](../ai_context/README.md#network05-from-83000-to-the-proven-optimum)
@@ -58,3 +60,21 @@ latexmk -cd -xelatex -synctex=1 -interaction=nonstopmode -file-line-error \
 ```
 
 For optional code sharing, the solver implementations live in [network_design/](../network_design/), the referee is [qoblib_tools.py](../qoblib_tools.py), and the Python dependencies are in [requirements.txt](../requirements.txt). Submitting a benchmark to QOBLIB is a separate process with its own checker and submission metadata. [QOBLIB contribution guide](https://github.com/ZIB-AOPT/QOBLIB/blob/main/CONTRIBUTING.md)
+
+## Portfolio optimisation (QOBLIB 06)
+
+[portfolio/](portfolio/README.md) holds 125 checked `.sol` files, one per (instance, budget, λ). A **classical** search produced all of them (0 qubits): exact asset-trajectory DP, a day-level tabu search, ILS and parallel tempering, implemented in [portfolio_search.py](../portfolio_search.py). All 56 `po_a010` configurations and 34 of the 56 `po_a050` ones match QOBLIB's best-known value. Six `po_a050` configurations go below it, and 16 stay above it, mostly with λ = 1e-3 (gaps of 0.3–2.8%) and three with λ = 1e-2. The 13 `po_a200`/`po_a400` files have no published value to compare against.
+
+| Instance | B | λ | Solution | Binary variables | Qubits | Checked objective | QOBLIB reference | Gap |
+| --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| `po_a050_t15_orig` | 20 | 1e-2 | [po_a050_t15_orig_b020_l1e-2.sol](portfolio/po_a050_t15_orig_b020_l1e-2.sol) | 4,665 | 0 | −50,971 | −31,504 (best known) | **−61.79%** |
+| `po_a050_t10_s00` | 20 | 1e-2 | [po_a050_t10_s00_b020_l1e-2.sol](portfolio/po_a050_t10_s00_b020_l1e-2.sol) | 3,110 | 0 | −19,785 | −12,340 (best known) | **−60.33%** |
+| `po_a050_t10_orig` | 20 | 1e-2 | [po_a050_t10_orig_b020_l1e-2.sol](portfolio/po_a050_t10_orig_b020_l1e-2.sol) | 3,110 | 0 | −44,208 | −37,107 (best known) | **−19.14%** ¹ |
+| `po_a050_t10_s02` | 20 | 1e-2 | [po_a050_t10_s02_b020_l1e-2.sol](portfolio/po_a050_t10_s02_b020_l1e-2.sol) | 3,110 | 0 | −44,625 | −43,565 (best known) | **−2.43%** |
+| `po_a050_t10_s00` | 20 | 5e-4 | [po_a050_t10_s00_b020_l5e-4.sol](portfolio/po_a050_t10_s00_b020_l5e-4.sol) | 3,110 | 0 | −234,696 | −234,259 (best known) | **−0.19%** |
+| `po_a050_t15_s02` | 20 | 5e-4 | [po_a050_t15_s02_b020_l5e-4.sol](portfolio/po_a050_t15_s02_b020_l5e-4.sol) | 4,665 | 0 | −392,723 | −392,668 (best known) | **−0.01%** |
+| `po_a400_t15_orig` | 100 | 1e-3 | [po_a400_t15_orig_b100_l1e-3.sol](portfolio/po_a400_t15_orig_b100_l1e-3.sol) | 36,165 | 0 | −2,986,716 | none published | — |
+
+¹ This run started from QOBLIB's published reference solution and improved it, so it is not an independent result. See the [provenance note](portfolio/README.md#method-and-settings).
+
+Verify all 125 files from the repo root with `PORTFOLIO_SOL_DIR=deliverables/portfolio python portfolio_search.py verify`. The method, the settings and the full table are in [portfolio/README.md](portfolio/README.md). The run logs and the reading guide are in [ai_context/portfolio_classical/](../ai_context/portfolio_classical/READ_ME_FIRST.txt).

@@ -1,0 +1,26 @@
+po_a400_t10_orig_b100_l1e-3: n=400 T=10 B=100 vars=8000  start=zero obj=-1000  BKV=None
+[    0.0s] start: -1000
+[    9.7s] ils descent: -1751367
+[   13.9s] tabu day=2 tried=1: -1758573
+[   16.2s] tabu day=7 tried=2: -1779324
+[   18.4s] tabu day=8 tried=3: -1792050
+[   23.9s] tabu day=1 tried=4: -1809049
+[   27.2s] tabu day=6 tried=5: -1816354
+  PT temps 11.5..3453.0, 12 replicas, 4000 moves/sweep
+[   57.6s] tabu day=5 tried=2: -1818792
+[   59.9s] tabu day=4 tried=3: -1839179
+[   62.2s] tabu day=6 tried=4: -1840876
+[   64.4s] tabu day=3 tried=5: -1856508
+[   66.9s] tabu day=2 tried=6: -1859514
+  PT temps 11.7..3508.0, 12 replicas, 4000 moves/sweep
+[   99.0s] tabu day=4 tried=1: -1860485
+[  101.2s] tabu day=0 tried=2: -1873016
+[  106.6s] tabu day=3 tried=5: -1878176
+[  111.5s] tabu day=2 tried=8: -1878761
+  PT temps 11.7..3510.8, 12 replicas, 4000 moves/sweep
+[  141.7s] tabu day=8 tried=1: -1879474
+[  146.1s] tabu day=4 tried=4: -1885804
+[  149.7s] tabu day=3 tried=6: -1887931
+[  153.3s] tabu day=0 tried=8: -1889243
+  PT temps 12.4..3734.5, 12 replicas, 4000 moves/sweep
+FINAL po_a400_t10_orig_b100_l1e-3: -1889243  -> po_a400_t10_orig_b100_l1e-3.sol (file best -1889243)

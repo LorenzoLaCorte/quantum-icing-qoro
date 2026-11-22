@@ -1,0 +1,8 @@
+po_a050_t10_s00_b020_l1e-6: n=50 T=10 B=20 vars=1000  start=zero obj=-1000  BKV=(-513409.0, 'best known')
+[    0.0s] start: -1000
+[    0.1s] ils descent: -513409
+  PT temps 7.5..2251.5, 12 replicas, 500 moves/sweep
+  PT temps 7.2..2147.0, 12 replicas, 500 moves/sweep
+  PT temps 7.5..2251.5, 12 replicas, 500 moves/sweep
+  PT temps 7.5..2251.5, 12 replicas, 500 moves/sweep
+FINAL po_a050_t10_s00_b020_l1e-6: -513409  gap +0.0000% vs -513409 (best known)  -> po_a050_t10_s00_b020_l1e-6.sol (file best -513409)

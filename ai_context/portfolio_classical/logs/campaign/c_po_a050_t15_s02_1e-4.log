@@ -1,0 +1,15 @@
+po_a050_t15_s02_b020_l1e-4: n=50 T=15 B=20 vars=1500  start=zero obj=-1500  BKV=(-604145.0, 'best known')
+[    0.0s] start: -1500
+[    0.2s] ils descent: -603418
+[    0.6s] ils it=8 k=1: -603498
+[    1.2s] ils it=18 k=6: -603638
+[    1.7s] ils it=25 k=3: -603886
+[    1.8s] ils it=26 k=4: -603957
+[    2.7s] ils it=42 k=6: -604078
+[    3.7s] ils it=59 k=6: -604104
+[    6.9s] tabu day=12 tried=8: -604145
+  PT temps 6.1..1825.0, 12 replicas, 750 moves/sweep
+  PT temps 6.4..1919.2, 12 replicas, 750 moves/sweep
+  PT temps 6.4..1909.5, 12 replicas, 750 moves/sweep
+  PT temps 6.3..1887.8, 12 replicas, 750 moves/sweep
+FINAL po_a050_t15_s02_b020_l1e-4: -604145  gap +0.0000% vs -604145 (best known)  -> po_a050_t15_s02_b020_l1e-4.sol (file best -604145)
